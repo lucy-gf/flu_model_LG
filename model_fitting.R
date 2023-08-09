@@ -252,11 +252,7 @@ for (epidemic_to_run in 1:length(epidemics_to_fit)){
   )
 }
 
-
-
-
-
-
+saveRDS(output_list, file = "output/my_output_list.rds")
 
 ## PLOTTING THE DENSITY OF PARAMETERS
 posterior_plot_df <- data.frame('pars' = c(c(output_list[[1]]$posterior$batch[,1:4]),
