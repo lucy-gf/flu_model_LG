@@ -6,6 +6,7 @@
 
 # source functions, call libraries
 source("fcns/inference_function.R")
+library(rriskDistributions)
 source("fcns/prior_distribution_specification.R")
 #source("fcns/gen_seeiir_ag_vacc_waning.R")
 #source("fcns/1_1_model_vaccine_waning.R")
@@ -26,7 +27,6 @@ df_epid_threshold <- read_csv(file="output/df_epid_threshold.csv")
 
 # 4x4 contact matrices are in `list_contact_matr` also save as RDS file in
 list_contact_matr <- readRDS("output/list_contact_matr.RDS")
-
 # this is a list with the countries as names: names(list_contact_matr)
 
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
@@ -45,8 +45,31 @@ susceptibility <- c( 0.7, 0.3 ) # Different for different ages
 transmissibility <- 0.17 # Same for all ages
 infection_delays <- c( 0.8, 1.8 ) # 0.8 and 1.8 day.
 
+# adding number of epidemics to fit to each country:
+x <- 4
+for(strain in c('A','B')){
+  for(source in c('NONSENT','SENTINEL')){
+    df_cntr_table[,x] <- rep.int(NA,nrow(df_cntr_table))
+    colnames(df_cntr_table)[x] <- paste0('INF_',strain,'_',source) 
+    x <- x + 1
+  }
+}
+for(i in 1:nrow(df_cntr_table)){
+  for(strain in c('A','B')){
+    for(source in c('NONSENT','SENTINEL')){
+        suppressWarnings(df_cntr_table[i,paste0('INF_',strain,'_',source)] <- 
+         max(df_epid_lims$index[df_epid_lims$country %in% c(df_cntr_table$country[i],df_cntr_table$COUNTRY_CODE[i]) &
+                                 df_epid_lims$STRAIN == paste0('INF_',strain) &
+                                 df_epid_lims$metasource == source]))
+      if(df_cntr_table[i,paste0('INF_',strain,'_',source)]==-Inf){
+        df_cntr_table[i,paste0('INF_',strain,'_',source)] <- 0
+      }
+    }
+  }
+}
+
 # SIMULATE
-# odes <- infectionODEs(population, initial.infected, vaccine_calendar, contact_matrix,
+# odes <- infectionODEs(population, initial.infected, vaccine_calendar, contact_matrix=contacts, 
 #                       susceptibility, transmissibility, infection_delays, 7)
 # head(odes %>% mutate_if(is.numeric, round) )
 # # % infected
@@ -101,7 +124,7 @@ round(list_contact_matr$`United Kingdom`,2)
 #
 # we need our contact matrices in this format: as.matrix(polymod_FluEv)
 
-sel_cntr <- df_cntr_table$country[1] # setting the selected country
+sel_cntr <- df_cntr_table$country[2] # setting the selected country
 
 # have ContMatrix as dataframe
 contacts_matrixformat <- as.matrix(
@@ -212,126 +235,80 @@ for(epid_index_val in 1:length(epidemics_to_fit)){
 
 ##### Run the fit #####
 
-post_size <- 1000 #3000 
+post_size <- 2000 #3000 
 thinning_steps <- 10 #100
-burn_in <- 1000 #100000
+burn_in <- 100 #100000
 seed_to_use <- 55 #99
 save <- T
 
-output_list <- vector("list",length(epidemics_to_fit))
+#output_list <- vector("list",length(epidemics_to_fit))
 
-for (epidemic_to_run in 1:length(epidemics_to_fit)){
-  set.seed(seed_to_use)
+#for (epidemic_to_run in 1:length(epidemics_to_fit)){
+set.seed(seed_to_use)
+global_index <- 1
+output <- custom_inference( # this calls "fcns/inference_function.R"
+  input_demography = yr_res_pop,
+  vaccine_calendar_list = vaccine_calendar_list, # vaccine_calendar_list[[epidemic_to_run]],
+  input_polymod = contacts_matrixformat, 
+  ili = NULL,
+  mon_pop = NULL,
+  # n_pos = epidemics_to_fit[[epidemic_to_run]]$data_points,
+  epidemics_to_fit = epidemics_to_fit, #epidemics_to_fit[[epidemic_to_run]], # passing in all the epidemics instead of n_pos
+  n_samples = NULL,
+  initial = unlist(initial_parameters), #initial_parameters[[epidemic_to_run]],
+  mapping = NULL,
+  nbatch = post_size,
+  nburn = burn_in,
+  blen = thinning_steps
+)
 
-# this calls "fcns/inference_function.R"
-  global_index <- 1
-  output <- custom_inference(
-    input_demography = yr_res_pop,
-    vaccine_calendar_list = vaccine_calendar_list[[epidemic_to_run]],
-    input_polymod = contacts_matrixformat, 
-    ili = NULL,
-    mon_pop = NULL,
-    # n_pos = epidemics_to_fit[[epidemic_to_run]]$data_points,
-    epidemics_to_fit = epidemics_to_fit[[epidemic_to_run]], #epidemics_to_fit, # passing in all the epidemics instead of n_pos
-    n_samples = NULL,
-    initial = initial_parameters[[epidemic_to_run]], #initial_parameters,
-    mapping = NULL,
-    nbatch = post_size,
-    nburn = burn_in,
-    blen = thinning_steps
-    )
+# output_list[[epidemic_to_run]] <- list(
+#   country = sel_cntr,
+#   epidemic_no = epidemic_to_run,
+#   posterior = output,
+#   post_size = post_size,
+#   thinning_steps = thinning_steps,
+#   burn_in = burn_in,
+#   seed = seed_to_use
+# )
 
-  output_list[[epidemic_to_run]] <- list(
-    country = sel_cntr,
-    epidemic_no = epidemic_to_run,
-    posterior = output,
-    post_size = post_size,
-    thinning_steps = thinning_steps,
-    burn_in = burn_in,
-    seed = seed_to_use
-  )
-}
 
-saveRDS(output_list, file = "output/my_output_list.rds")
+post_samples <- data.table(output$batch)
+# colnames(post_samples) <- rep(c("reporting","trans","sus","infected","blank","blank"),length(epidemics_to_fit))
+colnames(post_samples) <- paste0(c("reporting","trans","sus","infected","blank","blank"),"_",rep(1:length(epidemics_to_fit),each=6))
+# remove the blank ones
+cols_to_delete <- which(names(post_samples) %like% "blank")
+post_samples[, (cols_to_delete) := NULL ]
+# add the likelihoods
+post_samples[, ll := output$llikelihoods]
+post_samples$timestep <- 1:nrow(post_samples)
+post_samples_m <- melt.data.table(post_samples, id.vars = "timestep")
+post_samples_m[, c("variable", "epidemic_id") := tstrsplit(variable, "_", fixed = TRUE)]
+post_samples_m$epidemic_id <- factor(post_samples_m$epidemic_id, levels=unique(post_samples_m$epidemic_id))
 
-## PLOTTING THE DENSITY OF PARAMETERS
-posterior_plot_df <- data.frame('pars' = c(c(output_list[[1]]$posterior$batch[,1:4]),
-                                           c(output_list[[2]]$posterior$batch[,1:4]),
-                                           c(output_list[[3]]$posterior$batch[,1:4]),
-                                           c(output_list[[4]]$posterior$batch[,1:4]),
-                                           c(output_list[[5]]$posterior$batch[,1:4]),
-                                           c(output_list[[6]]$posterior$batch[,1:4]),
-                                           c(output_list[[7]]$posterior$batch[,1:4]),
-                                           c(output_list[[8]]$posterior$batch[,1:4]),
-                                           c(output_list[[9]]$posterior$batch[,1:4]),
-                                           c(output_list[[10]]$posterior$batch[,1:4])),
-                                'epidemic_id' = rep(1:length(epidemics_to_fit),each=4*post_size),
-                                'parameter' = rep(rep(c('reporting','transmissibility',
-                                                        'susceptibility','initial infected'),
-                                                      each=post_size),length(epidemics_to_fit)),
-                                'step' = rep((1:post_size)))
+#write_csv(post_samples_m, file = paste0('MCMC_output/',sel_cntr,'_',post_size,'_',thinning_steps,'_',burn_in,'.csv'))
 
-timestep_plot1 <- ggplot(data = posterior_plot_df, aes(x = step, y = pars, group = epidemic_id, col = epidemic_id)) +
-  geom_line() + theme_minimal() + facet_wrap(parameter~epidemic_id,nrow=4,scales='free') +
-  scale_color_viridis()
+DENSITY <- ggplot(post_samples_m[!post_samples_m$variable=='ll']) +
+  facet_grid(epidemic_id~variable, scales="free" ) +
+  geom_histogram(aes(x=value,fill=variable), bins=50) +
+  labs(title = paste0("Epidemic posterior parameters, ", sel_cntr)) +
+  theme_minimal() 
+DENSITY
 
-timestep_plot2 <- ggplot(data = posterior_plot_df, aes(x = step, y = pars, group = epidemic_id, col = epidemic_id)) +
-  geom_line() + theme_minimal() + facet_wrap(.~parameter,nrow=2,scales='free') +
-  scale_color_viridis()
-  
-density <- ggplot(data = posterior_plot_df[posterior_plot_df$epidemic_id < 7,], 
-       aes(x = pars, group = epidemic_id, fill = epidemic_id)) +
-  geom_density() + theme_minimal() + facet_wrap(epidemic_id~parameter,ncol=4,scales='free') +
-  scale_fill_viridis()
+TRACE_THINNED <- ggplot(post_samples_m[!post_samples_m$variable=='ll'], 
+                        aes(x = timestep, y = value, col = variable)) +
+  facet_grid(variable~epidemic_id, scales = "free_y") +
+  geom_line() + scale_x_continuous(breaks=seq(0,nrow(post_samples),
+                                              nrow(post_samples)/2)) + 
+  labs(title = paste0("Parameter traces, ", sel_cntr)) + theme_minimal()
+TRACE_THINNED
 
-DENSITY <- ggplot(posterior_plot_df[posterior_plot_df$epidemic_id < 7,]) +
-  facet_grid(epidemic_id~parameter, scales="free" ) +
-  geom_histogram(aes(x=pars,fill=epidemic_id), bins=50) +
-  labs(title = paste0("Epidemic posterior parameters")) +
-  scale_fill_viridis()
+LL <- ggplot(post_samples_m[post_samples_m$variable=='ll'], aes(x = timestep, y = value)) +
+  geom_line(lwd=1) + scale_x_continuous(breaks=seq(0,nrow(post_samples),
+                                              nrow(post_samples)/4)) + 
+  labs(title = paste0("Total log-likelihood, ", sel_cntr)) + theme_minimal()
+LL
 
 
 
-# colnames(output_list$posterior$batch) <- c("reporting", "transmissibility", "sus1",
-#                                            "infected", "blank", "blank")
-# post_samples <- data.table(output_list$posterior$batch)
-# # remove the blank ones
-# post_samples[, blank := NULL ]
-# post_samples[, blank := NULL ]
-# # add the likelihoods
-# post_samples[, ll := output_list$posterior$llikelihoods]
-# post_samples$timestep <- 1:nrow(post_samples)
-# post_samples_m <- melt.data.table(post_samples, id.vars = "timestep")
-# 
-# post_samples <- data.table(output$batch)
-# # colnames(post_samples) <- rep(c("reporting","trans","sus","infected","blank","blank"),length(epidemics_to_fit))
-# colnames(post_samples) <- paste0(c("reporting","trans","sus","infected","blank","blank"),"_",rep(1:length(epidemics_to_fit),each=6))
-# # remove the blank ones
-# cols_to_delete <- which(names(post_samples) %like% "blank")
-# post_samples[, (cols_to_delete) := NULL ]
-# # add the likelihoods
-# post_samples[, ll := output$llikelihoods]
-# post_samples$timestep <- 1:nrow(post_samples)
-# 
-# post_samples_m <- melt.data.table(post_samples, id.vars = "timestep")
-# 
-# post_samples_m[, c("variable", "epidemic_id") := tstrsplit(variable, "_", fixed = TRUE)]
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# DENSITY <- ggplot(post_samples_m) +
-#   facet_grid(epidemic_id~variable, scales="free" ) +
-#   geom_histogram(aes(x=value), bins=50) +
-#   labs(title = paste0("Epidemic posterior parameters"))
-# DENSITY
-# 
-# 
-# TRACE_THINNED <- ggplot(post_samples_m, aes(x = timestep, y = value)) +
-#   facet_grid(variable~epidemic_id, scales = "free_y") +
-#   geom_line() +
-#   labs(title = paste0("Epidemic ID"))
-# TRACE_THINNED
+
