@@ -28,37 +28,35 @@ custom_inference <- function(
   
   names(initial_parameters) <- c("reporting", "transmissibility","susceptibility","initial_infected")
   
-  # llikelihood_all <- function(pars){ # this would be use for output of one parameter set
-  #   print(paste0("Step=",global_index))
-  #   global_index <<- global_index+1
-  #   # if(global_index==1756){browser()}
-  #   #pars <- initial
-  #   total_ll <- 0
-  #   #all_pars <- pars 
-  #   for (e in 1:length(epidemics_to_fit)){
-  #     #pars <- all_pars[[e]] #all_pars[(((e-1))*6+1):(e*6)]
-  #     vaccine_calendar <- vaccine_calendar_list #[[e]] #taken out when running the loop with epidemic_to_run = 1:10
-  #     n_pos <- epidemics_to_fit[[e]]$data_points
-  #     # if("NaN" %in% pars) {browser}
-  #     # if(global_index==11652){browser()}
-  #     ll_epidemic <- llikelihood(pars,n_pos,vaccine_calendar)
-  #     # browser()
-  #     total_ll <- total_ll + ll_epidemic
-  #     if(total_ll=="-Inf"){break}
-  #   }
-  #   # browser()
-  #   return(total_ll)
-  # }
+  llikelihood_all <- function(pars){
+    
+    # browser()
+    if(global_index %% 10 == 0){
+      print(paste0("Step=",global_index))
+    }
+    global_index <<- global_index+1
+    #if(global_index==10){browser()}
+    total_ll <- 0
+    all_pars <- pars
+    for (e in 1:length(epidemics_to_fit)){
+      pars <- all_pars[(((e-1))*6+1):(e*6)] # select parameter set for epidemic e (currently no shared pars)
+      vaccine_calendar <- vaccine_calendar_list[[e]] # select vaccine calendar for epidemic e
+      n_pos <- epidemics_to_fit[[e]]$data_points
+      # if("NaN" %in% pars) {browser}
+      # if(global_index==11652){browser()}
+      ll_epidemic <-  llikelihood(pars,n_pos,vaccine_calendar) # generate log-likelihood for epidemic e
+      total_ll <- total_ll + ll_epidemic # then add it to the total log-likelihood
+      if(total_ll=="-Inf"){break}
+    }
+    #browser()
+    return(total_ll)
+  }
   
   
   # Define the actual log likelihood function
-  # llikelihood <- function(pars, n_pos, vaccine_calendar) {
-    # browser()
-  llikelihood <- function(pars) {
-    print(paste0("Step = ",global_index,", Epidemic_no = ",epidemic_to_run))
-    global_index <<- global_index+1
-    n_pos <- epidemics_to_fit$data_points
-    vaccine_calendar <- vaccine_calendar_list
+  llikelihood <- function(pars, n_pos, vaccine_calendar) {
+    
+    distr <- c('Bi','Po')[1] # choosing Binomial or Poisson likelihood
     
     contacts <- fluEvidenceSynthesis::contact_matrix(
       as.matrix(input_polymod),
@@ -85,7 +83,7 @@ custom_inference <- function(
       waning_rate = 0,
       vaccination_ratio_input = prop_vacc_start,
       begin_date = vaccine_calendar$dates[1], 
-      end_date = vaccine_calendar$dates[2] ,  
+      end_date = vaccine_calendar$dates[2],  
       year_to_run = year(vaccine_calendar$dates[1]), 
       efficacy_now =rep(0,12), 
       efficacy_next=rep(0,12),
@@ -100,48 +98,59 @@ custom_inference <- function(
     
     total_ll <- 0
     for(i in 1:length(n_pos)){
-      # if (round(as.numeric(weekly_cases[i,"V1"])) < n_pos[i]) {return(as.numeric("-Inf"))} else{
-      #   weekly_ll <-  dbinom(
-      #     x = n_pos[i], 
-      #     size = round(as.numeric(weekly_cases[i,"V1"])),
-      #     prob = exp(pars[1]), 
-      #     log = T
-      #   )
-      #   if(is.nan(weekly_ll)) {return(as.numeric("-Inf"))}
-      # }
-      ### POISSON LIKELIHOOD WITH AVOIDANCE OF LAMBDA=0
-      # Mean: lambda = n*p for n = round(as.numeric(weekly_cases[i,"V1"]))
-      lambda = round(as.numeric(weekly_cases[i,"V1"]))*unname(exp(pars[1])) 
-      # Replacing n = 0 values with n <- 0.000001
-      if(round(as.numeric(weekly_cases[i,"V1"]))==0){
-        lambda <- (1e-6)*unname(exp(pars[1]))
-      } # preliminary trial value, trying to avoid bias 
-      weekly_ll <- dpois( # Poisson density function
-        x = n_pos[i], 
-        lambda = lambda,
-        log = T # return log-likelihood
-      )
-      if(is.nan(weekly_ll)) {return(as.numeric("-Inf"))}
-      # browser()
+      if(distr == 'Bi'){
+        if (round(as.numeric(weekly_cases[i,"V1"])) < n_pos[i]) {return(as.numeric("-Inf"))} else
+        {
+          weekly_ll <-  dbinom(
+            x = n_pos[i],
+            size = round(as.numeric(weekly_cases[i,"V1"])),
+            prob = exp(pars[1]),
+            log = T
+          )
+          if(is.nan(weekly_ll)) {return(as.numeric("-Inf"))}
+        }
+      }
+      if(distr == 'Po'){
+        lambda = round(as.numeric(weekly_cases[i,"V1"]))*unname(exp(pars[1]))
+        # # Replacing n = 0 values with n <- 0.000001
+        if(round(as.numeric(weekly_cases[i,"V1"]))==0){
+          lambda <- (1e-6)*unname(exp(pars[1]))
+        } # preliminary trial value, trying to avoid bias
+        weekly_ll <- dpois( # Poisson density function
+          x = n_pos[i],
+          lambda = lambda,
+          log = T # return log-likelihood
+        )
+        if(is.nan(weekly_ll)) {return(as.numeric("-Inf"))}
+      }
       total_ll <- total_ll + weekly_ll  
     }
-    # browser()
+    #browser()
     return(total_ll)
   }
   
   ### FUNCTION: llprior ### 
   llprior <- function(pars) {
-    
+
     # 1 is reported
     # 2 is transmission
     # 3 is susceptibility
-    # 4 is initial start
-# browser()
-    value = 0 # unless any parameters are unfeasible
-    if (
-      exp(pars[1]) < 0 || exp(pars[1]) > 1 || pars[3] < 0 || pars[3] > 1  ||  pars[4] < log(0.00001) || pars[4] > 29.5  # pars[4] < log(0.01) #pars[4] < log(0.00001) || pars[4] > 29.5  # 29.5 as 0.01% of population
-    ) {value = -Inf}
-    return(value)
+    # 4 is initial infections
+    
+    for (e in 1:(length(pars)/6)){
+      if(
+        exp(pars[(e-1)*6+1]) < 0 ||
+        exp(pars[(e-1)*6+1]) > 1 ||
+        pars[(e-1)*6+3] < 0 ||
+        pars[(e-1)*6+3] > 1  ||
+        pars[(e-1)*6+4] < log(0.00001) ||
+        pars[(e-1)*6+4] > 6 # log(1E6)
+      ) {
+        #print(pars[(e-1)*6 + 1:6]) #checking in which cases -Inf is returned
+        return(-Inf)
+        }
+    }
+    
     # lprob <- 0
     # # prior on the R0
     # # browser()
@@ -155,7 +164,7 @@ custom_inference <- function(
     # lprob <- lprob + dbeta(pars[3], shape1 = sus_beta_pars[1], shape2 = sus_beta_pars[2], log = T)
     # # prior on susceptiblity
     # return(lprob)
-    #return(0)
+    return(0)
   }
   ### END OF FUNCTION: llprior ###
   
@@ -166,7 +175,7 @@ custom_inference <- function(
   # Run adaptive.mcmc
   mcmc.result <- adaptive.mcmc(
     lprior = llprior, 
-    llikelihood = llikelihood, #llikelihood_all, 
+    llikelihood = llikelihood_all, #llikelihood, 
     nburn = nburn, 
     initial = initial,
     nbatch = nbatch, 
@@ -329,3 +338,6 @@ incidence_function_fit <- function(
   # browser()
 }
 ### END OF FUNCTION: incidence_function_fit ###
+
+
+
