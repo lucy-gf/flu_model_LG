@@ -16,6 +16,7 @@ custom_inference <- function(
 ) {
 
   age.group.limits <- c(5,20,65)  # 4 age groups used in the model
+  age.groups <- stratify_by_age(input_demography, age.group.limits)
   
   prop_vacc_start <- list(
     prop_vaccine_compartments = rep(0,12),
@@ -31,7 +32,7 @@ custom_inference <- function(
   llikelihood_all <- function(pars){
     
     # browser()
-    if(global_index %% 10 == 0){
+    if(global_index %% 100 == 0){
       print(paste0("Step=",global_index))
     }
     global_index <<- global_index+1
@@ -63,8 +64,6 @@ custom_inference <- function(
       input_demography, 
       age.group.limits
     ) 
-    
-    age.groups <- stratify_by_age(input_demography, age.group.limits)
     
     # Population size initially infected by age
     initial.infected <- rep(10^pars[4], length(age.groups))
@@ -144,7 +143,7 @@ custom_inference <- function(
         pars[(e-1)*6+3] < 0 ||
         pars[(e-1)*6+3] > 1  ||
         pars[(e-1)*6+4] < log(0.00001) ||
-        pars[(e-1)*6+4] > 6 # log(1E6)
+        pars[(e-1)*6+4] > log10(min(age.groups)) # demography-specific upper bound for init_inf
       ) {
         #print(pars[(e-1)*6 + 1:6]) #checking in which cases -Inf is returned
         return(-Inf)
@@ -308,7 +307,7 @@ incidence_function_fit <- function(
   
   population_stratified <- stratify_by_risk(age_group_sizes, risk_ratios_input)
   
-  initial_infected <- rep(10^parameters[4],4) #6)
+  initial_infected <- rep(10^parameters[4],length(age_group_sizes)) #6)
   initial_infected <- stratify_by_risk(initial_infected, risk_ratios_input)
   
   susceptibility <- c(0,rep(parameters[3],3))#5))
