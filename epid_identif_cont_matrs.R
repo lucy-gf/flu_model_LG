@@ -1,7 +1,7 @@
 # source functions, call libraries
-source("fcns/fcns.R")
+source_url("https://raw.githubusercontent.com/1035825/flu_model_LG/main/fcns/fcns")
 # load data
-source("fcns/load_flunet.R")
+source_url("https://raw.githubusercontent.com/1035825/flu_model_LG/main/fcns/load_flunet")
 
 # load filtered data
 # this csv file is saved version of `df_posit_sel_cntrs` dataframe in the flunet_data.R file
