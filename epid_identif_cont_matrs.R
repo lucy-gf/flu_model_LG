@@ -108,6 +108,56 @@ df_cntr_table = data.frame(country=unique(df_posit_sel_cntrs$country),
 cm_list <- lapply(df_cntr_table$country_sub, function(x) contact_all[[x]])
 names(cm_list) <- df_cntr_table$country
 
+# adding number of epidemics to fit to each country:
+x <- 4
+for(strain in c('A','B')){
+  for(source in c('NONSENT','SENTINEL')){
+    df_cntr_table[,x] <- rep.int(NA,nrow(df_cntr_table))
+    colnames(df_cntr_table)[x] <- paste0('INF_',strain,'_',source) 
+    x <- x + 1
+  }
+}
+for(i in 1:nrow(df_cntr_table)){
+  for(strain_loop in c('A','B')){
+    for(source in c('NONSENT','SENTINEL')){
+      suppressWarnings(df_cntr_table[i,paste0('INF_',strain_loop,'_',source)] <- 
+                         max(df_epid_lims$index[df_epid_lims$country %in% c(df_cntr_table$country[i],df_cntr_table$COUNTRY_CODE[i]) &
+                                                  df_epid_lims$STRAIN == paste0('INF_',strain_loop) &
+                                                  df_epid_lims$metasource == source]))
+      if(df_cntr_table[i,paste0('INF_',strain_loop,'_',source)]==-Inf){
+        df_cntr_table[i,paste0('INF_',strain_loop,'_',source)] <- 0
+      }
+    }
+  }
+}
+
+# adding hemispheres
+df_cntr_table <- df_cntr_table %>% 
+  mutate(hemisphere = c('SH', 'SH', 'NH', 'NH', 'NH', 'NH', 'NH'))
+#write.csv(df_cntr_table, "data_for_cluster/df_cntr_table.csv", row.names=F)
+
+# data.frame of number of epidemics starting in each year, in each country
+# year_epis <- data.frame(country = rep(df_cntr_table$country, each = 2*length(2010:2019)),
+#                         code = rep(df_cntr_table$COUNTRY_CODE, each = 2*length(2010:2019)),
+#                         year = rep(2010:2019, 2*7),
+#                         strain = rep(c('INF_A', 'INF_B'), each = length(2010:2019)),
+#                         epidemic = NA,
+#                         hemisphere = NA)
+# for(i in 1:nrow(year_epis)){
+#   year_epis$hemisphere[i] <- unname(unlist(df_cntr_table %>% filter(country == year_epis$country[i]) %>% 
+#                                              select(hemisphere)))
+#   year_epis$epidemic[i] <- sum(as.numeric(unlist(df_epid_lims %>% filter(country %in% c(year_epis$country[i], year_epis$code[i]),
+#                           STRAIN == year_epis$strain[i],
+#                           year(start_date) == year_epis$year[i]) %>% ungroup %>% 
+#                             select(index))) > 0, na.rm=T)
+# }
+# year_epis <- year_epis %>% mutate(binary = 1 - (epidemic==0))
+# ggplot(year_epis, aes(x = year, y = country, fill = factor(binary))) + 
+#   geom_tile() + theme_minimal() + scale_x_continuous(breaks=2010:2019) +
+#   facet_grid(.~strain)
+
+
+
 #write_csv(df_cntr_table, file='data_for_cluster/df_cntr_table.csv')
 
 # aggregate into our age groups
