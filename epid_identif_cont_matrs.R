@@ -1,7 +1,12 @@
 # source functions, call libraries
-source_url("https://raw.githubusercontent.com/1035825/flu_model_LG/main/fcns/fcns.R")
+#source_url("https://raw.githubusercontent.com/1035825/flu_model_LG/main/fcns/fcns.R")
 # load data
-source_url("https://raw.githubusercontent.com/1035825/flu_model_LG/main/fcns/load_flunet.R")
+#source_url("https://raw.githubusercontent.com/1035825/flu_model_LG/main/fcns/load_flunet.R")
+
+# source functions, call libraries
+source("fcns/fcns.R")
+# load data
+source("fcns/load_flunet.R")
 
 # load filtered data
 # this csv file is saved version of `df_posit_sel_cntrs` dataframe in the flunet_data.R file
@@ -31,24 +36,24 @@ df_epid_threshold <- df_epid_threshold %>%
   mutate(ISO_WEEKSTARTDATE = as.Date(ISO_WEEKSTARTDATE, format = "%Y-%m-%d"))
 
 
-# # PLOTTING epidemics
-# for (y_log_flag in c(T,F)) {
-# df_epid_lims <- fcn_find_bloc_lims(df_epid_threshold,log_flag=y_log_flag)
-# 
-# # plot
+# PLOTTING epidemics
+for (y_log_flag in c(T,F)) {
+df_epid_lims <- fcn_find_bloc_lims(df_epid_threshold,log_flag=y_log_flag)
+
+# plot
 # p <- df_epid_threshold %>%
 #   mutate(country=ifelse(grepl("King",country),"UK",country),
 #          value=ifelse(value==0,ifelse(y_log_flag,NA,value),value),
 #          source_epid=paste0(metasource,"_",ifelse(epidem_inclusion==1,"_ON","_OFF"))) %>%
-#   ggplot() + facet_grid(country~STRAIN,scales="free_y") + 
-#   geom_line(aes(x=ISO_WEEKSTARTDATE,y=value,group=metasource,colour=factor(source_epid))) + 
+#   ggplot() + facet_grid(country~STRAIN,scales="free_y") +
+#   geom_line(aes(x=ISO_WEEKSTARTDATE,y=value,group=metasource,colour=factor(source_epid))) +
 #   xlab("") + ylab("# positive tests") + labs(colour="epidemic",fill="") +
-#   scale_color_manual(values=c("grey32","red","grey46","darkred")) + 
+#   scale_color_manual(values=c("grey32","red","grey46","darkred")) +
 #   scale_fill_manual(values=c("red","darkred")) +
 #   scale_x_date(date_labels="%Y\n%m",breaks="6 month",expand=expansion(0.01,0))  +
 #   geom_rect(data=df_epid_lims, aes(xmin=start_date,xmax=end_date,
 #                                    fill=metasource,ymin=min_val,ymax=max_val),alpha=1/4) +
-#   theme_bw() + standard_theme + theme(legend.position="top",strip.text=element_text(size=13)) + 
+#   theme_bw() + standard_theme + theme(legend.position="top",strip.text=element_text(size=13)) +
 #   guides(color=guide_legend(nrow=2))
 # if (y_log_flag) {p<-p+ scale_y_log10(expand=expansion(0.01,0))}; p
 # # SAVE
@@ -57,7 +62,13 @@ df_epid_threshold <- df_epid_threshold %>%
 #               "_length_lim",length_lim_val,ifelse(grepl("pos",sel_variable_val),"_byposit","_bycount"),
 #               ifelse(y_log_flag,"_ylog",""),".png"),
 #        width=36,height=24,units="cm")
-# }
+}
+
+df_epid_threshold %>% filter(country=='Turkey') %>% ggplot() +
+  theme_minimal() + scale_x_date(date_labels="%Y\n%m",breaks="6 month",expand=expansion(0.01,0)) +
+  facet_wrap(.~country) + scale_color_hue(h = c(0,360) + 110) + 
+  geom_line(aes(x=ISO_WEEKSTARTDATE,y=value,group=metasource,colour=factor(epidem_inclusion)))
+
 
 ### ### ### ### ### ### ### ### ### ### ### ### 
 # list of epidemics
@@ -96,6 +107,8 @@ df_cntr_table = data.frame(country=unique(df_posit_sel_cntrs$country),
 # extract matrices from `contact_all`
 cm_list <- lapply(df_cntr_table$country_sub, function(x) contact_all[[x]])
 names(cm_list) <- df_cntr_table$country
+
+#write_csv(df_cntr_table, file='data_for_cluster/df_cntr_table.csv')
 
 # aggregate into our age groups
 age_limits <- c(0,5,20,65); age_group_names <- paste0(age_limits,"-", c(age_limits[2:length(age_limits)],99))
