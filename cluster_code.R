@@ -7,9 +7,7 @@ library(data.table)
 library(odin)
 library(parallel)
 
-## ** GOING TO LOAD IN ALL OF THE NECESSARY DATASETS ETC. BY HAND **
-
-# data needed: 
+## ** LOADING IN DATA **
 
 df_cntr_table <- read.csv("data_for_cluster/df_cntr_table.csv") # saved from epid_identif_cont_matrs.R
 list_contact_matr <- readRDS("data_for_cluster/list_contact_matr.RDS") # saved from output
@@ -20,8 +18,7 @@ cov_data <- read.csv("data_for_cluster/cov_data.csv") # saved from vaccine_input
 age_limits <- c(0,5,20,65); age_group_names <- paste0(age_limits,"-", c(age_limits[2:length(age_limits)],99))
 infection_delays <- c( 0.8, 1.8 ) # 0.8 and 1.8 day
 
-# also used "scp -r fcns lshlg12@hpclogin.lshtm.ac.uk:" to upload the fcns folder
-# will then probably need to source these:
+# ** SOURCE FILES **
 source("fcns/inference_function.R")
 source("fcns/2_1b_model_epidemic_yearcross.R")
 
