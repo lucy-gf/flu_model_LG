@@ -11,13 +11,11 @@ library(parallel)
 
 # data needed: 
 
-df_cntr_table <- read.csv("data_for_cluster/df_cntr_table.csv")
-list_contact_matr <- readRDS("data_for_cluster/list_contact_matr.RDS")
-df_epid_threshold <- read.csv("data_for_cluster/df_epid_threshold.csv")
-matches <- read.csv("data_for_cluster/matches.csv")
-cov_data <- read.csv("data_for_cluster/cov_data.csv")
-
-# need to add vaccination coverage data too
+df_cntr_table <- read.csv("data_for_cluster/df_cntr_table.csv") # saved from epid_identif_cont_matrs.R
+list_contact_matr <- readRDS("data_for_cluster/list_contact_matr.RDS") # saved from output
+df_epid_threshold <- read.csv("data_for_cluster/df_epid_threshold.csv") # saved from output
+matches <- read.csv("data_for_cluster/matches.csv") # saved from vaccine_inputs.R
+cov_data <- read.csv("data_for_cluster/cov_data.csv") # saved from vaccine_inputs.R
 
 age_limits <- c(0,5,20,65); age_group_names <- paste0(age_limits,"-", c(age_limits[2:length(age_limits)],99))
 infection_delays <- c( 0.8, 1.8 ) # 0.8 and 1.8 day
