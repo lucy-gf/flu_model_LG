@@ -35,7 +35,7 @@ custom_inference <- function(
     if(global_index %% out_num == 0){
       print(paste0("Step = ",global_index,', Acceptance = ', 
                    round((out_rate - out_rate_cent)/(out_num/100), digits = 1),
-                   '% (Epidemic ', year(vaccine_calendar$dates[1]), ')'))
+                   '%'))
       out_rate_cent <<- out_rate
       # old_time <<- new_time
       # new_time <<- Sys.time()
