@@ -1,4 +1,4 @@
-## LOADING PACKAGES (which are manually installed on the cluster)
+## LOADING PACKAGES
 
 library(dplyr)
 library(socialmixr)
@@ -24,12 +24,18 @@ source("fcns/2_1b_model_epidemic_yearcross.R")
 
 # MCMC parameters
 
-post_size <- 1000 #5000 #3000 
+post_size <- 500000 #5000 #3000 
 thinning_steps <- 1 #100
 burn_in <- 1 #100000
 seed_to_use <- 55 #99
 
-strain <- 'INF_A'
+strain <- c('INF_A', 'INF_B')[1]
+
+
+# ## INPUT PARS FOR TEST RUN WITH FINAL FIT INPUTS
+# 
+# saved_vals <- read.csv('saved_vals.csv')
+# saved_vals <- data.frame(saved_vals)
 
 # ** FUNCTION TO BE USED WITH LAPPLY/MCLAPPLY **
 
@@ -41,12 +47,10 @@ cluster_mcmc <- function(k){ # k %in% 1:7
   
   yr_res_pop <- unlist(lapply(pop_age(wpp_age(sel_cntr, 2015))$population/5, function(x) rep(x,5)))
   group_pop <- pop_age(wpp_age(sel_cntr, 2015), age.limits=c(0,5,20,65))$population # size of each age group
-  contact_matrix_small <- t(t(contact_matrix)/group_pop) ### CHECK THIS
-  
-  # lets first subset data for one country and NONSENT data only
+  contact_matrix_small <- t(t(contact_matrix)/group_pop) 
   
   data_fitting <- df_epid_threshold %>% 
-    filter(grepl("NONSENT",metasource) & country %in% sel_cntr & STRAIN %in% "INF_A") %>%
+    filter(grepl("NONSENT",metasource) & country %in% sel_cntr & STRAIN %in% strain) %>%
     select(!c(over_peak,flu_included,over_inclusion,positivity,flu_peak,seq))
 
   epidemics_to_fit <- list()
@@ -55,9 +59,13 @@ cluster_mcmc <- function(k){ # k %in% 1:7
     epidemics_to_fit[[epid_index_val]] <- list(
       start=min(xx$ISO_WEEKSTARTDATE),
       end = max(xx$ISO_WEEKSTARTDATE),
-      initial_params = c(-8, 10, 0.4, 4, 0, 0),# c(-7, 10, 0.5, 3, 0, 0), # c(-8, 10, 0.4, 4, 0, 0),
+      initial_params = c(-8, 10, 0.4, 4, 0, 0),
+        #c(unname(unlist(saved_vals %>% filter(epidemic_id==epid_index_val,
+        #                                    !variable=='ll') %>% select(value))),0,0),
+        #c(-7, 10, 0.5, 3, 0, 0), # c(-8, 10, 0.4, 4, 0, 0),
+      weeks = xx$ISO_WEEKSTARTDATE,
       data_points = xx$value,
-      type = "A"
+      type = strain
     )
   }
 
@@ -65,7 +73,8 @@ cluster_mcmc <- function(k){ # k %in% 1:7
   for(epid_index_val in 1:length(epidemics_to_fit)){
     dates_to_run[[epid_index_val]] <- c(
       as.Date(epidemics_to_fit[[epid_index_val]]$start),
-      as.Date(epidemics_to_fit[[epid_index_val]]$end) + 7 # need end date to be the date AFTER the last week we want to model
+      as.Date(epidemics_to_fit[[epid_index_val]]$end) + 7 
+      # need end date to be the date AFTER the last week we want to model
     )
   }
   # dates_to_run <- as.Date(dates_to_run,origin="1970-01-01")
@@ -116,23 +125,26 @@ cluster_mcmc <- function(k){ # k %in% 1:7
     nbatch = post_size,
     nburn = burn_in,
     blen = thinning_steps,
-    sel_cntr = sel_cntr
+    sel_cntr = sel_cntr,
+    hemisphere_input = df_cntr_table[df_cntr_table$country == sel_cntr,]$hemisphere
   )
   
-  return(output) # output of the function 'cluster_mcmc'
+  return(output)
   
 }
 
-results <- mclapply(1:7, cluster_mcmc)#, mc.cores = 4) # will update to include both strains/sources in future
-# mclapply took 50mins for 7x500 steps
-# 11hrs for 7x10,000 steps
+a <- 6
 
-names(results) <- df_cntr_table$country
+test <- cluster_mcmc(a)
 
-saveRDS(results, file = "cluster_data_29-09.rds")
+sel_cntr <- df_cntr_table$country[a]
 
-# this is binomial likelihood with no vaccinations and
-# updated priors, over 200,000 steps
+saveRDS(results, file = paste0(strain, '_JOINT_', sel_cntr, "_",
+                               post_size, "_", thinning_steps, "_", burn_in, ".rds"))
+
+
+
+
 
 
 
