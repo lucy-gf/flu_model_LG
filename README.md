@@ -6,9 +6,7 @@ Use cluster_code_sep_COUNTRY_num.R to run the parameter inference for each epide
 
 cluster_code_sep_COUNTRY_num.R uses the datasets in /data_for_cluster/. Epidemic identification, contact matrix contruction etc. uses datasets in /data/.
 
-vaccine_inputs.R is incomplete.
-
-Vaccination program data was produced in vaccine_inputs.R, and used in llikelihood (in /fcns/inference_function.R).
+Vaccination data (efficacy, matching, exemplar country coverage) was produced in vaccine_inputs.R, and used in llikelihood (in /fcns/inference_function.R).
 
 
 
