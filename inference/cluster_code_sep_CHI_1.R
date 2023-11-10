@@ -29,7 +29,7 @@ source("fcns/2_1b_model_epidemic_yearcross.R")
 
 post_size <- 10000 #5000 #3000 
 thinning_steps <- 50 #50
-burn_in <- 200000
+burn_in <- 500000
 seed_to_use <- 70 #55 #99
 
 strain <- c('INF_A', 'INF_B')[1]
