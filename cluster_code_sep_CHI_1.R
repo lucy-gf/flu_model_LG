@@ -28,9 +28,9 @@ source("fcns/2_1b_model_epidemic_yearcross.R")
 # MCMC parameters
 
 post_size <- 10000 #5000 #3000 
-thinning_steps <- 30 #100
-burn_in <- 200000 #100000
-seed_to_use <- 99 #55
+thinning_steps <- 50 #50
+burn_in <- 200000
+seed_to_use <- 70 #55 #99
 
 strain <- c('INF_A', 'INF_B')[1]
 
@@ -58,7 +58,7 @@ cluster_mcmc <- function(k, epidemic_to_run){ # k %in% 1:7
     epidemics_to_fit[[epid_index_val]] <- list(
       start=min(xx$ISO_WEEKSTARTDATE),
       end = max(xx$ISO_WEEKSTARTDATE),
-      initial_params = c(-7, 10, 0.5, 3, 0, 0), # c(-8, 10, 0.4, 4, 0, 0),
+      initial_params = c(-8, 10, 0.4, 4, 0, 0),
       weeks = xx$ISO_WEEKSTARTDATE,
       data_points = xx$value,
       type = strain
@@ -98,12 +98,10 @@ cluster_mcmc <- function(k, epidemic_to_run){ # k %in% 1:7
   
   ##### Run the fit #####
 
-  post_size <- post_size #3000 
-  thinning_steps <- thinning_steps #100
-  burn_in <- burn_in #100000
-  seed_to_use <- seed_to_use #99
-  
-  results <- list()
+  post_size <- post_size 
+  thinning_steps <- thinning_steps 
+  burn_in <- burn_in
+  seed_to_use <- seed_to_use 
 
   set.seed(seed_to_use)
   global_index <<- 1
@@ -127,7 +125,7 @@ cluster_mcmc <- function(k, epidemic_to_run){ # k %in% 1:7
   return(output) # each epidemic's batch & llikelihoods
 }
 
-a <- 6 # CHANGE THIS TO CHANGE EXEMPLAR COUNTRY
+a <- 4 # CHANGE THIS TO CHANGE EXEMPLAR COUNTRY
 epidemic_to_run <- 1 # CHANGE THIS TO RUN A DIFFERENT EPIDEMIC
 
 ## run first epidemic
@@ -137,7 +135,7 @@ sel_cntr <- df_cntr_table$country[a]
 
 saveRDS(results, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
                                epidemic_to_run, "_",
-                               post_size, "_", thinning_steps, "_", burn_in, ".rds"))
+                               post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
 
 ## run second epidemic
 epidemic_to_run <- epidemic_to_run + 1
@@ -146,11 +144,25 @@ results2 <- cluster_mcmc(a, epidemic_to_run)
 
 saveRDS(results2, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
                                epidemic_to_run, "_",
-                               post_size, "_", thinning_steps, "_", burn_in, ".rds"))
+                               post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
 
+## run third epidemic
+epidemic_to_run <- epidemic_to_run + 1
 
+results3 <- cluster_mcmc(a, epidemic_to_run)
 
+saveRDS(results3, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
+                                epidemic_to_run, "_",
+                                post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
 
+## run fourth epidemic
+epidemic_to_run <- epidemic_to_run + 1
+
+results4 <- cluster_mcmc(a, epidemic_to_run)
+
+saveRDS(results4, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
+                                epidemic_to_run, "_",
+                                post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
 
 
 
