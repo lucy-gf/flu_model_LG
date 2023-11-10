@@ -30,7 +30,7 @@ source("fcns/2_1b_model_epidemic_yearcross.R")
 post_size <- 10000 #5000 #3000 
 thinning_steps <- 50 #50
 burn_in <- 500000
-seed_to_use <- 70 #55 #99
+seed_to_use <- 55 #99
 
 strain <- c('INF_A', 'INF_B')[1]
 
@@ -135,7 +135,7 @@ sel_cntr <- df_cntr_table$country[a]
 
 saveRDS(results, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
                                epidemic_to_run, "_",
-                               post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
+                               post_size, "_", thinning_steps, "_", burn_in, ".rds"))
 
 ## run second epidemic
 epidemic_to_run <- epidemic_to_run + 1
@@ -144,7 +144,7 @@ results2 <- cluster_mcmc(a, epidemic_to_run)
 
 saveRDS(results2, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
                                epidemic_to_run, "_",
-                               post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
+                               post_size, "_", thinning_steps, "_", burn_in, ".rds"))
 
 ## run third epidemic
 epidemic_to_run <- epidemic_to_run + 1
@@ -153,7 +153,7 @@ results3 <- cluster_mcmc(a, epidemic_to_run)
 
 saveRDS(results3, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
                                 epidemic_to_run, "_",
-                                post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
+                                post_size, "_", thinning_steps, "_", burn_in, ".rds"))
 
 ## run fourth epidemic
 epidemic_to_run <- epidemic_to_run + 1
@@ -162,7 +162,7 @@ results4 <- cluster_mcmc(a, epidemic_to_run)
 
 saveRDS(results4, file = paste0("command_line_runs/", strain, '_sep/', sel_cntr,"_epid",
                                 epidemic_to_run, "_",
-                                post_size, "_", thinning_steps, "_", burn_in, seed_to_use, ".rds"))
+                                post_size, "_", thinning_steps, "_", burn_in, ".rds"))
 
 
 
