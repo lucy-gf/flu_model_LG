@@ -8,5 +8,5 @@ cluster_code_sep_COUNTRY_num.R uses the datasets in /data_for_cluster/. Epidemic
 
 Vaccination data (efficacy, matching, exemplar country coverage) was produced in vaccine_inputs.R, and used in llikelihood (in /fcns/inference_function.R).
 
-
+Files for running projections in each ITZ are in 'BS/' (bootstrapping).
 
