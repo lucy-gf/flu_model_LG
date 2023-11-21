@@ -8,5 +8,8 @@ cluster_code_sep_COUNTRY_num.R uses the datasets in /data_for_cluster/. Epidemic
 
 Vaccination data (efficacy, matching, exemplar country coverage) was produced in vaccine_inputs.R, and used in llikelihood (in /fcns/inference_function.R).
 
-Files for running projections in each ITZ are in 'BS/' (bootstrapping).
+Files for running projections in each ITZ are in 'BS/' (bootstrapping). To carry out simulations:
+  1. Download all data from /data_for_BS/ folder, including the 100 simulations of the sampled 30-year period 
+  2. Run BS_post_samples.R to merge the posterior samples
+  3. Run BS_epid_simulations.R, changing 'c_number' to be the chosen ITZ (sources BS_data_fcns.R, BS_demography.R). Can run *some* of the 100 simulations on multiple cores for speed
 
