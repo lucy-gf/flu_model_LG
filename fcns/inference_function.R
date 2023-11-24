@@ -260,7 +260,7 @@ custom_inference_sep <- function(
   
     ll_epidemic <- 0
     n_pos <- data.frame(time = as.Date(epidemics_to_fit$weeks),
-                        data = epidemics_to_fit$data_points)
+                        data = round(epidemics_to_fit$data_points, digits=0))
 
     ll_epidemic <- llikelihood(pars,n_pos,vaccine_calendar,sel_cntr,hemisphere_input) 
     #browser()
