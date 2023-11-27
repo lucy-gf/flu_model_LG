@@ -89,7 +89,8 @@ fcn_shortercntr_names <- function(df) {
 # function to identify flu seasons
 
 fcn_identify_seasons <- function(df_input,sel_variable,source_varname="ORIGIN_SOURCE",
-                                 up_thresh=0.9,low_thresh=0.6,length_lim=9,print_flag=F){
+                                 up_thresh=0.9,low_thresh=0.6,length_lim=9,print_flag=F,
+                                 rolling_yrs=3){
   
   df_inds <- df_input %>% ungroup() %>%  select(country,STRAIN,!!source_varname) %>% unique()
   list_cntr_epid_incl<-list()
@@ -104,11 +105,12 @@ fcn_identify_seasons <- function(df_input,sel_variable,source_varname="ORIGIN_SO
     
     input_data <- df_input %>% 
       filter(country %in% df_inds$country[k_row] & 
-                                        STRAIN %in% df_inds$STRAIN[k_row] & 
-                                        !!sym(source_varname) %in% sel_source_varname) %>%
+               STRAIN %in% df_inds$STRAIN[k_row] & 
+               !!sym(source_varname) %in% sel_source_varname) %>%
       mutate(flu_peak=quantile(value,probs=up_thresh), over_peak=F, over_peak=flu_peak<value,
-             flu_included=quantile(value, probs=low_thresh), 
-                    over_inclusion=F, over_inclusion=flu_included<value) 
+             flu_included=quantile(value, probs=low_thresh),
+                    over_inclusion=F, over_inclusion=flu_included<value)
+
     # seq_log=rep(rle(over_inclusion)$length>=length_lim,times=rle(over_inclusion)$length)
     if (print_flag){
           print(paste0( paste0(dim(input_data),collapse = ", "),", ",
@@ -131,11 +133,15 @@ fcn_identify_seasons <- function(df_input,sel_variable,source_varname="ORIGIN_SO
     }
     
     input_data$seq <- seq_to_add; input_data$epidem_inclusion <- 0
-    for(j in 1:start_seq){
+    for(j in 1:(start_seq-1)){
       # any data points over the peak?
       peak_detect <- sum(input_data$over_peak[input_data$seq==j])>0
       # is the selected period at least `length_lim` weeks long?
-      length_detect <- sum(input_data$seq==j)>=length_lim
+      #length_detect <- sum(input_data$seq==j)>=length_lim
+      # using ISO_WEEKSTARTDATE time difference instead
+      # + 7 as need **full** weeks
+      length_detect <- as.numeric(input_data$ISO_WEEKSTARTDATE[input_data$seq==j][length(input_data$ISO_WEEKSTARTDATE[input_data$seq==j])] + 7 
+                        - input_data$ISO_WEEKSTARTDATE[input_data$seq==j][1])/7 >= length_lim
       if (peak_detect&length_detect) {
         input_data$epidem_inclusion[input_data$seq==j]=1  }
     }
@@ -145,6 +151,159 @@ fcn_identify_seasons <- function(df_input,sel_variable,source_varname="ORIGIN_SO
              epid_index=ifelse(epidem_inclusion == 0,0,epid_index))
     
     list_cntr_epid_incl[[k_row]] <- input_data %>% rename(positivity=value,value=count)
+  }
+  
+  return(bind_rows(list_cntr_epid_incl))
+}
+
+# with a different end point, to be used in global code
+
+fcn_identify_seasons_three_thresh <- function(df_input,sel_variable,source_varname="ORIGIN_SOURCE",
+                                 up_thresh_df=0.75,low_thresh_df=0.5,length_lim=8,print_flag=F,
+                                 end_thresh_df=0.58, rolling_yrs=3,
+                                 cushioning=0){
+  for(row in 1:7){
+    if(end_thresh_df$val[row] < low_thresh_df$val[row]){
+      stop(paste0(end_thresh_df$val[row], " < ", low_thresh_df$val[row]))
+    } 
+  }
+  
+  df_inds <- df_input %>% ungroup() %>%  select(country,STRAIN,!!source_varname) %>% unique()
+  list_cntr_epid_incl<-list()
+  
+  # sel_variable 
+  if (sel_variable %in% "positivity") {
+    df_input <- df_input %>% rename(count=value) %>% mutate(value=count/SPEC_PROCESSED_NB)
+  }
+  
+  for (k_row in 1:nrow(df_inds)) {
+    sel_source_varname <- as.character(df_inds[k_row,source_varname])
+    
+    up_thresh <- up_thresh_df$val[up_thresh_df$country==df_inds$country[k_row]]
+    low_thresh <- low_thresh_df$val[low_thresh_df$country==df_inds$country[k_row]]
+    end_thresh <- end_thresh_df$val[end_thresh_df$country==df_inds$country[k_row]]
+    
+    input_data <- df_input %>%
+      filter(country %in% df_inds$country[k_row] &
+              STRAIN %in% df_inds$STRAIN[k_row] &
+               !!sym(source_varname) %in% sel_source_varname) %>%
+      mutate(flu_peak=quantile(value,probs=up_thresh), over_peak=F, over_peak=flu_peak<value,
+             flu_included=quantile(value, probs=low_thresh),
+             over_inclusion=F, over_inclusion=flu_included<value,
+             flu_end=quantile(value, probs=end_thresh),
+             over_end_thresh=F, over_end_thresh=flu_end<value)
+    # input_data <- df_input %>% 
+    #   filter(country %in% df_inds$country[k_row] & 
+    #            STRAIN %in% df_inds$STRAIN[k_row] & 
+    #            !!sym(source_varname) %in% sel_source_varname) %>%
+    #   # mutate(flu_peak=quantile(value,probs=up_thresh), over_peak=F, over_peak=flu_peak<value,
+    #   #        flu_included=quantile(value, probs=low_thresh), 
+    #   #               over_inclusion=F, over_inclusion=flu_included<value)
+    #   mutate(flu_peak=quantile(value,probs=up_thresh), flu_included=NA, flu_end=NA)
+    # for(df_row in 1:(52*rolling_yrs)){
+    #   input_data$flu_peak[df_row] <- quantile(input_data$value[1:(52*rolling_yrs)],probs=up_thresh)
+    #   input_data$flu_included[df_row] <- quantile(input_data$value[1:(52*rolling_yrs)],probs=low_thresh)
+    #   input_data$flu_end[df_row] <- quantile(input_data$value[1:(52*rolling_yrs)],probs=end_thresh)
+    # }
+    # for(df_row in (nrow(input_data) - 0:(52*rolling_yrs - 1))){
+    #   input_data$flu_peak[df_row] <- quantile(input_data$value[(nrow(input_data) - 0:(52*rolling_yrs - 1))],probs=up_thresh)
+    #   input_data$flu_included[df_row] <- quantile(input_data$value[(nrow(input_data) - 0:(52*rolling_yrs - 1))],probs=low_thresh)
+    #   input_data$flu_end[df_row] <- quantile(input_data$value[(nrow(input_data) - 0:(52*rolling_yrs - 1))],probs=end_thresh)
+    # }
+    # for(df_row in which(is.na(input_data$flu_included))){
+    #   input_data$flu_peak[df_row] <- quantile(input_data$value[(df_row - rolling_yrs*52/2):(df_row - rolling_yrs*52/2)],probs=up_thresh)
+    #   input_data$flu_included[df_row] <- quantile(input_data$value[(df_row - rolling_yrs*52/2):(df_row - rolling_yrs*52/2)],probs=low_thresh)
+    #   input_data$flu_end[df_row] <- quantile(input_data$value[(df_row - rolling_yrs*52/2):(df_row - rolling_yrs*52/2)],probs=end_thresh)
+    # }
+    # input_data <- input_data %>% mutate(over_peak=flu_peak<value, 
+    #                                     over_inclusion=flu_included<value,
+    #                                     over_end_thresh=flu_end<value)
+    # seq_log=rep(rle(over_inclusion)$length>=length_lim,times=rle(over_inclusion)$length)
+    if (print_flag){
+      print(paste0( paste0(dim(input_data),collapse = ", "),", ",
+                    paste0(df_inds[k_row,],collapse =", ")) )
+    }
+    
+    input_data <- input_data %>% mutate(start_end_vec = over_inclusion)
+    # start_end_vec will include breaks when an epidemic which has lasted
+    # over 8 weeks then crosses the end_threshold
+    
+    # changing any necessary entries 
+    # (first length_lim rows will follow over_inclusion)
+    for(i in (length_lim+1):nrow(input_data)){ 
+      if(input_data$over_end_thresh[i] == F & 
+         # is under end threshold
+         sum(input_data$start_end_vec[(i-(length_lim)):(i-1)]) == length_lim){ 
+         # previous 8 weeks were included as an epidemic
+        input_data$start_end_vec[i] <- F
+      }
+    }
+    
+    # anything after this inserted break that is over flu_included (so still T  
+    # in start_end_vec) will only be included in the final epidemic list if
+    # it goes on to cross flu_peak again (and is longer than 8 weeks)
+    
+    tmp <- rle(input_data$start_end_vec)
+    # add the sequence number to each
+    seq_to_add <- c(); start_seq <- 1
+    for(i in 1:length(tmp$lengths)){
+      length_run <- tmp$lengths[i]
+      tester <- input_data[sum(tmp$lengths[1:i]),"start_end_vec"]
+      if(tester == F){ 
+        seq_to_add <- c(seq_to_add, rep(0,length_run))
+      } else {
+        seq_to_add <- c(seq_to_add, rep(start_seq,length_run))
+        start_seq <- start_seq + 1
+      }
+    }
+    
+    input_data$seq <- seq_to_add; input_data$epidem_inclusion <- 0
+    for(j in 1:(start_seq-1)){
+      # any data points over the peak?
+      peak_detect <- sum(input_data$over_peak[input_data$seq==j])>0
+      # is the selected period at least `length_lim` weeks long?
+      #length_detect <- sum(input_data$seq==j)>=length_lim
+      # using ISO_WEEKSTARTDATE time difference instead
+      # + 7 as need **full** weeks
+      length_detect <- as.numeric(input_data$ISO_WEEKSTARTDATE[input_data$seq==j][length(input_data$ISO_WEEKSTARTDATE[input_data$seq==j])] + 7 
+                                  - input_data$ISO_WEEKSTARTDATE[input_data$seq==j][1])/7 >= length_lim
+      if (peak_detect&length_detect) {
+        input_data$epidem_inclusion[input_data$seq==j]=1  }
+    }
+    
+    if(cushioning>0){
+      for(c in 1:nrow(input_data)){
+        if(input_data$epidem_inclusion[c]==0){
+          if(cushioning < c & c < nrow(input_data) - cushioning){
+            if((sum(input_data$epidem_inclusion[(c-cushioning):(c)]==1)>0) +
+               (sum(input_data$epidem_inclusion[(c):(c+cushioning)]==1)>0) == 1){
+              input_data$epidem_inclusion[c] <- 0.5
+            }
+          }
+          if(c <= cushioning){
+            if((sum(input_data$epidem_inclusion[1:(c)]==1)>0) +
+               (sum(input_data$epidem_inclusion[(c):(c+cushioning)]==1)>0) == 1){
+              input_data$epidem_inclusion[c] <- 0.5
+            }
+          }
+          if(nrow(input_data) - cushioning <= c){
+            if((sum(input_data$epidem_inclusion[(c-cushioning-1):(c)]==1)>0) +
+               (sum(input_data$epidem_inclusion[(c):nrow(input_data)]==1)>0) == 1){
+              input_data$epidem_inclusion[c] <- 0.5
+            }
+          }
+        }
+      }
+    }
+    
+    input_data <- input_data %>%
+      mutate(epid_index = cumsum(epidem_inclusion %in% c(1,0.5) & lag(epidem_inclusion, default = 0) == 0) ,
+             epid_index=ifelse(epidem_inclusion == 0,0,epid_index))
+    
+    if(sel_variable %in% "positivity"){
+      input_data <- input_data %>% rename(positivity=value,value=count)
+    }
+    list_cntr_epid_incl[[k_row]] <- input_data 
   }
   
   return(bind_rows(list_cntr_epid_incl))
