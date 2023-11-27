@@ -328,6 +328,12 @@ custom_inference_sep <- function(
     weekly_cases <- odes[, sum(.SD, na.rm=TRUE), by="time"]
     weekly_cases <- left_join(weekly_cases, n_pos, by="time")
     
+    # requiring growing cases at the start of the period
+    if(weekly_cases$V1[1]>weekly_cases$V1[2]){return(-Inf)}
+    # requiring falling cases at the end of the period
+    n_weeks <- nrow(weekly_cases)
+    if(weekly_cases$V1[n_weeks]>weekly_cases$V1[n_weeks - 1]){return(-Inf)}
+    
     total_ll <- 0
     for(i in 1:nrow(weekly_cases)){
       if(is.na(weekly_cases$data[i])){weekly_ll <- 0} else{
