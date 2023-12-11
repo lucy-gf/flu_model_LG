@@ -236,6 +236,10 @@ custom_inference_sep <- function(
     hemisphere_input
 ) {
   
+  rf_rejec_vec <- rep(0, nburn + nbatch*blen)
+  prior_rejec_vec <- rep(0, nburn + nbatch*blen)
+  accept_vec <- rep(0, nburn + nbatch*blen)
+  
   global_index <<- 1
   age.group.limits <- c(5,20,65)  # 4 age groups used in the model
   age.groups <- stratify_by_age(input_demography, age.group.limits)
@@ -329,10 +333,16 @@ custom_inference_sep <- function(
     weekly_cases <- left_join(weekly_cases, n_pos, by="time")
     
     # requiring growing cases at the start of the period
-    if(weekly_cases$V1[1]>weekly_cases$V1[2]){return(-Inf)}
+    if(weekly_cases$V1[1]>weekly_cases$V1[2]){
+      rf_rejec_vec[outnum] <<- 1
+      return(-Inf)
+      }
     # requiring falling cases at the end of the period
     n_weeks <- nrow(weekly_cases)
-    if(weekly_cases$V1[n_weeks]>weekly_cases$V1[n_weeks - 1]){return(-Inf)}
+    if(weekly_cases$V1[n_weeks]>weekly_cases$V1[n_weeks - 1]){
+      rf_rejec_vec[outnum] <<- 1
+      return(-Inf)
+      }
     
     total_ll <- 0
     for(i in 1:nrow(weekly_cases)){
@@ -374,7 +384,11 @@ custom_inference_sep <- function(
       pars[3] > 1  ||
       pars[4] < -1 || # minimum of 1 infected individual in each age group
       pars[4] > log10(min(age.groups)) # demography-specific upper bound for init_inf
-    ) {print('Parameter out of prior bounds'); return(-Inf)}
+    ) {
+      print('Parameter out of prior bounds')
+      prior_rejec_vec[outnum] <<- 1
+      return(-Inf)
+      }
     
     lprob <- 0
     
@@ -397,6 +411,7 @@ custom_inference_sep <- function(
   contact.ids <- list()
   
   out_rate <<- 0
+  outnum <<- 0
   # Run adaptive.mcmc
   mcmc.result <- adaptive.mcmc(
     lprior = llprior, 
@@ -405,13 +420,22 @@ custom_inference_sep <- function(
     initial = initial,
     nbatch = nbatch, 
     blen = blen,
+    outfun = function(){
+      outnum <<- outnum + 1
+    },
     acceptfun = function() {
       out_rate <<- out_rate + 1
+      accept_vec[outnum] <<- 1
     }
   )
   
+  # adding the prior rejection etc. vector
+  mcmc.result$rf_rejec <- rf_rejec_vec[nburn + blen*(1:nbatch)]
+  mcmc.result$prior_rejec <- prior_rejec_vec[nburn + blen*(1:nbatch)]
+  mcmc.result$accept <- accept_vec[nburn + blen*(1:nbatch)]
+  
   #mcmc.result$contact.ids <- t(data.frame(contact.ids))
-  mcmc.result
+  return(mcmc.result)
 }
 ### END OF FUNCTION: custom_inference_sep ##
 
