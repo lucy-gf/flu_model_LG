@@ -440,6 +440,222 @@ custom_inference_sep <- function(
 ### END OF FUNCTION: custom_inference_sep ##
 
 
+### FUNCTION: custom_inference_sep_bt ###
+## for running each epidemic individually (fits quicker)
+custom_inference_sep_bt <- function(
+    input_demography, 
+    vaccine_calendar, 
+    input_polymod, 
+    ili = NULL, 
+    mon_pop = NULL, 
+    # n_pos, 
+    epidemics_to_fit, # passing in all epidemics but will choose one 
+    n_samples, 
+    initial,
+    mapping,
+    nbatch, 
+    nburn, 
+    blen,
+    sel_cntr,
+    hemisphere_input
+) {
+  
+  global_index <<- 1
+  age.group.limits <- c(5,20,65)  # 4 age groups used in the model
+  age.groups <- stratify_by_age(input_demography, age.group.limits)
+  
+  #names(initial_parameters) <- c("reporting", "transmissibility","susceptibility","initial_infected")
+  
+  #out_rate_cent <<- 0
+  
+  llikelihood_print <- function(pars){
+    
+    #out_num <- 1000
+    # if(global_index %% out_num == 0){
+    #   print(paste0("Step = ",global_index,', Acceptance = ', 
+    #                round((out_rate - out_rate_cent)/(out_num/100), digits = 1),
+    #                '% (Epidemic ', year(vaccine_calendar$dates[1]), ')'))
+    #   out_rate_cent <<- out_rate
+    #   # old_time <<- new_time
+    #   # new_time <<- Sys.time()
+    #   # print(new_time - old_time)
+    # }
+    # global_index <<- global_index+1
+    
+    ll_epidemic <- 0
+    n_pos <- data.frame(time = as.Date(epidemics_to_fit$weeks),
+                        data = epidemics_to_fit$data_points)
+    
+    ll_epidemic <- llikelihood(pars,n_pos,vaccine_calendar,sel_cntr,hemisphere_input) 
+    #browser()
+    return(ll_epidemic)
+  }
+  
+  
+  # Define the actual log likelihood function
+  llikelihood <- function(pars, n_pos, vaccine_calendar, sel_cntr, hemisphere_input) {
+    
+    # Population size initially infected by age
+    initial.infected <- rep(10^pars[4], length(age.groups))
+    pars[2] <- pars[2]/100 # transmissibility
+    
+    # WITH EXISTING VACCINATIONS
+    year_index = as.numeric(year(vaccine_calendar$dates[1]))
+    # if in NH and has vaccinations and epidemic starts in the first half of the year,
+    # replace with previous year's vaccination program/match
+    if(hemisphere_input == 'NH' & 
+       sel_cntr %in% c('Canada', 'United Kingdom') & # ignore countries with no vacc
+       month(vaccine_calendar$dates[1]) %in% 1:7){
+      year_index <- year_index - 1
+    }
+    coverage = as.numeric(c(unname(cov_data %>% filter(country==sel_cntr,
+                                                       year==year_index) %>% select(!country:year))))
+    efficacy = unlist(unname(matches %>% filter(year == year_index,
+                                                strain_match == strain,
+                                                hemisphere == hemisphere_input
+    ) %>% select(!hemisphere:match)))
+    
+    prop_vacc_start <- list(
+      prop_vaccine_compartments = rep(coverage, 3), #proportion of individuals vaccinated
+      prop_R_vaccinated = rep(efficacy, 3), #proportion of vaccinated individuals in Rv compartment (as opposed to Sv)
+      prop_R = rep(0,12) # proportion of individuals in R (unvaccinated)
+      # set to 0 as immunity is not assumed to be related to the previous season
+    )
+    
+    # Run simulation
+    # Note that to reduce complexity 
+    # we are using the same susceptibility parameter for multiple age groups
+    # browser()
+    odes <- incidence_function_fit(
+      demography_input = input_demography,
+      parameters = pars,
+      calendar_input = vaccine_calendar,
+      contact_ids_sample = NA, 
+      contacts = input_polymod,
+      waning_rate = 0,
+      vaccination_ratio_input = prop_vacc_start,
+      begin_date = vaccine_calendar$dates[1], 
+      end_date = vaccine_calendar$dates[length(vaccine_calendar$dates)],  
+      year_to_run = year(vaccine_calendar$dates[1]), 
+      efficacy_now =rep(0,12), 
+      efficacy_next=rep(0,12),
+      efficacy_next2 =rep(0,12), 
+      previous_summary = NA, 
+      age_groups_model = age.group.limits
+    )
+    # browser()
+    odes <- data.table(odes)
+    
+    # break if it goes too wrong
+    if(sum(is.na(odes)) > 0){return(as.numeric("-Inf"))}
+    
+    weekly_cases <- odes[, sum(.SD, na.rm=TRUE), by="time"]
+    weekly_cases <- left_join(weekly_cases, n_pos, by="time")
+    
+    # requiring growing cases at the start of the period
+    if(weekly_cases$V1[1]>weekly_cases$V1[2]){
+      #rf_rejec_vec[outnum] <<- 1
+      return(-Inf)
+    }
+    # requiring falling cases at the end of the period
+    n_weeks <- nrow(weekly_cases)
+    if(weekly_cases$V1[n_weeks]>weekly_cases$V1[n_weeks - 1]){
+      #rf_rejec_vec[outnum] <<- 1
+      return(-Inf)
+    }
+    
+    total_ll <- 0
+    for(i in 1:nrow(weekly_cases)){
+      if(is.na(weekly_cases$data[i])){weekly_ll <- 0} else{
+        if (round(as.numeric(weekly_cases$V1[i])) < weekly_cases$data[i]) {
+          #print('weekly < n_pos')
+          return(-Inf) #(-1e+10)
+        } else
+        {
+          weekly_ll <-  dbinom(
+            x = weekly_cases$data[i],
+            size = round(as.numeric(weekly_cases[i,"V1"])),
+            prob = exp(pars[1]),
+            log = T
+          )
+          if(is.nan(weekly_ll)) {return(as.numeric("-Inf"))}
+        }
+      }
+      total_ll <- total_ll + weekly_ll  
+    }
+    #browser()
+    return(total_ll)
+  }
+  
+  ### FUNCTION: llprior ### 
+  llprior <- function(pars) {
+    
+    # 1 is reporting prob, 2/10 is transmission, 3 is susceptibility, 10^4 is initial infections
+    r0_gamma_pars <- c(11.082591, 9.248767)
+    names(r0_gamma_pars) = c('shape', 'rate')
+    sus_beta_pars <- c(50.19925, 32.55043)
+    names(sus_beta_pars) <- c('shape1', 'shape2')
+    
+    if(
+      exp(pars[1]) < 0 || # exp(rep) is a probability
+      exp(pars[1]) > 1 ||
+      pars[2] < 0 || # transmissibility must be geq 0
+      pars[3] < 0 || # susceptibility is a probability
+      pars[3] > 1  ||
+      pars[4] < -1 || # minimum of 1 infected individual in each age group
+      pars[4] > log10(min(age.groups)) # demography-specific upper bound for init_inf
+    ) {print('Parameter out of prior bounds'); return(-Inf)}
+    
+    lprob <- 0
+    
+    R0 <- fluEvidenceSynthesis::as_R0(
+      transmission_rate = pars[2]/100,
+      contact_matrix = input_polymod, # contact_matrix = contacts_matrixformat,
+      age_groups = stratify_by_age(input_demography, limits = age.group.limits)
+    )
+    # prior on R0
+    lprob <- lprob + dgamma(R0 - 1, shape = r0_gamma_pars[1], rate = r0_gamma_pars[2], log = T)
+    # prior on susceptibility
+    lprob <- lprob + unname(dbeta(pars[3], shape1 = sus_beta_pars[1], shape2 = sus_beta_pars[2], log = T))
+    
+    return(lprob)
+    #return(0)
+  }
+  ### END OF FUNCTION: llprior ###
+  
+  lower_vals <- c(-200, 0, 0, -1)
+  upper_vals <- c(0, 1000, 1, log10(min(age.groups)))
+  
+  sampler = function(n = 1){
+    d1 = runif(n, lower_vals[1], upper_vals[1])
+    d2 = runif(n, lower_vals[2], upper_vals[2])
+    d3 = runif(n, lower_vals[3], upper_vals[3])
+    d4 = runif(n, lower_vals[4], upper_vals[4])
+    return(cbind(d1,d2,d3,d4))
+  }
+  
+  prior <- createPrior(density = llprior, 
+                       sampler = sampler,
+                       lower = lower_vals,
+                       upper = upper_vals)
+  
+  bayesianSetup <- createBayesianSetup(likelihood = llikelihood_print, 
+                                       prior = prior)
+  
+  settings <- list(
+    iterations = nburn + nbatch*blen, 
+    burnin = 0,
+    thin = 1,
+    message = T, nrChains=1, parallel = F
+    )
+  out <- runMCMC(bayesianSetup = bayesianSetup, sampler = 'DEzs', settings = settings)
+  # plot(out)
+  # summary(out)
+  getSample(out)
+}
+### END OF FUNCTION: custom_inference_sep_bt ##
+
+
 
 ### FUNCTION: incidence_function_fit ###
 incidence_function_fit <- function(
