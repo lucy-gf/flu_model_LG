@@ -624,7 +624,7 @@ custom_inference_sep_bt <- function(
   ### END OF FUNCTION: llprior ###
   
   lower_vals <- c(-200, 0, 0, -1)
-  upper_vals <- c(0, 1000, 1, log10(min(age.groups)))
+  upper_vals <- c(0, 100, 1, log10(min(age.groups)))
   
   sampler = function(n = 1){
     d1 = runif(n, lower_vals[1], upper_vals[1])
