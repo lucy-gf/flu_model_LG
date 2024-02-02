@@ -1,3 +1,5 @@
+source('fcns/2_1b_model_epidemic_yearcross.R')
+
 ### FUNCTION: custom_inference ###
 ## for running all epidemics in one country at once (joint log-likelihood)
 custom_inference <- function(
@@ -673,7 +675,8 @@ incidence_function_fit <- function(
     efficacy_next,
     efficacy_next2, 
     previous_summary, 
-    age_groups_model
+    age_groups_model,
+    kappa_input = 1
 ){
   
   risk_ratios_input <- matrix(c(rep(0,8)), ncol = 4 , byrow = T) # Not using risk groups so setting this here for now.
@@ -695,7 +698,111 @@ incidence_function_fit <- function(
   initial_Rv_prop = unlist(vaccination_ratio_input[[2]])
   initial_R_prop = unlist(vaccination_ratio_input[[3]])
   #Assume that all R become susceptible again at the start of each posterior
-  initial_R_prop <- rep(0,no_groups) ### these are the same now but may not be later, check which is correct
+ 
+  # Contacts matrix only covers one set of age groups, here we "repeat" it to also cover 
+  # risk groups
+  # new_cij <- matrix(rep(0,18*18), nrow = 18)
+  # for (k in 1:3) {
+  #   for (l in 1:3) {
+  #     lk <- (k - 1)*6 + 1
+  #     ll <- (l - 1)*6 + 1
+  #     new_cij[lk:(lk + 6 - 1), ll:(ll + 6 - 1)] <- contacts_matrixformat
+  #   }
+  # }
+  new_cij <- matrix(rep(0,12*12), nrow = 12)
+  for (k in 1:3) {
+    for (l in 1:3) {
+      lk <- (k - 1)*4 + 1
+      ll <- (l - 1)*4 + 1
+      new_cij[lk:(lk + 4 - 1), ll:(ll + 4 - 1)] <- contacts
+    }
+  }
+  
+  # specify the model
+  mod <- gen_seeiir_ag_vacc_waning$new(
+    no_groups = no_groups,
+    cij = new_cij,
+    trans = transmissibility,
+    pop = population_stratified,
+    I0 = initial_infected,
+    V0 = initial_vaccinated_prop,
+    R0 = initial_R_prop,
+    RV0 = initial_Rv_prop,
+    susc = rep(susceptibility,3),
+    alpha = calendar_input$efficacy[1:no_groups],
+    omega = waning_rate,
+    dates = calendar_input$dates,
+    calendar = matrix(calendar_input$calendar, ncol = 4*3),
+    gamma1 = 2/infection_delays[1],
+    gamma2 = 2/infection_delays[2], 
+    num_vac_start = rep(0,no_groups),
+    kappa = kappa_input
+  )
+  
+  # run the model
+  y_run <- mod$run(t, hmax = NULL, method = "euler", hini = 0.25, atol = 1)
+  # calculate the cumulative values
+  y <- mod$transform_variables(y_run)$cumI
+  yU <- mod$transform_variables(y_run)$cumIU
+  yV <- mod$transform_variables(y_run)$cumIV
+  # Returning the differences in cumulative infections from one time-step to the other
+  y_transform <- function(y_input){
+    y_input <- data.table(y_input[2:(nrow(y_input)), ] - y_input[1:(nrow(y_input) - 1), ])
+    if(ncol(y_input) == 1){y_input <- data.table(unname(t(y_input)))}
+    y_input$time <- seq(begin_date,length.out = nrow(y_input), by = interval)
+    y_input <- data.table(y_input)
+  }
+  y <- y_transform(y)
+  yU <- y_transform(yU)
+  yV <- y_transform(yV)
+  
+  output_y <- cbind(time = y$time, y[,V1:V4], yU[,V1:V4], yV[,V1:V4])
+  colnames(output_y) <- c('time', 'I1', 'I2', 'I3', 'I4',
+                          'IU1', 'IU2', 'IU3', 'IU4', 'IV1', 'IV2', 'IV3', 'IV4')
+    
+  return(y)
+}
+### END OF FUNCTION: incidence_function_fit ###
+
+### FUNCTION: incidence_function_fit_VS (vaccination status-specific outputs) ###
+incidence_function_fit_VS <- function(
+    demography_input,
+    parameters,
+    calendar_input,
+    contact_ids_sample,
+    contacts,
+    waning_rate,
+    vaccination_ratio_input,
+    begin_date, 
+    end_date,  
+    year_to_run, 
+    efficacy_now, 
+    efficacy_next,
+    efficacy_next2, 
+    previous_summary, 
+    age_groups_model,
+    kappa_input = 1
+){
+  
+  risk_ratios_input <- matrix(c(rep(0,8)), ncol = 4 , byrow = T) # Not using risk groups so setting this here for now.
+  age_group_sizes <- stratify_by_age(demography_input, age_groups_model)
+  population_stratified <- stratify_by_risk(age_group_sizes, risk_ratios_input)
+  
+  # define model timings
+  interval = 7
+  t <- as.numeric(seq(begin_date, end_date, interval))
+  # define age group inputs
+  no_groups <- length(population_stratified)
+  
+  initial_infected <- rep(10^parameters[4],length(age_group_sizes)) #6)
+  initial_infected <- stratify_by_risk(initial_infected, risk_ratios_input)
+  susceptibility <- c((0.2*1 + 0.8*parameters[3]), rep(parameters[3],3)) # 1 in [0,1), parameters[3] in [1,\infty)
+  transmissibility = parameters[2]
+  
+  initial_vaccinated_prop = unlist(vaccination_ratio_input[[1]])
+  initial_Rv_prop = unlist(vaccination_ratio_input[[2]])
+  initial_R_prop = unlist(vaccination_ratio_input[[3]])
+  #Assume that all R become susceptible again at the start of each posterior
   
   # Contacts matrix only covers one set of age groups, here we "repeat" it to also cover 
   # risk groups
@@ -717,7 +824,6 @@ incidence_function_fit <- function(
   }
   
   # specify the model
-
   mod <- gen_seeiir_ag_vacc_waning$new(
     no_groups = no_groups,
     cij = new_cij,
@@ -734,24 +840,317 @@ incidence_function_fit <- function(
     calendar = matrix(calendar_input$calendar, ncol = 4*3),
     gamma1 = 2/infection_delays[1],
     gamma2 = 2/infection_delays[2], 
-    num_vac_start = rep(0,no_groups) # don't need to be tracked
+    num_vac_start = rep(0,no_groups), 
+    kappa = kappa_input
+  )
+  
+  # run the model
+  y_run <- mod$run(t, hmax = NULL, method = "euler", hini = 0.25, atol = 1)
+  # calculate the cumulative values
+  y <- mod$transform_variables(y_run)$cumI
+  yU <- mod$transform_variables(y_run)$cumIU
+  yV <- mod$transform_variables(y_run)$cumIV
+  # Returning the differences in cumulative infections from one time-step to the other
+  y_transform <- function(y_input){
+    y_input <- data.table(y_input[2:(nrow(y_input)), ] - y_input[1:(nrow(y_input) - 1), ])
+    if(ncol(y_input) == 1){y_input <- data.table(unname(t(y_input)))}
+    y_input$time <- seq(begin_date,length.out = nrow(y_input), by = interval)
+    y_input <- data.table(y_input)
+  }
+  y <- y_transform(y)
+  yU <- y_transform(yU)
+  yV <- y_transform(yV)
+  
+  output_y <- cbind(time = y$time, y[,V1:V4], yU[,V1:V4], yV[,V1:V4])
+  colnames(output_y) <- c('time', 'I1', 'I2', 'I3', 'I4',
+                          'IU1', 'IU2', 'IU3', 'IU4', 'IV1', 'IV2', 'IV3', 'IV4')
+  
+  # y_ratio <- y_run[,170:173]/(y_run[,110:113] + y_run[,170:173])
+  # return(y_ratio)
+  
+  return(output_y)
+}
+### END OF FUNCTION: incidence_function_fit_VS ###
+
+incidence_function_fit_demog <- function(
+    demography_input,
+    calendar_input,
+    contacts,
+    waning_rate,
+    vaccination_ratio_input,
+    begin_date, 
+    end_date,  
+    age_groups_model
+){
+  
+  parameters <- c(NA, 0, 0, 1)
+  contact_ids_sample = NA
+  efficacy_now=rep(0,12); efficacy_next=rep(0,12); efficacy_next2=rep(0,12) 
+  
+  risk_ratios_input <- matrix(c(rep(0,8)), ncol = 4 , byrow = T) # Not using risk groups so setting this here for now.
+  age_group_sizes <- stratify_by_age(demography_input, age_groups_model)
+  population_stratified <- stratify_by_risk(age_group_sizes, risk_ratios_input)
+  
+  # define model timings
+  interval = 7
+  t <- as.numeric(seq(begin_date, end_date, interval))
+  # define age group inputs
+  no_groups <- length(population_stratified)
+  
+  initial_infected <- rep(10^parameters[4],length(age_group_sizes)) #6)
+  initial_infected <- stratify_by_risk(initial_infected, risk_ratios_input)
+  susceptibility <- c((0.2*1 + 0.8*parameters[3]), rep(parameters[3],3)) # 1 in [0,1), parameters[3] in [1,\infty)
+  transmissibility = parameters[2]
+  
+  initial_vaccinated_prop = unlist(vaccination_ratio_input[[1]])
+  initial_Rv_prop = unlist(vaccination_ratio_input[[2]])
+  initial_R_prop = unlist(vaccination_ratio_input[[3]])
+  #Assume that all R become susceptible again at the start of each posterior
+  
+  # Contacts matrix only covers one set of age groups, here we "repeat" it to also cover 
+  # risk groups
+  # new_cij <- matrix(rep(0,18*18), nrow = 18)
+  # for (k in 1:3) {
+  #   for (l in 1:3) {
+  #     lk <- (k - 1)*6 + 1
+  #     ll <- (l - 1)*6 + 1
+  #     new_cij[lk:(lk + 6 - 1), ll:(ll + 6 - 1)] <- contacts_matrixformat
+  #   }
+  # }
+  new_cij <- matrix(rep(0,12*12), nrow = 12)
+  for (k in 1:3) {
+    for (l in 1:3) {
+      lk <- (k - 1)*4 + 1
+      ll <- (l - 1)*4 + 1
+      new_cij[lk:(lk + 4 - 1), ll:(ll + 4 - 1)] <- contacts
+    }
+  }
+  
+  # specify the model
+  mod <- gen_seeiir_ag_vacc_waning$new(
+    no_groups = no_groups,
+    cij = new_cij,
+    trans = transmissibility,
+    pop = population_stratified,
+    I0 = initial_infected,
+    V0 = initial_vaccinated_prop,
+    R0 = initial_R_prop,
+    RV0 = initial_Rv_prop,
+    susc = rep(susceptibility,3),
+    alpha = calendar_input$efficacy[1:no_groups],
+    omega = waning_rate,
+    dates = calendar_input$dates,
+    calendar = matrix(calendar_input$calendar, ncol = 4*3),
+    gamma1 = 2/infection_delays[1],
+    gamma2 = 2/infection_delays[2], 
+    num_vac_start = rep(0,no_groups), 
+    kappa = 1
+  )
+  
+  # run the model
+  y_run <- mod$run(t, hmax = NULL, method = "euler", hini = 0.25, atol = 1)
+  # pop sizes to check:
+  y_pop <- data.frame(U1 = rowSums(y_run[,12*(1:6) - 10]),
+                      V1 = rowSums(y_run[,12*(1:6) + 98]),
+                      U2 = rowSums(y_run[,12*(1:6) - 9]),
+                      V2 = rowSums(y_run[,12*(1:6) + 99]),
+                      U3 = rowSums(y_run[,12*(1:6) - 8]),
+                      V3 = rowSums(y_run[,12*(1:6) + 100]),
+                      U4 = rowSums(y_run[,12*(1:6) - 7]),
+                      V4 = rowSums(y_run[,12*(1:6) + 101]),
+                      t = y_run[,1])
+  
+  return(y_pop)
+}
+### END OF FUNCTION: incidence_function_fit_demog ###
+
+
+incidence_function_fit_doses <- function(
+    demography_input,
+    calendar_input,
+    contacts,
+    waning_rate,
+    vaccination_ratio_input,
+    begin_date, 
+    end_date,  
+    age_groups_model
+){
+  
+  parameters <- c(NA, 0, 0, 1)
+  contact_ids_sample = NA
+  efficacy_now=rep(0,12); efficacy_next=rep(0,12); efficacy_next2=rep(0,12) 
+  
+  risk_ratios_input <- matrix(c(rep(0,8)), ncol = 4 , byrow = T) # Not using risk groups so setting this here for now.
+  age_group_sizes <- stratify_by_age(demography_input, age_groups_model)
+  population_stratified <- stratify_by_risk(age_group_sizes, risk_ratios_input)
+  
+  # define model timings
+  interval = 7
+  t <- as.numeric(seq(begin_date, end_date, interval))
+  # define age group inputs
+  no_groups <- length(population_stratified)
+  
+  initial_infected <- rep(10^parameters[4],length(age_group_sizes)) #6)
+  initial_infected <- stratify_by_risk(initial_infected, risk_ratios_input)
+  susceptibility <- c((0.2*1 + 0.8*parameters[3]), rep(parameters[3],3)) # 1 in [0,1), parameters[3] in [1,\infty)
+  transmissibility = parameters[2]
+  
+  initial_vaccinated_prop = unlist(vaccination_ratio_input[[1]])
+  initial_Rv_prop = unlist(vaccination_ratio_input[[2]])
+  initial_R_prop = unlist(vaccination_ratio_input[[3]])
+  #Assume that all R become susceptible again at the start of each posterior
+  
+  # Contacts matrix only covers one set of age groups, here we "repeat" it to also cover 
+  # risk groups
+  # new_cij <- matrix(rep(0,18*18), nrow = 18)
+  # for (k in 1:3) {
+  #   for (l in 1:3) {
+  #     lk <- (k - 1)*6 + 1
+  #     ll <- (l - 1)*6 + 1
+  #     new_cij[lk:(lk + 6 - 1), ll:(ll + 6 - 1)] <- contacts_matrixformat
+  #   }
+  # }
+  new_cij <- matrix(rep(0,12*12), nrow = 12)
+  for (k in 1:3) {
+    for (l in 1:3) {
+      lk <- (k - 1)*4 + 1
+      ll <- (l - 1)*4 + 1
+      new_cij[lk:(lk + 4 - 1), ll:(ll + 4 - 1)] <- contacts
+    }
+  }
+  
+  # specify the model
+  mod <- gen_seeiir_ag_vacc_waning$new(
+    no_groups = no_groups,
+    cij = new_cij,
+    trans = transmissibility,
+    pop = population_stratified,
+    I0 = initial_infected,
+    V0 = initial_vaccinated_prop,
+    R0 = initial_R_prop,
+    RV0 = initial_Rv_prop,
+    susc = rep(susceptibility,3),
+    alpha = calendar_input$efficacy[1:no_groups],
+    omega = waning_rate,
+    dates = calendar_input$dates,
+    calendar = matrix(calendar_input$calendar, ncol = 4*3),
+    gamma1 = 2/infection_delays[1],
+    gamma2 = 2/infection_delays[2], 
+    num_vac_start = rep(0,no_groups), 
+    kappa = 1
+  )
+  
+  # run the model
+  y_run <- mod$run(t, hmax = NULL, method = "euler", hini = 0.25, atol = 1)
+  # pop sizes to check:
+  y_pop <- data.frame(U1 = rowSums(y_run[,12*(1:6) - 10]),
+                      V1 = rowSums(y_run[,12*(1:6) + 98]),
+                      U2 = rowSums(y_run[,12*(1:6) - 9]),
+                      V2 = rowSums(y_run[,12*(1:6) + 99]),
+                      U3 = rowSums(y_run[,12*(1:6) - 8]),
+                      V3 = rowSums(y_run[,12*(1:6) + 100]),
+                      U4 = rowSums(y_run[,12*(1:6) - 7]),
+                      V4 = rowSums(y_run[,12*(1:6) + 101]),
+                      vaccs1 = y_run[,182],
+                      vaccs2 = y_run[,183],
+                      vaccs3 = y_run[,184],
+                      vaccs4 = y_run[,185],
+                      t = y_run[,1])
+  
+  return(y_pop)
+}
+### END OF FUNCTION: incidence_function_fit_doses ###
+
+
+### FUNCTION: incidence_function_fit_total_inf (total infections on any week) ###
+incidence_function_fit_total_inf <- function(
+    demography_input,
+    parameters,
+    calendar_input,
+    contact_ids_sample,
+    contacts,
+    waning_rate,
+    vaccination_ratio_input,
+    begin_date, 
+    end_date,  
+    year_to_run, 
+    efficacy_now, 
+    efficacy_next,
+    efficacy_next2, 
+    previous_summary, 
+    age_groups_model,
+    kappa_input = 1
+){
+  
+  risk_ratios_input <- matrix(c(rep(0,8)), ncol = 4 , byrow = T) # Not using risk groups so setting this here for now.
+  age_group_sizes <- stratify_by_age(demography_input, age_groups_model)
+  population_stratified <- stratify_by_risk(age_group_sizes, risk_ratios_input)
+  
+  # define model timings
+  interval = 7
+  t <- as.numeric(seq(begin_date, end_date, interval))
+  # define age group inputs
+  no_groups <- length(population_stratified)
+  
+  initial_infected <- rep(10^parameters[4],length(age_group_sizes)) #6)
+  initial_infected <- stratify_by_risk(initial_infected, risk_ratios_input)
+  susceptibility <- c((0.2*1 + 0.8*parameters[3]), rep(parameters[3],3)) # 1 in [0,1), parameters[3] in [1,\infty)
+  transmissibility = parameters[2]
+  
+  initial_vaccinated_prop = unlist(vaccination_ratio_input[[1]])
+  initial_Rv_prop = unlist(vaccination_ratio_input[[2]])
+  initial_R_prop = unlist(vaccination_ratio_input[[3]])
+  #Assume that all R become susceptible again at the start of each posterior
+  
+  # Contacts matrix only covers one set of age groups, here we "repeat" it to also cover 
+  # risk groups
+  # new_cij <- matrix(rep(0,18*18), nrow = 18)
+  # for (k in 1:3) {
+  #   for (l in 1:3) {
+  #     lk <- (k - 1)*6 + 1
+  #     ll <- (l - 1)*6 + 1
+  #     new_cij[lk:(lk + 6 - 1), ll:(ll + 6 - 1)] <- contacts_matrixformat
+  #   }
+  # }
+  new_cij <- matrix(rep(0,12*12), nrow = 12)
+  for (k in 1:3) {
+    for (l in 1:3) {
+      lk <- (k - 1)*4 + 1
+      ll <- (l - 1)*4 + 1
+      new_cij[lk:(lk + 4 - 1), ll:(ll + 4 - 1)] <- contacts
+    }
+  }
+  
+  # specify the model
+  mod <- gen_seeiir_ag_vacc_waning$new(
+    no_groups = no_groups,
+    cij = new_cij,
+    trans = transmissibility,
+    pop = population_stratified,
+    I0 = initial_infected,
+    V0 = initial_vaccinated_prop,
+    R0 = initial_R_prop,
+    RV0 = initial_Rv_prop,
+    susc = rep(susceptibility,3),
+    alpha = calendar_input$efficacy[1:no_groups],
+    omega = waning_rate,
+    dates = calendar_input$dates,
+    calendar = matrix(calendar_input$calendar, ncol = 4*3),
+    gamma1 = 2/infection_delays[1],
+    gamma2 = 2/infection_delays[2], 
+    num_vac_start = rep(0,no_groups), 
+    kappa = kappa_input
   )
   
   # run the model
   y <- mod$run(t, hmax = NULL, method = "euler", hini = 0.25, atol = 1)
-  # calculate the cumulative values
-  y <- mod$transform_variables(y)$cumI
-  # Returning the differences in cumulative infections from one time-step to the other
-  y <- data.table(y[2:(nrow(y)), ] - y[1:(nrow(y) - 1), ])
-  if(ncol(y) == 1){y <- data.table(unname(t(y)))}
-  # add the dates
-  y$time <- seq(begin_date,length.out = nrow(y), by = interval)
-  y<-data.table(y)
-
-  return(y)
+  y_mod <- mod$transform_variables(y)
+  y_out <- data.table(time = seq(begin_date,length.out = nrow(y), by = interval),
+                      total_inf = rowSums(y_mod$I1 + y_mod$I2 + y_mod$I1v + y_mod$I2v))
+  
+  return(y_out)
 }
-### END OF FUNCTION: incidence_function_fit ###
-
+### END OF FUNCTION: incidence_function_fit_total_inf ###
 
 
 

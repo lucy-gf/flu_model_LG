@@ -400,8 +400,15 @@ fun_recipr_contmatr <- function(C_m_full,age_group_sizes){
 fun_cntr_agestr <- function(i_cntr,i_year,age_low_vals,age_high_vals){
   age_groups=data.frame(age_low=seq(0,75,5), age_high=c(seq(4,74,5),100))
   if (!any((.packages()) %in% "wpp2019")) {library(wpp2019)}; if (!exists("popF")) {data("pop")}
-  cntr_agestr=data.frame(agegroups=popF[popF$name %in% i_cntr,"age"],
-                         values=popF[popF$name %in% i_cntr,i_year] + popM[popM$name %in% i_cntr,i_year])
+  if(i_cntr[1] == 'Kosovo'){
+    vals <- unname(unlist(pop_hist_WPP_data %>% filter(grepl('Kos', name), Year == 2020) %>% 
+      select(!c(name, Type, Year))))
+    cntr_agestr = data.frame(agegroups=popF[popF$name %in% 'France',"age"],
+                             values=vals)
+  }else{
+    cntr_agestr=data.frame(agegroups=popF[popF$name %in% i_cntr,"age"],
+                           values=popF[popF$name %in% i_cntr,i_year] + popM[popM$name %in% i_cntr,i_year])
+  }
   agegr_truthvals=sapply(strsplit(as.character(cntr_agestr$agegroups),"-"),"[[",1) %in% age_groups$age_low
   N_tot=cntr_agestr$values[agegr_truthvals]
   N_tot[length(N_tot)]=N_tot[length(N_tot)]+sum(cntr_agestr$values[!agegr_truthvals])

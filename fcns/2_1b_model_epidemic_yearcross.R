@@ -1008,6 +1008,9 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   # waning of vaccine immunity
   omega <- user()
   
+  # kappa in [0,1] the relative (decreased) infectiousness of vaccinated indivs
+  kappa <- user()
+  
   # efficacy
   alpha[] <- user()
   
@@ -1023,10 +1026,12 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   
   # Vaccination is given as a fraction vaccination, here we scale it to 
   # a rate
-  #sumN[] <- if (vI[i]>0) (S[i]+E1[i]+E2[i]+I1[i]+I2[i]+R[i]) else 0
-  v[] <-vI[i] #if (sumN[i]>0) vI[i]*pop[i] else 0
+  sumN[] <- if (vI[i]>0) (S[i]+E1[i]+E2[i]+I1[i]+I2[i]+R[i]) else 0
+  # v[] <- if (sumN[i]>0) vI[i]*pop[i]/sumN[i] else 0
+  v[] <- if (sumN[i]>0) (vI[i]*(pop[i] - V0[i])/(sumN[i])) else 0
+  # v[] <- vI[i]
   # Transmission matrix
-  sij[,] <- cij[i,j] * (I1[j] + I2[j] + I1v[j] + I2v[j])
+  sij[,] <- cij[i,j] * (I1[j] + I2[j] + kappa*(I1v[j] + I2v[j]))
   
   # Newly infected
   newInf[] <- lambda[i] * S[i]
@@ -1048,10 +1053,12 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   deriv(I1v[]) <- - omega*I1v[i] + gamma1 * E2v[i]  - gamma2 * I1v[i] + v[i] * I1[i]
   deriv(I2v[]) <- - omega*I2v[i] + gamma2 * (I1v[i] - I2v[i]) + v[i] * I2[i]
   deriv(Rv[])  <- - omega*Rv[i]  + gamma2 * I2v[i] + v[i] * (R[i] + alpha[i] * S[i])
-  deriv(VT[]) <- vI[i]*pop[i]
-  
+  deriv(VT[]) <- + v[i]*(S[i] + E1[i] + E2[i] + I1[i] + I2[i] + R[i])
+
   # Tracking the cumulative amount of infections over time for output of incidence
   deriv(cumI[]) <- newInf[i] + newInfv[i]
+  deriv(cumIU[]) <- newInf[i] 
+  deriv(cumIV[]) <- newInfv[i]
   
   # Initial value of the variables
   initial(S[1:no_groups]) <- pop[i]*(1-V0[i])*(1-R0[i]) - I0[i]
@@ -1061,6 +1068,8 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   initial(I2[1:no_groups]) <- 0
   initial(R[1:no_groups]) <- pop[i]*(1-V0[i])*(R0[i])
   initial(cumI[1:no_groups]) <- 0
+  initial(cumIU[1:no_groups]) <- 0
+  initial(cumIV[1:no_groups]) <- 0
   
   initial(Sv[1:no_groups]) <- (pop[i]*V0[i])*(1-RV0[i])
   initial(E1v[1:no_groups]) <- 0
@@ -1084,7 +1093,7 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   dim(lambda) <- no_groups
   dim(v) <- no_groups
   dim(vI) <- no_groups
-  #dim(sumN) <- no_groups  
+  dim(sumN) <- no_groups
   dim(alpha) <- no_groups
   dim(cij) <- c(no_groups, no_groups)
   dim(sij) <- c(no_groups, no_groups)
@@ -1102,6 +1111,8 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   dim(I2v) <- no_groups
   dim(Rv) <- no_groups
   dim(cumI) <- no_groups
+  dim(cumIU) <- no_groups
+  dim(cumIV) <- no_groups
   dim(newInf) <- no_groups
   dim(newInfv) <- no_groups
   dim(VT) <- no_groups
