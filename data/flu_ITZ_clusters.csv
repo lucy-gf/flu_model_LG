@@ -1,110 +1,219 @@
-country,kmeans_cluster_num,kmeans_cluster_name,hi_cluster_ward_num,hi_cluster_ward_name,country_altern_name
-Uruguay,1,Southern America,1,Southern America,Uruguay
-Argentina,1,Southern America,1,Southern America,Argentina
-Bolivia,1,Southern America,1,Southern America,Bolivia (Plurinational State of)
-Brazil,1,Southern America,1,Southern America,Brazil
-Colombia,1,Southern America,1,Southern America,Colombia
-French Guiana,1,Southern America,1,Southern America,French Guiana
-Panama,1,Southern America,1,Southern America,Panama
-Chile,1,Southern America,1,Southern America,Chile
-Paraguay,1,Southern America,1,Southern America,Paraguay
-Jamaica,1,Southern America,1,Southern America,Jamaica
-Venezuela,1,Southern America,1,Southern America,Venezuela (Bolivarian Republic of)
-Suriname,1,Southern America,1,Southern America,Suriname
-Dominican Republic,1,Southern America,1,Southern America,Dominican Republic
-El Salvador,1,Southern America,1,Southern America,El Salvador
-Haiti,1,Southern America,1,Southern America,Haiti
-Costa Rica,1,Southern America,1,Southern America,Costa Rica
-Ecuador,2,Northern America,1,Southern America,Ecuador
-Honduras,2,Northern America,2,Northern America,Honduras
-Nicaragua,2,Northern America,2,Northern America,Nicaragua
-Peru,2,Northern America,2,Northern America,Peru
-Cuba,2,Northern America,2,Northern America,Cuba
-Belize,2,Northern America,2,Northern America,Belize
-Canada,2,Northern America,2,Northern America,Canada
-United States,2,Northern America,2,Northern America,United States of America
-Guatemala,2,Northern America,2,Northern America,Guatemala
-Mexico,2,Northern America,2,Northern America,Mexico
-Fiji,3,Oceania-Melanesia-Polynesia,3,Oceania-Melanesia-Polynesia,Fiji
-Australia,3,Oceania-Melanesia-Polynesia,3,Oceania-Melanesia-Polynesia,Australia
-New Caledonia,3,Oceania-Melanesia-Polynesia,3,Oceania-Melanesia-Polynesia,New Caledonia
-Papua New Guinea,4,Eastern and Southern Asia,3,Oceania-Melanesia-Polynesia,Papua New Guinea
-Nepal,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Nepal
-Singapore,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Singapore
-Philippines,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Philippines
-Laos,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Lao People's Democratic Republic
-Cambodia,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Cambodia
-Thailand,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Thailand
-Russia,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Russian Federation
-Mongolia,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Mongolia
-China,4,Eastern and Southern Asia,4,Eastern and Southern Asia,China
-Republic of Korea,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Republic of Korea
-Bangladesh,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Bangladesh
-Bhutan,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Bhutan
-Maldives,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Maldives
-India,4,Eastern and Southern Asia,4,Eastern and Southern Asia,India
-Sri Lanka,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Sri Lanka
-Viet Nam,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Viet Nam
-Malaysia,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Malaysia
-Indonesia,4,Eastern and Southern Asia,4,Eastern and Southern Asia,Indonesia
-Cote d'Ivoire,5,Africa,5,Africa,Côte d'Ivoire
-Ghana,5,Africa,5,Africa,Ghana
-Burkina Faso,5,Africa,5,Africa,Burkina Faso
-Niger,5,Africa,5,Africa,Niger
-Senegal,5,Africa,5,Africa,Senegal
-Sierra Leone,5,Africa,5,Africa,Sierra Leone
-Cameroon,5,Africa,5,Africa,Cameroon
-Togo,5,Africa,5,Africa,Togo
-Mali,5,Africa,5,Africa,Mali
-Nigeria,5,Africa,5,Africa,Nigeria
-Kenya,5,Africa,5,Africa,Kenya
-Central African Republic,5,Africa,5,Africa,Central African Republic
-Uganda,5,Africa,5,Africa,Uganda
-Mauritius,5,Africa,5,Africa,Mauritius
-Zambia,5,Africa,5,Africa,Zambia
-South Africa,5,Africa,5,Africa,South Africa
-Madagascar,5,Africa,5,Africa,Madagascar
-Mozambique,5,Africa,5,Africa,Mozambique
-Bulgaria,6,Europe,6,Europe,Bulgaria
-Greece,6,Europe,6,Europe,Greece
-Austria,6,Europe,6,Europe,Austria
-Slovenia,6,Europe,6,Europe,Slovenia
-Poland,6,Europe,6,Europe,Poland
-Slovakia,6,Europe,6,Europe,Slovakia
-Ukraine,6,Europe,6,Europe,Ukraine
-Finland,6,Europe,6,Europe,Finland
-Estonia,6,Europe,6,Europe,Estonia
-Belarus,6,Europe,6,Europe,Belarus
-Lithuania,6,Europe,6,Europe,Lithuania
-Malta,6,Europe,6,Europe,Malta
-Spain,6,Europe,6,Europe,Spain
-Morocco,6,Europe,6,Europe,Morocco
-Norway,6,Europe,6,Europe,Norway
-France,6,Europe,6,Europe,France
-Netherlands,6,Europe,6,Europe,Netherlands
-Denmark,6,Europe,6,Europe,Denmark
-Germany,6,Europe,6,Europe,Germany
-Iceland,6,Europe,6,Europe,Iceland
-Ireland,6,Europe,6,Europe,Ireland
-United Kingdom,6,Europe,6,Europe,"United Kingdom, England, UK"
-Afghanistan,7,Asia-Europe,7,Asia-Europe,Afghanistan
-Pakistan,7,Asia-Europe,7,Asia-Europe,Pakistan
-Kazakhstan,7,Asia-Europe,7,Asia-Europe,Kazakhstan
-Kyrgyzstan,7,Asia-Europe,7,Asia-Europe,Kyrgyzstan
-Armenia,7,Asia-Europe,7,Asia-Europe,Armenia
-Iran,7,Asia-Europe,7,Asia-Europe,Iran (Islamic Republic of)
-Azerbaijan,7,Asia-Europe,7,Asia-Europe,Azerbaijan
-Georgia,7,Asia-Europe,7,Asia-Europe,Georgia
-Jordan,7,Asia-Europe,7,Asia-Europe,Jordan
-Lebanon,7,Asia-Europe,7,Asia-Europe,Lebanon
-Turkey,7,Asia-Europe,7,Asia-Europe,Türkiye
-Iraq,7,Asia-Europe,7,Asia-Europe,Iraq
-Bahrain,7,Asia-Europe,7,Asia-Europe,Bahrain
-Kuwait,7,Asia-Europe,7,Asia-Europe,Kuwait
-Oman,7,Asia-Europe,7,Asia-Europe,Oman
-Qatar,7,Asia-Europe,7,Asia-Europe,Qatar
-Rwanda,7,Asia-Europe,7,Asia-Europe,Rwanda
-Democratic Republic of the Congo,5,Africa,7,Asia-Europe,Democratic Republic of the Congo
-United Republic of Tanzania,5,Africa,7,Asia-Europe,United Republic of Tanzania
-Egypt,7,Asia-Europe,7,Asia-Europe,Egypt
-Ethiopia,5,Africa,7,Asia-Europe,Ethiopia
+country,country_altern_name,method,cluster_name,cluster_number
+Uruguay,Uruguay,kmeans_cluster,Southern America,1
+Uruguay,Uruguay,hi_cluster_ward,Southern America,1
+Argentina,Argentina,kmeans_cluster,Southern America,1
+Argentina,Argentina,hi_cluster_ward,Southern America,1
+Bolivia,Bolivia (Plurinational State of),kmeans_cluster,Southern America,1
+Bolivia,Bolivia (Plurinational State of),hi_cluster_ward,Southern America,1
+Brazil,Brazil,kmeans_cluster,Southern America,1
+Brazil,Brazil,hi_cluster_ward,Southern America,1
+Colombia,Colombia,kmeans_cluster,Southern America,1
+Colombia,Colombia,hi_cluster_ward,Southern America,1
+French Guiana,French Guiana,kmeans_cluster,Southern America,1
+French Guiana,French Guiana,hi_cluster_ward,Southern America,1
+Panama,Panama,kmeans_cluster,Southern America,1
+Panama,Panama,hi_cluster_ward,Southern America,1
+Chile,Chile,kmeans_cluster,Southern America,1
+Chile,Chile,hi_cluster_ward,Southern America,1
+Paraguay,Paraguay,kmeans_cluster,Southern America,1
+Paraguay,Paraguay,hi_cluster_ward,Southern America,1
+Jamaica,Jamaica,kmeans_cluster,Southern America,1
+Jamaica,Jamaica,hi_cluster_ward,Southern America,1
+Venezuela,Venezuela (Bolivarian Republic of),kmeans_cluster,Southern America,1
+Venezuela,Venezuela (Bolivarian Republic of),hi_cluster_ward,Southern America,1
+Suriname,Suriname,kmeans_cluster,Southern America,1
+Suriname,Suriname,hi_cluster_ward,Southern America,1
+Dominican Republic,Dominican Republic,kmeans_cluster,Southern America,1
+Dominican Republic,Dominican Republic,hi_cluster_ward,Southern America,1
+El Salvador,El Salvador,kmeans_cluster,Southern America,1
+El Salvador,El Salvador,hi_cluster_ward,Southern America,1
+Haiti,Haiti,kmeans_cluster,Southern America,1
+Haiti,Haiti,hi_cluster_ward,Southern America,1
+Costa Rica,Costa Rica,kmeans_cluster,Southern America,1
+Costa Rica,Costa Rica,hi_cluster_ward,Southern America,1
+Ecuador,Ecuador,kmeans_cluster,Northern America,2
+Ecuador,Ecuador,hi_cluster_ward,Southern America,1
+Honduras,Honduras,kmeans_cluster,Northern America,2
+Honduras,Honduras,hi_cluster_ward,Northern America,2
+Nicaragua,Nicaragua,kmeans_cluster,Northern America,2
+Nicaragua,Nicaragua,hi_cluster_ward,Northern America,2
+Peru,Peru,kmeans_cluster,Northern America,2
+Peru,Peru,hi_cluster_ward,Northern America,2
+Cuba,Cuba,kmeans_cluster,Northern America,2
+Cuba,Cuba,hi_cluster_ward,Northern America,2
+Belize,Belize,kmeans_cluster,Northern America,2
+Belize,Belize,hi_cluster_ward,Northern America,2
+Canada,Canada,kmeans_cluster,Northern America,2
+Canada,Canada,hi_cluster_ward,Northern America,2
+United States,United States of America,kmeans_cluster,Northern America,2
+United States,United States of America,hi_cluster_ward,Northern America,2
+Guatemala,Guatemala,kmeans_cluster,Northern America,2
+Guatemala,Guatemala,hi_cluster_ward,Northern America,2
+Mexico,Mexico,kmeans_cluster,Northern America,2
+Mexico,Mexico,hi_cluster_ward,Northern America,2
+Fiji,Fiji,kmeans_cluster,Oceania-Melanesia-Polynesia,3
+Fiji,Fiji,hi_cluster_ward,Oceania-Melanesia-Polynesia,3
+Australia,Australia,kmeans_cluster,Oceania-Melanesia-Polynesia,3
+Australia,Australia,hi_cluster_ward,Oceania-Melanesia-Polynesia,3
+New Caledonia,New Caledonia,kmeans_cluster,Oceania-Melanesia-Polynesia,3
+New Caledonia,New Caledonia,hi_cluster_ward,Oceania-Melanesia-Polynesia,3
+Papua New Guinea,Papua New Guinea,kmeans_cluster,Eastern and Southern Asia,4
+Papua New Guinea,Papua New Guinea,hi_cluster_ward,Oceania-Melanesia-Polynesia,3
+Nepal,Nepal,kmeans_cluster,Eastern and Southern Asia,4
+Nepal,Nepal,hi_cluster_ward,Eastern and Southern Asia,4
+Singapore,Singapore,kmeans_cluster,Eastern and Southern Asia,4
+Singapore,Singapore,hi_cluster_ward,Eastern and Southern Asia,4
+Philippines,Philippines,kmeans_cluster,Eastern and Southern Asia,4
+Philippines,Philippines,hi_cluster_ward,Eastern and Southern Asia,4
+Laos,Lao People's Democratic Republic,kmeans_cluster,Eastern and Southern Asia,4
+Laos,Lao People's Democratic Republic,hi_cluster_ward,Eastern and Southern Asia,4
+Cambodia,Cambodia,kmeans_cluster,Eastern and Southern Asia,4
+Cambodia,Cambodia,hi_cluster_ward,Eastern and Southern Asia,4
+Thailand,Thailand,kmeans_cluster,Eastern and Southern Asia,4
+Thailand,Thailand,hi_cluster_ward,Eastern and Southern Asia,4
+Russia,Russian Federation,kmeans_cluster,Eastern and Southern Asia,4
+Russia,Russian Federation,hi_cluster_ward,Eastern and Southern Asia,4
+Mongolia,Mongolia,kmeans_cluster,Eastern and Southern Asia,4
+Mongolia,Mongolia,hi_cluster_ward,Eastern and Southern Asia,4
+China,China,kmeans_cluster,Eastern and Southern Asia,4
+China,China,hi_cluster_ward,Eastern and Southern Asia,4
+Republic of Korea,Republic of Korea,kmeans_cluster,Eastern and Southern Asia,4
+Republic of Korea,Republic of Korea,hi_cluster_ward,Eastern and Southern Asia,4
+Bangladesh,Bangladesh,kmeans_cluster,Eastern and Southern Asia,4
+Bangladesh,Bangladesh,hi_cluster_ward,Eastern and Southern Asia,4
+Bhutan,Bhutan,kmeans_cluster,Eastern and Southern Asia,4
+Bhutan,Bhutan,hi_cluster_ward,Eastern and Southern Asia,4
+Maldives,Maldives,kmeans_cluster,Eastern and Southern Asia,4
+Maldives,Maldives,hi_cluster_ward,Eastern and Southern Asia,4
+India,India,kmeans_cluster,Eastern and Southern Asia,4
+India,India,hi_cluster_ward,Eastern and Southern Asia,4
+Sri Lanka,Sri Lanka,kmeans_cluster,Eastern and Southern Asia,4
+Sri Lanka,Sri Lanka,hi_cluster_ward,Eastern and Southern Asia,4
+Viet Nam,Viet Nam,kmeans_cluster,Eastern and Southern Asia,4
+Viet Nam,Viet Nam,hi_cluster_ward,Eastern and Southern Asia,4
+Malaysia,Malaysia,kmeans_cluster,Eastern and Southern Asia,4
+Malaysia,Malaysia,hi_cluster_ward,Eastern and Southern Asia,4
+Indonesia,Indonesia,kmeans_cluster,Eastern and Southern Asia,4
+Indonesia,Indonesia,hi_cluster_ward,Eastern and Southern Asia,4
+Cote d'Ivoire,Côte d'Ivoire,kmeans_cluster,Africa,5
+Cote d'Ivoire,Côte d'Ivoire,hi_cluster_ward,Africa,5
+Ghana,Ghana,kmeans_cluster,Africa,5
+Ghana,Ghana,hi_cluster_ward,Africa,5
+Burkina Faso,Burkina Faso,kmeans_cluster,Africa,5
+Burkina Faso,Burkina Faso,hi_cluster_ward,Africa,5
+Niger,Niger,kmeans_cluster,Africa,5
+Niger,Niger,hi_cluster_ward,Africa,5
+Senegal,Senegal,kmeans_cluster,Africa,5
+Senegal,Senegal,hi_cluster_ward,Africa,5
+Sierra Leone,Sierra Leone,kmeans_cluster,Africa,5
+Sierra Leone,Sierra Leone,hi_cluster_ward,Africa,5
+Cameroon,Cameroon,kmeans_cluster,Africa,5
+Cameroon,Cameroon,hi_cluster_ward,Africa,5
+Togo,Togo,kmeans_cluster,Africa,5
+Togo,Togo,hi_cluster_ward,Africa,5
+Mali,Mali,kmeans_cluster,Africa,5
+Mali,Mali,hi_cluster_ward,Africa,5
+Nigeria,Nigeria,kmeans_cluster,Africa,5
+Nigeria,Nigeria,hi_cluster_ward,Africa,5
+Kenya,Kenya,kmeans_cluster,Africa,5
+Kenya,Kenya,hi_cluster_ward,Africa,5
+Central African Republic,Central African Republic,kmeans_cluster,Africa,5
+Central African Republic,Central African Republic,hi_cluster_ward,Africa,5
+Uganda,Uganda,kmeans_cluster,Africa,5
+Uganda,Uganda,hi_cluster_ward,Africa,5
+Mauritius,Mauritius,kmeans_cluster,Africa,5
+Mauritius,Mauritius,hi_cluster_ward,Africa,5
+Zambia,Zambia,kmeans_cluster,Africa,5
+Zambia,Zambia,hi_cluster_ward,Africa,5
+South Africa,South Africa,kmeans_cluster,Africa,5
+South Africa,South Africa,hi_cluster_ward,Africa,5
+Madagascar,Madagascar,kmeans_cluster,Africa,5
+Madagascar,Madagascar,hi_cluster_ward,Africa,5
+Mozambique,Mozambique,kmeans_cluster,Africa,5
+Mozambique,Mozambique,hi_cluster_ward,Africa,5
+Bulgaria,Bulgaria,kmeans_cluster,Europe,6
+Bulgaria,Bulgaria,hi_cluster_ward,Europe,6
+Greece,Greece,kmeans_cluster,Europe,6
+Greece,Greece,hi_cluster_ward,Europe,6
+Austria,Austria,kmeans_cluster,Europe,6
+Austria,Austria,hi_cluster_ward,Europe,6
+Slovenia,Slovenia,kmeans_cluster,Europe,6
+Slovenia,Slovenia,hi_cluster_ward,Europe,6
+Poland,Poland,kmeans_cluster,Europe,6
+Poland,Poland,hi_cluster_ward,Europe,6
+Slovakia,Slovakia,kmeans_cluster,Europe,6
+Slovakia,Slovakia,hi_cluster_ward,Europe,6
+Ukraine,Ukraine,kmeans_cluster,Europe,6
+Ukraine,Ukraine,hi_cluster_ward,Europe,6
+Finland,Finland,kmeans_cluster,Europe,6
+Finland,Finland,hi_cluster_ward,Europe,6
+Estonia,Estonia,kmeans_cluster,Europe,6
+Estonia,Estonia,hi_cluster_ward,Europe,6
+Belarus,Belarus,kmeans_cluster,Europe,6
+Belarus,Belarus,hi_cluster_ward,Europe,6
+Lithuania,Lithuania,kmeans_cluster,Europe,6
+Lithuania,Lithuania,hi_cluster_ward,Europe,6
+Malta,Malta,kmeans_cluster,Europe,6
+Malta,Malta,hi_cluster_ward,Europe,6
+Spain,Spain,kmeans_cluster,Europe,6
+Spain,Spain,hi_cluster_ward,Europe,6
+Morocco,Morocco,kmeans_cluster,Europe,6
+Morocco,Morocco,hi_cluster_ward,Europe,6
+Norway,Norway,kmeans_cluster,Europe,6
+Norway,Norway,hi_cluster_ward,Europe,6
+France,France,kmeans_cluster,Europe,6
+France,France,hi_cluster_ward,Europe,6
+Netherlands,Netherlands,kmeans_cluster,Europe,6
+Netherlands,Netherlands,hi_cluster_ward,Europe,6
+Denmark,Denmark,kmeans_cluster,Europe,6
+Denmark,Denmark,hi_cluster_ward,Europe,6
+Germany,Germany,kmeans_cluster,Europe,6
+Germany,Germany,hi_cluster_ward,Europe,6
+Iceland,Iceland,kmeans_cluster,Europe,6
+Iceland,Iceland,hi_cluster_ward,Europe,6
+Ireland,Ireland,kmeans_cluster,Europe,6
+Ireland,Ireland,hi_cluster_ward,Europe,6
+United Kingdom,"United Kingdom, England, UK",kmeans_cluster,Europe,6
+United Kingdom,"United Kingdom, England, UK",hi_cluster_ward,Europe,6
+Afghanistan,Afghanistan,kmeans_cluster,Asia-Europe,7
+Afghanistan,Afghanistan,hi_cluster_ward,Asia-Europe,7
+Pakistan,Pakistan,kmeans_cluster,Asia-Europe,7
+Pakistan,Pakistan,hi_cluster_ward,Asia-Europe,7
+Kazakhstan,Kazakhstan,kmeans_cluster,Asia-Europe,7
+Kazakhstan,Kazakhstan,hi_cluster_ward,Asia-Europe,7
+Kyrgyzstan,Kyrgyzstan,kmeans_cluster,Asia-Europe,7
+Kyrgyzstan,Kyrgyzstan,hi_cluster_ward,Asia-Europe,7
+Armenia,Armenia,kmeans_cluster,Asia-Europe,7
+Armenia,Armenia,hi_cluster_ward,Asia-Europe,7
+Iran,Iran (Islamic Republic of),kmeans_cluster,Asia-Europe,7
+Iran,Iran (Islamic Republic of),hi_cluster_ward,Asia-Europe,7
+Azerbaijan,Azerbaijan,kmeans_cluster,Asia-Europe,7
+Azerbaijan,Azerbaijan,hi_cluster_ward,Asia-Europe,7
+Georgia,Georgia,kmeans_cluster,Asia-Europe,7
+Georgia,Georgia,hi_cluster_ward,Asia-Europe,7
+Jordan,Jordan,kmeans_cluster,Asia-Europe,7
+Jordan,Jordan,hi_cluster_ward,Asia-Europe,7
+Lebanon,Lebanon,kmeans_cluster,Asia-Europe,7
+Lebanon,Lebanon,hi_cluster_ward,Asia-Europe,7
+Turkey,Türkiye,kmeans_cluster,Asia-Europe,7
+Turkey,Türkiye,hi_cluster_ward,Asia-Europe,7
+Iraq,Iraq,kmeans_cluster,Asia-Europe,7
+Iraq,Iraq,hi_cluster_ward,Asia-Europe,7
+Bahrain,Bahrain,kmeans_cluster,Asia-Europe,7
+Bahrain,Bahrain,hi_cluster_ward,Asia-Europe,7
+Kuwait,Kuwait,kmeans_cluster,Asia-Europe,7
+Kuwait,Kuwait,hi_cluster_ward,Asia-Europe,7
+Oman,Oman,kmeans_cluster,Asia-Europe,7
+Oman,Oman,hi_cluster_ward,Asia-Europe,7
+Qatar,Qatar,kmeans_cluster,Asia-Europe,7
+Qatar,Qatar,hi_cluster_ward,Asia-Europe,7
+Rwanda,Rwanda,kmeans_cluster,Asia-Europe,7
+Rwanda,Rwanda,hi_cluster_ward,Asia-Europe,7
+Democratic Republic of the Congo,Democratic Republic of the Congo,kmeans_cluster,Africa,5
+Democratic Republic of the Congo,Democratic Republic of the Congo,hi_cluster_ward,Asia-Europe,7
+United Republic of Tanzania,United Republic of Tanzania,kmeans_cluster,Africa,5
+United Republic of Tanzania,United Republic of Tanzania,hi_cluster_ward,Asia-Europe,7
+Egypt,Egypt,kmeans_cluster,Asia-Europe,7
+Egypt,Egypt,hi_cluster_ward,Asia-Europe,7
+Ethiopia,Ethiopia,kmeans_cluster,Africa,5
+Ethiopia,Ethiopia,hi_cluster_ward,Asia-Europe,7
