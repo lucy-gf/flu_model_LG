@@ -267,7 +267,7 @@ fcn_run_epidemic <- function(sus, trans, strain,
                              vaccine_program,
                              match, vacc_spec_pop, 
                              vacc_date, hemisphere,
-                             init = 1){ 
+                             init = 1, unvaxed_pop){ 
   
   dates_to_run <- seq.Date(from = as.Date(start_date), 
                            to = as.Date(end_of_period) + 7,
@@ -317,7 +317,6 @@ fcn_run_epidemic <- function(sus, trans, strain,
       coverage_matrix_minimal <- rbind(coverage_matrix_minimal, changed_cov[(length(rows_to_vacc) + 1),])
       dates <- dates_to_run[1:(rows_to_vacc[length(rows_to_vacc)] + 2)]
     }}
-  
   vaccine_calendar <- as_vaccination_calendar(
     efficacy = c(rep(vacc_details$VE[1 + 2*(1 - match)], 3), vacc_details$VE[2 + 2*(1 - match)]),
     dates = dates,
@@ -325,7 +324,19 @@ fcn_run_epidemic <- function(sus, trans, strain,
     no_age_groups = length(age_group_names),
     no_risk_groups=1
   )
-  
+  unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')] <- as.numeric(unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')])
+  prop_vacc <- c(unname(unvaxed_pop['V1']/(unvaxed_pop['U1'] + unvaxed_pop['V1'])), 
+                 unname(unvaxed_pop['V2']/(unvaxed_pop['U2'] + unvaxed_pop['V2'])),
+                 unname(unvaxed_pop['V3']/(unvaxed_pop['U3'] + unvaxed_pop['V3'])),
+                 unname(unvaxed_pop['V4']/(unvaxed_pop['U4'] + unvaxed_pop['V4'])))
+  for(i in 1:nrow(vaccine_calendar$calendar)){
+    for(j in 1:4){
+      if(!vaccine_calendar$calendar[i,j] == 0){
+        vaccine_calendar$calendar[i,j] <- unlist(prop_vacc)[j] + 
+          (12 + i - rows_to_vacc[length(rows_to_vacc)])*(vaccine_program$pop_coverage[j] - unlist(prop_vacc)[j])/vaccine_program$weeks_vaccinating
+      }
+    }
+  }
   
   prop_vacc_start <- list(
     # proportion of the population who have *been* vaccinated
@@ -390,7 +401,7 @@ fcn_pop_check <- function(sus, trans, strain,
                              vaccine_program,
                              match, vacc_spec_pop, 
                              vacc_date, hemisphere,
-                             init = 1, forward){ 
+                             init = 1, forward, unvaxed_pop){ 
   
   dates_to_run <- seq.Date(from = as.Date(start_date), 
                            to = as.Date(end_of_period) + 7,
@@ -450,6 +461,19 @@ fcn_pop_check <- function(sus, trans, strain,
     no_age_groups = length(age_group_names),
     no_risk_groups=1
   )
+  unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')] <- as.numeric(unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')])
+  prop_vacc <- c(unname(unvaxed_pop['V1']/(unvaxed_pop['U1'] + unvaxed_pop['V1'])), 
+                 unname(unvaxed_pop['V2']/(unvaxed_pop['U2'] + unvaxed_pop['V2'])),
+                 unname(unvaxed_pop['V3']/(unvaxed_pop['U3'] + unvaxed_pop['V3'])),
+                 unname(unvaxed_pop['V4']/(unvaxed_pop['U4'] + unvaxed_pop['V4'])))
+  for(i in 1:nrow(vaccine_calendar$calendar)){
+    for(j in 1:4){
+      if(!vaccine_calendar$calendar[i,j] == 0){
+        vaccine_calendar$calendar[i,j] <- unlist(prop_vacc)[j] + 
+          (12 + i - rows_to_vacc[length(rows_to_vacc)])*(vaccine_program$pop_coverage[j] - unlist(prop_vacc)[j])/vaccine_program$weeks_vaccinating
+      }
+    }
+  }
   
   prop_vacc_start <- list(
     # proportion of the population who have *been* vaccinated
@@ -767,6 +791,17 @@ fcn_simulate_epidemics <- function(country_code_input,
                                      coverage_pattern = vacc_details$coverage_pattern,
                                      hemisphere = hemisphere,
                                      start_year = start_year, years = years) 
+  age_structure2 <- fcn_weekly_demog2(country = c(country, country_altern, country_altern_2),
+                                    pop_coverage = vacc_prog$pop_coverage,
+                                    weeks_vaccinating = vacc_prog$weeks_vaccinating,
+                                    first_year_all = vacc_prog$first_year_all,
+                                    NH_vacc_date = vacc_prog$NH_vacc_date,
+                                    SH_vacc_date = vacc_prog$SH_vacc_date,
+                                    init_vaccinated = vacc_prog$init_vaccinated,
+                                    imm_duration = vacc_details$imm_duration, # in years 
+                                    coverage_pattern = vacc_details$coverage_pattern,
+                                    hemisphere = hemisphere,
+                                    start_year = start_year, years = years) 
   epidemics <- sampled_epidemics_input %>% filter(exemplar_code == exemplar_code_input)
   # each week needs to start on a Monday
   monday_start <- which(weekdays(seq.Date(from = as.Date(paste0("01-01-", start_year), '%d-%m-%Y'),
@@ -837,7 +872,17 @@ fcn_simulate_epidemics <- function(country_code_input,
                                          pop_model = group_pop)
     yr_res_pop <- c(rep(group_pop[1]/5, 5), rep(group_pop[2]/15, 15),
                     rep(group_pop[3]/45, 45), rep(group_pop[4]/5, 5))
-    # probability contact matrix needed for the ODE model
+    year_of_first_vacc <- case_when(
+      hemisphere == 'NH' & month(start_date_input) < as.numeric(substr(vacc_prog$SH_vacc_date, 4, 5)) ~
+        year(start_date_input) - 1,
+      hemisphere == 'NH' & month(start_date_input) >= as.numeric(substr(vacc_prog$SH_vacc_date, 4, 5)) ~
+        year(start_date_input),
+      hemisphere == 'SH' & month(start_date_input) < as.numeric(substr(vacc_prog$NH_vacc_date, 4, 5)) ~
+        year(start_date_input),
+      hemisphere == 'SH' & month(start_date_input) >= as.numeric(substr(vacc_prog$NH_vacc_date, 4, 5)) ~
+        year(start_date_input) + 1
+    )
+   
     match_epid <- unname(unlist(data_sample[,paste0(substr(hemisphere, 1, 1), '_', substr(data_sample$strain, 5, 5), '_match')]))
     contact_matrix_small <- t(t(contact_matrix)/group_pop) 
     output_epid <- fcn_run_epidemic(sus = unlist(data_sample$sus), 
@@ -853,11 +898,13 @@ fcn_simulate_epidemics <- function(country_code_input,
                                       init = init_input,
                                       vacc_spec_pop = group_pop_vs,
                                       vacc_date = vacc_date_input,
-                                      hemisphere = hemisphere) 
+                                      hemisphere = hemisphere,
+                                      unvaxed_pop = (age_structure2 %>% filter(X2025L == year_of_first_vacc))) 
     ## RANDOMLY CHECKING IN THREE EPIDEMICS THAT AGE- AND VACC STATUS-SPECIFIC POPULATION
     ## SIZES ARE THE SAME TEN WEEKS IN
     if(j %in% pop_check_random){
       k <- 10
+      # k <- 1:50
       pop_check_demog <- (age_structure %>% filter(week %in% (start_date_input + 7*(k))))
       pop_check_epid <- fcn_pop_check(sus = unlist(data_sample$sus),
                                       trans = unlist(data_sample$trans),
@@ -872,13 +919,14 @@ fcn_simulate_epidemics <- function(country_code_input,
                                       init = init_input,
                                       vacc_spec_pop = group_pop_vs,
                                       vacc_date = vacc_date_input,
-                                      forward = k, hemisphere = hemisphere)
+                                      forward = k, hemisphere = hemisphere,
+                                      unvaxed_pop = (age_structure2 %>% filter(X2025L == year_of_first_vacc)))
       # rbind((c(pop_check_demog$value, pop_check_demog$week[1])),
-      #             as.numeric(pop_check_epid))
-      # plot(pop_check_demog[pop_check_demog$name=='U1',]$value, type='l', ylim=c(1300000, 1700000))
+                  # as.numeric(pop_check_epid))
+      # plot(pop_check_demog[pop_check_demog$name=='V1',]$value, type='l', ylim=c(0, 2000000))
       # par(new=T)
-      # plot(pop_check_epid$U1, type='l', ylim=c(1300000, 1700000), col=2)
-      
+      # plot(pop_check_epid$V1, type='l', ylim=c(0, 2000000), col=2)
+
       if(sum(abs(as.numeric(c(pop_check_demog$value, pop_check_demog$week[1])) -
                  as.numeric(pop_check_epid))) > 100){
         print(paste0('Population sizes differing, ', country, ', epid ', j, ', by = ',
