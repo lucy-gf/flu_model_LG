@@ -824,7 +824,7 @@ incidence_function_fit_VS <- function(
   }
   
   # specify the model
-  mod <- gen_seeiir_ag_vacc_waning$new(
+  mod <- gen_seeiir_ag_vacc_waning_updated$new(
     no_groups = no_groups,
     cij = new_cij,
     trans = transmissibility,
@@ -927,7 +927,7 @@ incidence_function_fit_demog <- function(
   }
   
   # specify the model
-  mod <- gen_seeiir_ag_vacc_waning$new(
+  mod <- gen_seeiir_ag_vacc_waning_updated$new(
     no_groups = no_groups,
     cij = new_cij,
     trans = transmissibility,
@@ -1020,7 +1020,7 @@ incidence_function_fit_doses <- function(
   }
   
   # specify the model
-  mod <- gen_seeiir_ag_vacc_waning$new(
+  mod <- gen_seeiir_ag_vacc_waning_updated$new(
     no_groups = no_groups,
     cij = new_cij,
     trans = transmissibility,
@@ -1051,10 +1051,10 @@ incidence_function_fit_doses <- function(
                       V3 = rowSums(y_run[,12*(1:6) + 100]),
                       U4 = rowSums(y_run[,12*(1:6) - 7]),
                       V4 = rowSums(y_run[,12*(1:6) + 101]),
-                      vaccs1 = y_run[,182],
-                      vaccs2 = y_run[,183],
-                      vaccs3 = y_run[,184],
-                      vaccs4 = y_run[,185],
+                      vaccs1 = y_run[,206],
+                      vaccs2 = y_run[,207],
+                      vaccs3 = y_run[,208],
+                      vaccs4 = y_run[,209],
                       t = y_run[,1])
   
   return(y_pop)
