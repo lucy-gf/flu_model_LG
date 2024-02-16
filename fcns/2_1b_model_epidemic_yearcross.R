@@ -1027,8 +1027,11 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
   # Vaccination is given as a fraction vaccination, here we scale it to 
   # a rate
   sumN[] <- if (vI[i]>0) (S[i]+E1[i]+E2[i]+I1[i]+I2[i]+R[i]) else 0
-  # v[] <- if (sumN[i]>0) vI[i]*pop[i]/sumN[i] else 0
-  v[] <- if (sumN[i]>0) (vI[i]*(pop[i] - V0[i])/(sumN[i])) else 0
+  ## original:
+  # v[] <- if (sumN[i] > 0) (vI[i]*(pop[i]/sumN[i])) else 0
+  ## mine:
+  v[] <- if (sumN[i]>0) (1 - ((1 - vI[i])/(sumN[i]/pop[i]))) else 0
+  ## most basic:
   # v[] <- vI[i]
   # Transmission matrix
   sij[,] <- cij[i,j] * (I1[j] + I2[j] + kappa*(I1v[j] + I2v[j]))
@@ -1119,6 +1122,159 @@ gen_seeiir_ag_vacc_waning <- odin::odin({
 })
 
 
+
+gen_seeiir_ag_vacc_waning_updated <- odin::odin({
+  # Number of groups
+  no_groups <- user()
+  
+  # INITIAL CONDITIONS
+  # Population size by age/risk group
+  pop[] <- user()
+  # Start vaccinated by age/risk group
+  V0[] <- user()
+  R0[] <- user()
+  RV0[] <- user()
+  # Initial infection by age/risk group
+  I0[] <- user()
+  num_vac_start[] <- user()
+  
+  # MODEL PARAMETERS
+  # Susceptibility
+  susc[] <- user()
+  
+  # Transmissibility
+  trans <- user()
+  
+  # Latent periods
+  gamma1 <- user()
+  gamma2 <- user()
+  
+  # Vaccine related variables 
+  dates[] <- user()
+  calendar[,] <- user()
+  # waning of vaccine immunity
+  omega <- user()
+  
+  # kappa in [0,1] the relative (decreased) infectiousness of vaccinated indivs
+  kappa <- user()
+  
+  # efficacy
+  alpha[] <- user()
+  
+  # Contact matrix
+  cij[,] <- user()
+  
+  # Force of infection
+  lambda[] <- trans * susc[i] * (sum(sij[i,]))
+  
+  # Vaccination. The rate is a step function that changes at each date according
+  # to the passed calendar
+  vI[] <- interpolate(dates, calendar, "constant")
+  
+  # Vaccination is given as a fraction vaccination, here we scale it to 
+  # a rate
+  sumN[] <- if (vI[i]>0) (S[i]+E1[i]+E2[i]+I1[i]+I2[i]+R[i]) else 0
+  ## original:
+  # v[] <- if (sumN[i] > 0) (vI[i]*(pop[i]/sumN[i])) else 0
+  ## mine:
+  v[] <- if (sumN[i]>0) (1 - ((1 - vI[i])/(sumN[i]/pop[i]))) else 0
+  ## most basic:
+  # v[] <- vI[i]
+  # constant:
+  # v[] <- if (sumN[i]>0) (0.6/(12*7)) else 0
+  # Transmission matrix
+  sij[,] <- cij[i,j] * (I1[j] + I2[j] + kappa*(I1v[j] + I2v[j]))
+  
+  # Newly infected
+  newInf[] <- lambda[i] * S[i]
+  newInfv[] <- lambda[i] * Sv[i]
+  
+  # THE DERIVATIVES OF THE SEEIIR MODEL
+  # Derivatives of the not vaccinated group
+  deriv(S[])  <- + omega*(Sv[i] + Rev[i]) - newInf[i] - v[i] * S[i] 
+  deriv(E1[]) <- + omega*E1v[i] + newInf[i] - gamma1 * E1[i] - v[i] * E1[i] 
+  deriv(E2[]) <- + omega*E2v[i] + gamma1 * (E1[i] - E2[i]) - v[i] * E2[i]
+  deriv(I1[]) <- + omega*I1v[i] + gamma1 * E2[i]  - gamma2 * I1[i] - v[i] * I1[i] 
+  deriv(I2[]) <- + omega*I2v[i] + gamma2 * (I1[i] - I2[i]) - v[i] * I2[i] 
+  deriv(R[])  <- + omega*Rnv[i] + gamma2 * I2[i] - v[i] * R[i] 
+  
+  # Derivatives vaccination group
+  deriv(Sv[])  <- - omega*Sv[i]  - newInfv[i] + v[i] * (1-alpha[i]) * S[i] 
+  deriv(E1v[]) <- - omega*E1v[i] + newInfv[i] - gamma1 * E1v[i] + v[i] * E1[i]
+  deriv(E2v[]) <- - omega*E2v[i] + gamma1 * (E1v[i] - E2v[i]) + v[i] * E2[i]
+  deriv(I1v[]) <- - omega*I1v[i] + gamma1 * E2v[i]  - gamma2 * I1v[i] + v[i] * I1[i]
+  deriv(I2v[]) <- - omega*I2v[i] + gamma2 * (I1v[i] - I2v[i]) + v[i] * I2[i]
+  deriv(Rv[])  <- - omega*Rv[i]  + gamma2 * I2v[i] + v[i] * (R[i] + alpha[i] * S[i])
+  deriv(Rnv[])  <- - omega*Rnv[i]  + gamma2 * I2v[i] + v[i] * (R[i])
+  deriv(Rev[])  <- - omega*Rev[i] + v[i] * (alpha[i] * S[i])
+  deriv(VT[]) <- + v[i]*(S[i] + E1[i] + E2[i] + I1[i] + I2[i] + R[i])
+  
+  # Tracking the cumulative amount of infections over time for output of incidence
+  deriv(cumI[]) <- newInf[i] + newInfv[i]
+  deriv(cumIU[]) <- newInf[i] 
+  deriv(cumIV[]) <- newInfv[i]
+  
+  # Initial value of the variables
+  initial(S[1:no_groups]) <- pop[i]*(1-V0[i])*(1-R0[i]) - I0[i]
+  initial(E1[1:no_groups]) <- 0
+  initial(E2[1:no_groups]) <- 0
+  initial(I1[1:no_groups]) <- I0[i]
+  initial(I2[1:no_groups]) <- 0
+  initial(R[1:no_groups]) <- pop[i]*(1-V0[i])*(R0[i])
+  initial(cumI[1:no_groups]) <- 0
+  initial(cumIU[1:no_groups]) <- 0
+  initial(cumIV[1:no_groups]) <- 0
+  
+  initial(Sv[1:no_groups]) <- (pop[i]*V0[i])*(1-RV0[i])
+  initial(E1v[1:no_groups]) <- 0
+  initial(E2v[1:no_groups]) <- 0
+  initial(I1v[1:no_groups]) <- 0
+  initial(I2v[1:no_groups]) <- 0
+  initial(Rv[1:no_groups]) <- (pop[i]*V0[i])*(RV0[i])
+  initial(Rnv[1:no_groups]) <- 0
+  initial(Rev[1:no_groups]) <- (pop[i]*V0[i])*(RV0[i])
+  initial(VT[1:no_groups]) <- num_vac_start[i]
+  
+  # Set dimension of all variables/parameters
+  dim(dates) <- user()
+  dim(calendar) <- user()
+  
+  dim(pop) <- no_groups
+  dim(I0) <- no_groups
+  dim(V0) <- no_groups
+  dim(R0) <- no_groups
+  dim(RV0) <- no_groups
+  dim(num_vac_start) <- no_groups
+  dim(susc) <- no_groups
+  dim(lambda) <- no_groups
+  dim(v) <- no_groups
+  dim(vI) <- no_groups
+  dim(sumN) <- no_groups
+  dim(alpha) <- no_groups
+  dim(cij) <- c(no_groups, no_groups)
+  dim(sij) <- c(no_groups, no_groups)
+  
+  dim(S) <- no_groups
+  dim(E1) <- no_groups
+  dim(E2) <- no_groups
+  dim(I1) <- no_groups
+  dim(I2) <- no_groups
+  dim(R) <- no_groups
+  dim(Sv) <- no_groups
+  dim(E1v) <- no_groups
+  dim(E2v) <- no_groups
+  dim(I1v) <- no_groups
+  dim(I2v) <- no_groups
+  dim(Rv) <- no_groups
+  dim(Rnv) <- no_groups
+  dim(Rev) <- no_groups
+  dim(cumI) <- no_groups
+  dim(cumIU) <- no_groups
+  dim(cumIV) <- no_groups
+  dim(newInf) <- no_groups
+  dim(newInfv) <- no_groups
+  dim(VT) <- no_groups
+})
 
 
 gen_seeiir_ag_vacc_waning_NH <- odin::odin({
