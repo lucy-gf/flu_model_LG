@@ -12,11 +12,15 @@ start_year <- 2025
 years <- 30
 
 ## CHANGE THIS EACH TIME
-k <- c(0:4)[1] # this is the targeting group
-scenario_name <- c('base', 'low_cov', 'high_cov', 'rel_inf')[1]
-scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]][1:5 + k*5]
-# alternatives: vaccine_programs_low_cov, vaccine_programs_high_cov, vaccine_programs_rel_inf
-targeting <- substr(names(scenarios[1]), 6, 9)
+k <- c(1:5)[1] # this is the targeting group
+targeting <- paste0('ct_', k)
+scenario_name <- c('none', 'base', 'low_cov', 'rel_inf')[1]
+if(scenario_name == 'none'){
+  scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]]
+}else{
+  scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]][1:5 + (k-1)*5]
+}
+
 
 ## change c_number loop for each ITZ 
 c_number <- 5

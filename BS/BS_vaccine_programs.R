@@ -46,9 +46,8 @@ default_v <- list(
   init_vaccinated = c(0, 0, 0, 0)
 )
 
-cov1 <- 0.5
-cov2 <- 0.2
-cov3 <- 0.8
+cov_main <- 0.7
+cov_low <- 0.4
 
 coverage_vector <- function(target, cov){
   if(! target %in% 1:5){
@@ -63,7 +62,16 @@ coverage_vector <- function(target, cov){
   )
 }
 
-fcn_vacc_prog <- function(target_input, cov_input, relative_vacc_infec_input){
+fcn_vacc_prog <- function(target_input, cov_input, relative_vacc_infec_input, none = F){
+  if(none == T){
+    output_list <- list(
+      c(list(pop_coverage = c(0,0,0,0),
+             vacc_type = 'current',
+             relative_vacc_infec = 1),
+        default_v))
+    names(output_list) <- paste0('vt_0_ct_0')
+    return(output_list)
+  }
   output_list <- list(
     c(list(pop_coverage = coverage_vector(target_input, cov_input),
               vacc_type = 'current',
@@ -90,29 +98,26 @@ fcn_vacc_prog <- function(target_input, cov_input, relative_vacc_infec_input){
   output_list
 }
 
-# vaccine programs, list unfinished:
+# vaccine programs:
+
+vaccine_programs_none <- c(
+  fcn_vacc_prog(1, 0, 1, T)
+)
+
 vaccine_programs_base <- c(
-  fcn_vacc_prog(1, cov1, 1),
-  fcn_vacc_prog(2, cov1, 1),
-  fcn_vacc_prog(3, cov1, 1),
-  fcn_vacc_prog(4, cov1, 1),
-  fcn_vacc_prog(5, cov1, 1)
+  fcn_vacc_prog(1, cov_main, 1),
+  fcn_vacc_prog(2, cov_main, 1),
+  fcn_vacc_prog(3, cov_main, 1),
+  fcn_vacc_prog(4, cov_main, 1),
+  fcn_vacc_prog(5, cov_main, 1)
 )
 
 vaccine_programs_low_cov <- c(
-  fcn_vacc_prog(1, cov2, 1),
-  fcn_vacc_prog(2, cov2, 1),
-  fcn_vacc_prog(3, cov2, 1),
-  fcn_vacc_prog(4, cov2, 1),
-  fcn_vacc_prog(5, cov2, 1)
-)
-
-vaccine_programs_high_cov <- c(
-  fcn_vacc_prog(1, cov3, 1),
-  fcn_vacc_prog(2, cov3, 1),
-  fcn_vacc_prog(3, cov3, 1),
-  fcn_vacc_prog(4, cov3, 1),
-  fcn_vacc_prog(5, cov3, 1)
+  fcn_vacc_prog(1, cov_low, 1),
+  fcn_vacc_prog(2, cov_low, 1),
+  fcn_vacc_prog(3, cov_low, 1),
+  fcn_vacc_prog(4, cov_low, 1),
+  fcn_vacc_prog(5, cov_low, 1)
 )
 
 vaccine_programs_rel_inf <- c(
@@ -124,9 +129,9 @@ vaccine_programs_rel_inf <- c(
 )
 
 vaccine_programs_merged <- list(
+  vaccine_programs_none = vaccine_programs_none,
   vaccine_programs_base = vaccine_programs_base,
   vaccine_programs_low_cov = vaccine_programs_low_cov,
-  vaccine_programs_high_cov = vaccine_programs_high_cov,
   vaccine_programs_rel_inf = vaccine_programs_rel_inf
 )
 

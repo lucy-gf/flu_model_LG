@@ -611,7 +611,7 @@ fcn_run_epidemic_total_inf <- function(sus, trans, strain,
      month(vaccine_calendar$dates[1]) %in% 1:7){
     year_index <- year_index - 1
   }
-  if(year_index < 2010){year_index <- 2010} # quick fix here for if the pushback is too far
+  if(year_index < 2010){year_index <- 2010} 
   coverage = as.numeric(c(unname(cov_data %>% filter(country==sel_cntr,
                                                      year==year_index) %>% select(!country:year))))
   efficacy = unlist(unname(matches %>% filter(year == year_index,
