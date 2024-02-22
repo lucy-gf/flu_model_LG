@@ -324,18 +324,21 @@ fcn_run_epidemic <- function(sus, trans, strain,
     no_age_groups = length(age_group_names),
     no_risk_groups=1
   )
-  unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')] <- as.numeric(unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')])
-  prop_vacc <- c(unname(unvaxed_pop['V1']/(unvaxed_pop['U1'] + unvaxed_pop['V1'])), 
-                 unname(unvaxed_pop['V2']/(unvaxed_pop['U2'] + unvaxed_pop['V2'])),
-                 unname(unvaxed_pop['V3']/(unvaxed_pop['U3'] + unvaxed_pop['V3'])),
-                 unname(unvaxed_pop['V4']/(unvaxed_pop['U4'] + unvaxed_pop['V4'])))
-  for(i in 1:nrow(vaccine_calendar$calendar)){
-    for(j in 1:4){
-      if(!vaccine_calendar$calendar[i,j] == 0){
-        vaccine_calendar$calendar[i,j] <- unlist(prop_vacc)[j] + 
-          (12 + i - rows_to_vacc[length(rows_to_vacc)])*(vaccine_program$pop_coverage[j] - unlist(prop_vacc)[j])/vaccine_program$weeks_vaccinating
+  
+  if(nrow(unvaxed_pop)>0){
+    unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')] <- as.numeric(unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')])
+    prop_vacc <- c(unname(unvaxed_pop['V1']/(unvaxed_pop['U1'] + unvaxed_pop['V1'])), 
+                   unname(unvaxed_pop['V2']/(unvaxed_pop['U2'] + unvaxed_pop['V2'])),
+                   unname(unvaxed_pop['V3']/(unvaxed_pop['U3'] + unvaxed_pop['V3'])),
+                   unname(unvaxed_pop['V4']/(unvaxed_pop['U4'] + unvaxed_pop['V4'])))
+    for(i in 1:nrow(vaccine_calendar$calendar)){
+      for(j in 1:4){
+        if(!vaccine_calendar$calendar[i,j] == 0){
+          vaccine_calendar$calendar[i,j] <- unlist(prop_vacc)[j] + 
+            (12 + i - rows_to_vacc[length(rows_to_vacc)])*(vaccine_program$pop_coverage[j] - unlist(prop_vacc)[j])/vaccine_program$weeks_vaccinating
+        }
       }
-    }
+    } 
   }
   
   prop_vacc_start <- list(
@@ -461,18 +464,20 @@ fcn_pop_check <- function(sus, trans, strain,
     no_age_groups = length(age_group_names),
     no_risk_groups=1
   )
-  unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')] <- as.numeric(unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')])
-  prop_vacc <- c(unname(unvaxed_pop['V1']/(unvaxed_pop['U1'] + unvaxed_pop['V1'])), 
-                 unname(unvaxed_pop['V2']/(unvaxed_pop['U2'] + unvaxed_pop['V2'])),
-                 unname(unvaxed_pop['V3']/(unvaxed_pop['U3'] + unvaxed_pop['V3'])),
-                 unname(unvaxed_pop['V4']/(unvaxed_pop['U4'] + unvaxed_pop['V4'])))
-  for(i in 1:nrow(vaccine_calendar$calendar)){
-    for(j in 1:4){
-      if(!vaccine_calendar$calendar[i,j] == 0){
-        vaccine_calendar$calendar[i,j] <- unlist(prop_vacc)[j] + 
-          (12 + i - rows_to_vacc[length(rows_to_vacc)])*(vaccine_program$pop_coverage[j] - unlist(prop_vacc)[j])/vaccine_program$weeks_vaccinating
+  if(nrow(unvaxed_pop)>0){
+    unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')] <- as.numeric(unvaxed_pop[c('U1', 'V1', 'U2', 'V2', 'U3', 'V3', 'U4', 'V4')])
+    prop_vacc <- c(unname(unvaxed_pop['V1']/(unvaxed_pop['U1'] + unvaxed_pop['V1'])), 
+                   unname(unvaxed_pop['V2']/(unvaxed_pop['U2'] + unvaxed_pop['V2'])),
+                   unname(unvaxed_pop['V3']/(unvaxed_pop['U3'] + unvaxed_pop['V3'])),
+                   unname(unvaxed_pop['V4']/(unvaxed_pop['U4'] + unvaxed_pop['V4'])))
+    for(i in 1:nrow(vaccine_calendar$calendar)){
+      for(j in 1:4){
+        if(!vaccine_calendar$calendar[i,j] == 0){
+          vaccine_calendar$calendar[i,j] <- unlist(prop_vacc)[j] + 
+            (12 + i - rows_to_vacc[length(rows_to_vacc)])*(vaccine_program$pop_coverage[j] - unlist(prop_vacc)[j])/vaccine_program$weeks_vaccinating
+        }
       }
-    }
+    } 
   }
   
   prop_vacc_start <- list(
