@@ -934,7 +934,8 @@ fcn_simulate_epidemics <- function(country_code_input,
                                as.numeric(pop_check_epid)))))
       }
     }
-    output_epid <- output_epid %>% filter(!year(time) < start_year) %>% 
+    output_epid <- output_epid %>% filter(!year(time) < start_year,
+                                          !year(time) > start_year + years - 1) %>% 
         select(!c(I1, I2, I3, I4))
     cases_df[cases_df$week %in% output_epid$time, 
                (2:9 + 8*(data_sample$strain=='INF_B'))] <- cases_df[cases_df$week %in% output_epid$time, 
