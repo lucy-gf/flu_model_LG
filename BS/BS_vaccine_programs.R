@@ -121,11 +121,11 @@ vaccine_programs_low_cov <- c(
 )
 
 vaccine_programs_rel_inf <- c(
-  fcn_vacc_prog(1, cov1, 0.5),
-  fcn_vacc_prog(2, cov1, 0.5),
-  fcn_vacc_prog(3, cov1, 0.5),
-  fcn_vacc_prog(4, cov1, 0.5),
-  fcn_vacc_prog(5, cov1, 0.5)
+  fcn_vacc_prog(1, cov_main, 0.5),
+  fcn_vacc_prog(2, cov_main, 0.5),
+  fcn_vacc_prog(3, cov_main, 0.5),
+  fcn_vacc_prog(4, cov_main, 0.5),
+  fcn_vacc_prog(5, cov_main, 0.5)
 )
 
 vaccine_programs_merged <- list(
