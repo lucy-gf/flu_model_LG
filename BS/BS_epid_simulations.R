@@ -14,7 +14,7 @@ years <- 30
 ## CHANGE THIS EACH TIME
 k <- c(1:5)[1] # this is the targeting group
 targeting <- paste0('ct_', k)
-scenario_name <- c('none', 'base', 'low_cov', 'rel_inf')[1]
+scenario_name <- c('none', 'base', 'low_cov', 'rel_inf')[2]
 if(scenario_name == 'none'){
   scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]]
 }else{
