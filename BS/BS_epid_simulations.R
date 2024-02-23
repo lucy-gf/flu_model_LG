@@ -12,7 +12,7 @@ start_year <- 2025
 years <- 30
 
 ## CHANGE THIS EACH TIME
-k <- c(1:5)[1] # this is the targeting group
+k <- 1 # age-specific targeting strategy, in 1:5
 targeting <- paste0('ct_', k)
 scenario_name <- c('none', 'base', 'low_cov', 'rel_inf')[2]
 if(scenario_name == 'none'){
@@ -23,7 +23,7 @@ if(scenario_name == 'none'){
 
 
 ## change c_number loop for each ITZ 
-c_number <- 5
+c_number <- 6
     c_name <- c("Africa", "Asia-Europe", "Eastern and Southern Asia",
                 "Europe", "Northern America", "Oceania-Melanesia-Polynesia",
                 "Southern America")[c_number]
@@ -84,8 +84,14 @@ c_number <- 5
                    ', Simulations complete: ', sims,
                    ', time taken: ', round(Sys.time() - start_time, digits = 2)))
     }
-  }
+}
+    
 
+    
+
+
+    
+    
 
 
 
