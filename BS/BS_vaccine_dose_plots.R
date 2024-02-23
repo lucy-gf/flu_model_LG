@@ -89,21 +89,22 @@ vacc_doses_g %>% filter(!age_grp == 3) %>% select(!c(wasted, age_grp)) %>%
 ## vaccinations over the period
 
 wd_ex <- data.frame()
-for(i in 1:length(vaccine_programs)){
-  wd_ex <- rbind(wd_ex, (fcn_weekly_demog(country = 'United Kingdom',
+for(i in 1:length(vaccine_programs_base)){
+  wd_ex <- rbind(wd_ex, (fcn_weekly_demog(country = 'Canada',
                                          hemisphere = 'NH',
-                                         pop_coverage = coverage_vec,
-                                         imm_duration = vacc_type_list[[vaccine_programs[[i]]$vacc_type]]$imm_duration, # in years 
-                                         coverage_pattern = vacc_type_list[[vaccine_programs[[i]]$vacc_type]]$coverage_pattern,
-                                         weeks_vaccinating = vaccine_programs[[i]]$weeks_vaccinating) %>% mutate(vp=i)))
+                                         pop_coverage = vaccine_programs_base[[i]]$pop_coverage,
+                                         imm_duration = vacc_type_list[[vaccine_programs_base[[i]]$vacc_type]]$imm_duration, # in years 
+                                         coverage_pattern = vacc_type_list[[vaccine_programs_base[[i]]$vacc_type]]$coverage_pattern,
+                                         weeks_vaccinating = vaccine_programs_base[[i]]$weeks_vaccinating) %>% mutate(vp = names(vaccine_programs_base)[i])))
 }
 
 wd_ex %>% filter(V==T, year < 2035) %>% 
+  mutate(vacc_type = substr(vp, 4, 4), targeting = substr(vp, 9, 9)) %>% 
   ggplot() +
-  geom_line(aes(x=week, y=value/total_as, group=vp, col=as.factor(vp)), lwd=0.8) +
+  geom_line(aes(x=week, y=value/total_as, group=vacc_type, col=as.factor(vacc_type)), lwd=0.8) +
   theme_bw() + ylab('Vaccinated proportion of population') + xlab('Year') +
   ggtitle(paste0('Population projections')) + 
-  facet_grid(age_grp~., scales='free') + 
+  facet_grid(age_grp~targeting, scales='free') + 
   theme(text=element_text(size=14)) + 
   labs(color = "Vaccine type") +
   scale_color_manual(labels = c("Current", "Improved \nminimal",

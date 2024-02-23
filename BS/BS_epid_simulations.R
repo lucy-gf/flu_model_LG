@@ -23,7 +23,7 @@ if(scenario_name == 'none'){
 
 
 ## change c_number loop for each ITZ 
-c_number <- 6
+c_number <- 1
     c_name <- c("Africa", "Asia-Europe", "Eastern and Southern Asia",
                 "Europe", "Northern America", "Oceania-Melanesia-Polynesia",
                 "Southern America")[c_number]

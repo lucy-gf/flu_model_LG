@@ -395,7 +395,7 @@ fcn_weekly_demog <- function(country, demographic_pars = demog_data,
   }
   action_week <- dates_to_run[length(dates_to_run)]
   
-  for(loop_index in 3:11){#(length(dates) - 1)){
+  for(loop_index in 3:(length(dates) - 1)){
     if((vacc_first + loop_index) %% 2 == 1){
       births <- CBR*sum(output[output$week == action_week,columns])
       output[output$week == action_week,c('U1', 'U2', 'U3', 'U4')] <- c(births,0,0,0) + unname(unlist(output[output$week == action_week,c('U1', 'U2', 'U3', 'U4')]))%*%RH_matrix

@@ -12,9 +12,8 @@ start_year <- 2025
 years <- 30
 
 ## CHANGE THIS EACH TIME
-scenario_name <- c('base', 'low_cov', 'high_cov', 'rel_inf')[1]
+scenario_name <- c('base', 'low_cov', 'rel_inf')[1]
 scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]]
-# alternatives: vaccine_programs_low_cov, vaccine_programs_high_cov, vaccine_programs_rel_inf
 
 ## MAKE SURE THAT THE ORDER OF LOOPS ENSURES THE LEAST COMPUTATIONAL TIME
 
