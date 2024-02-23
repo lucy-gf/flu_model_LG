@@ -1,5 +1,5 @@
 # LOAD FLUNET DATA
-flunet_data <- read_csv("https://github.com/1035825/flu_model_LG/raw/main/VIW_FNT.csv") 
+flunet_data <- read_csv("data/VIW_FNT.csv") 
 # POPULATION
 cntr_pop_2020 = pop[-(1:29),] %>% select(name,`2020`) %>% rename(pop_size=`2020`) %>% 
   mutate(pop_size=round(pop_size/1e3,2)) %>% rename(COUNTRY_AREA_TERRITORY=name)
