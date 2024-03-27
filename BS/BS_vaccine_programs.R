@@ -2,6 +2,7 @@
 ## SIMULATING X-YEAR TIME SERIES FOR EACH CLUSTER/COUNTRY IN INF A+B ##
 
 ## RUNNING WITH VARIOUS VACCINATION SCENARIOS ##
+library(dplyr)
 
 # vaccine types:
 vacc_type_list <- list(

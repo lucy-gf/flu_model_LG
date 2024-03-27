@@ -9,7 +9,7 @@ library(socialmixr)
 library(fluEvidenceSynthesis)
 library(data.table)
 library(odin)
-library(parallel)
+#library(parallel)
 library(countrycode)
 library(ggplot2)
 library(readxl)
@@ -108,14 +108,14 @@ for(i in 1:nrow(allyrs)){
 # write_csv(allyrs, file = "output/allyrs.csv")
 
 ## loading in clusters, matching to exemplar countries ##
-flu_ITZ_clusters <- read_csv("data/flu_ITZ_clusters.csv") 
+flu_ITZ_clusters <- read_csv("data_for_BS/flu_ITZ_clusters.csv") 
 
 cluster_codes <- data.frame(cluster = 1:7, 
                             cluster_name = unique(flu_ITZ_clusters$cluster_name),
                             code = c('ARG','CAN','AUS','CHN','GHA','GBR','TUR'))
 
 ## new_clusters defined in cluster_expansion.R
-clusters <- read_csv("data/new_clustering.csv")
+clusters <- read_csv("data_for_BS/new_clustering.csv")
 
 clusters <- clusters %>% arrange(cluster_name) %>% mutate(cluster_code = NA)
 
@@ -125,7 +125,7 @@ for(i in 1:nrow(clusters)){
 
 ## loading in the inference parameter samples: ##
 
-#post_samples_merged_simulation <- readRDS("data_for_BS/post_samples_merged_simulation.rds")
+post_samples_merged_simulation <- readRDS("data_for_BS/post_samples_merged_simulation.rds")
 
 ## function to bootstrap the parameters: ##
 
@@ -184,7 +184,7 @@ fcn_sample_epidemics <- function(country_code, sampled_years){ # k in 1:7, clust
 age_limits <- c(0,5,20,65)
 age_group_names <- paste0(age_limits,"-", c(age_limits[2:length(age_limits)],99))
 
-load("data/contact_all.rdata")
+load("data_for_BS/contact_all.rdata")
 source("fcns/fcns.R")
 
 ## function to re-weight Prem et al. contact matrices to a specific demography
@@ -366,6 +366,78 @@ fcn_run_epidemic <- function(sus, trans, strain,
     contact_ids_sample = NA, 
     contacts = contact_matrix_input,
     waning_rate = 1/(365*vacc_details$imm_duration),
+    vaccination_ratio_input = prop_vacc_start,
+    begin_date = start_date, 
+    end_date = end_of_period,  
+    year_to_run = year(vaccine_calendar$dates[1]), 
+    efficacy_now =rep(0,12), 
+    efficacy_next=rep(0,12),
+    efficacy_next2 =rep(0,12), 
+    previous_summary = NA, 
+    age_groups_model = c(5,20,65),
+    kappa_input = vaccine_program$relative_vacc_infec
+  )
+  fit <- data.table(fit)
+  return(fit)
+}
+
+fcn_run_epidemic_exemplar <- function(sus, trans, strain,
+                             sel_cntr,
+                             demography, contact_matrix_input,
+                             start_date, end_of_period,
+                             vaccine_program,
+                             match, vacc_spec_pop, 
+                             vacc_date, hemisphere,
+                             init = 1, unvaxed_pop){ 
+  
+  dates_to_run <- c(as.Date(start_date), as.Date(end_of_period) + 7) # end after the final week
+  
+  vaccine_calendar <- as_vaccination_calendar(
+    efficacy = rep(0,length(age_group_names)),
+    dates = dates_to_run,
+    coverage = matrix(
+      0,
+      nrow = 3, 
+      ncol = length(age_group_names)
+    ),
+    no_age_groups = length(age_group_names),
+    no_risk_groups=1
+  )
+  year_for_vacc = year(start_date)
+  hemisphere_input <- df_cntr_table[df_cntr_table$country == sel_cntr,]$hemisphere
+  year_index = year_for_vacc
+  # if in NH, has vaccinations and epidemic starts in the first half of the year,
+  # replace with previous year's vaccination program/match
+  if(hemisphere_input == 'NH' & 
+     sel_cntr %in% c('Canada', 'United Kingdom') & # ignore countries with no vacc
+     month(vaccine_calendar$dates[1]) %in% 1:7){
+    year_index <- year_index - 1
+  }
+  if(year_index < 2010){year_index <- 2010} # quick fix here for if the pushback is too far
+  coverage = as.numeric(c(unname(cov_data %>% filter(country==sel_cntr,
+                                                     year==year_index) %>% select(!country:year))))
+  efficacy = unlist(unname(matches %>% filter(year == year_index,
+                                              strain_match == strain,
+                                              hemisphere == hemisphere_input
+  ) %>% select(!hemisphere:match)))
+  
+  prop_vacc_start <- list(
+    prop_vaccine_compartments = rep(coverage, 3), #proportion of individuals vaccinated
+    prop_R_vaccinated = rep(efficacy, 3), #proportion of vaccinated individuals in Rv compartment (as opposed to Sv)
+    prop_R = rep(0,12) # proportion of individuals in R (unvaccinated)
+    # set to 0 as immunity is not assumed to be related to the previous season
+  )
+  
+  # pars: c(reporting, transmissibility, susceptibility, initial infected)
+  pars <- c(NA, trans, sus, init) 
+  
+  fit <- incidence_function_fit_VS(
+    demography_input = demography,
+    parameters = pars,
+    calendar_input = vaccine_calendar,
+    contact_ids_sample = NA, 
+    contacts = contact_matrix_input,
+    waning_rate = 0,
     vaccination_ratio_input = prop_vacc_start,
     begin_date = start_date, 
     end_date = end_of_period,  
@@ -764,6 +836,19 @@ fcn_identify_start <- function(sus_input, trans_input, infected, date, country,
     }}
 }
 
+## function to scale contact matrices to match r0
+fcn_scale_contacts <- function(trans,
+                               contacts_small, 
+                               age_groups,
+                               r0){
+  r0_here <- fluEvidenceSynthesis::as_R0(
+    transmission_rate = trans,
+    contact_matrix = contacts_small, 
+    age_groups = age_groups
+  )
+  return(contacts_small*r0/r0_here)
+}
+
 ## function to run the bootstrapped epidemics ##
 
 fcn_simulate_epidemics <- function(country_code_input, 
@@ -891,12 +976,19 @@ fcn_simulate_epidemics <- function(country_code_input,
    
     match_epid <- unname(unlist(data_sample[,paste0(substr(hemisphere, 1, 1), '_', substr(data_sample$strain, 5, 5), '_match')]))
     contact_matrix_small <- t(t(contact_matrix)/group_pop) 
+    
+    contact_matrix_scaled <- fcn_scale_contacts(
+      trans = data_sample$trans,
+      contacts_small = contact_matrix_small, 
+      age_groups = group_pop,
+      r0 = data_sample$r0)
+    
     output_epid <- fcn_run_epidemic(sus = unlist(data_sample$sus), 
                                       trans = unlist(data_sample$trans), 
                                       strain = data_sample$strain,
                                       sel_cntr = country,
                                       demography = yr_res_pop, 
-                                      contact_matrix_input = contact_matrix_small,
+                                      contact_matrix_input = contact_matrix_scaled,
                                       start_date = start_date_input, 
                                       end_of_period = end_of_period_input,
                                       vaccine_program = vacc_prog,
@@ -928,10 +1020,10 @@ fcn_simulate_epidemics <- function(country_code_input,
                                       forward = k, hemisphere = hemisphere,
                                       unvaxed_pop = (age_structure2 %>% filter(X2025L == year_of_first_vacc)))
       # rbind((c(pop_check_demog$value, pop_check_demog$week[1])),
-                  # as.numeric(pop_check_epid))
-      # plot(pop_check_demog[pop_check_demog$name=='V1',]$value, type='l', ylim=c(0, 2000000))
+      # as.numeric(pop_check_epid))
+      # plot(pop_check_demog[pop_check_demog$name=='V4',]$value, type='l', ylim=c(0, 2000000))
       # par(new=T)
-      # plot(pop_check_epid$V1, type='l', ylim=c(0, 2000000), col=2)
+      # plot(pop_check_epid$V4, type='l', ylim=c(0, 2000000), col=2)
 
       if(sum(abs(as.numeric(c(pop_check_demog$value, pop_check_demog$week[1])) -
                  as.numeric(pop_check_epid))) > 100){
@@ -951,7 +1043,289 @@ fcn_simulate_epidemics <- function(country_code_input,
   return(cases_df)
 }
 
+## function to run the original epidemics 
+## in exemplar countries, with vaccination fixed 
+## at observed coverage ##
 
+fcn_simulate_epidemics_exemplar <- function(country_code_input, 
+                                   hemisphere, 
+                                   sampled_epidemics_input, 
+                                   vacc_prog,
+                                   start_year = 2010,
+                                   years = 10){ 
+  # name the country
+  if(country_code_input == 'XKX'){
+    country <- 'Kosovo'
+    country_altern <- 'Kosovo (under UNSC res. 1244)'
+    country_altern_2 <- 'Kosovo'
+  }else{
+    country <- countrycode(country_code_input, origin = 'iso3c', destination = 'country.name')
+    country_altern <- clusters$country_altern[clusters$codes == country_code_input]
+    country_altern_2 <- clusters$country_altern_2[clusters$codes == country_code_input]
+  }
+  exemplar_code_input <- clusters$cluster_code[clusters$codes == country_code_input]
+  # demography data-frame
+  vacc_date_input <- unlist(unname(vacc_prog[paste0(hemisphere, '_vacc_date')]))
+  vacc_details <- vacc_type_list[[vacc_prog$vacc_type]]
+  age_structure <- fcn_weekly_demog(country = c(country, country_altern, country_altern_2),
+                                    pop_coverage = vacc_prog$pop_coverage,
+                                    weeks_vaccinating = vacc_prog$weeks_vaccinating,
+                                    first_year_all = vacc_prog$first_year_all,
+                                    NH_vacc_date = vacc_prog$NH_vacc_date,
+                                    SH_vacc_date = vacc_prog$SH_vacc_date,
+                                    init_vaccinated = vacc_prog$init_vaccinated,
+                                    imm_duration = vacc_details$imm_duration, # in years 
+                                    coverage_pattern = vacc_details$coverage_pattern,
+                                    hemisphere = hemisphere,
+                                    start_year = start_year, years = years) 
+  age_structure2 <- fcn_weekly_demog2(country = c(country, country_altern, country_altern_2),
+                                      pop_coverage = vacc_prog$pop_coverage,
+                                      weeks_vaccinating = vacc_prog$weeks_vaccinating,
+                                      first_year_all = vacc_prog$first_year_all,
+                                      NH_vacc_date = vacc_prog$NH_vacc_date,
+                                      SH_vacc_date = vacc_prog$SH_vacc_date,
+                                      init_vaccinated = vacc_prog$init_vaccinated,
+                                      imm_duration = vacc_details$imm_duration, # in years 
+                                      coverage_pattern = vacc_details$coverage_pattern,
+                                      hemisphere = hemisphere,
+                                      start_year = start_year, years = years) 
+  epidemics <- sampled_epidemics_input %>% filter(exemplar_code == exemplar_code_input)
+  # each week needs to start on a Monday
+  monday_start <- which(weekdays(seq.Date(from = as.Date(paste0("01-01-", start_year), '%d-%m-%Y'),
+                                          to = as.Date(paste0("07-01-", start_year), '%d-%m-%Y'),
+                                          by = 1)) == 'Monday')
+  
+  cases_df <- data.frame(week = seq.Date(from = as.Date(paste0(monday_start, "-01-", start_year), '%d-%m-%Y'),
+                                         to = as.Date(paste0("31-12-", (start_year + years - 1)), '%d-%m-%Y'),
+                                         by = 7),
+                         IU1A = 0, IU2A = 0, IU3A = 0, IU4A = 0,
+                         IV1A = 0, IV2A = 0, IV3A = 0, IV4A = 0,
+                         IU1B = 0, IU2B = 0, IU3B = 0, IU4B = 0,
+                         IV1B = 0, IV2B = 0, IV3B = 0, IV4B = 0)
+  
+  # removing any epidemics which start over a month before the first vaccination date,
+  # as these will not be relevant to vaccine effectiveness
+  vacc_date <- unlist(unname(vacc_prog[paste0(hemisphere, '_vacc_date')]))
+  epidemics <- epidemics %>% filter(! (simulation_cal_year == 1 & 
+                                         (as.numeric(substr(vacc_date, 4, 5)) - as.numeric(month)) > 1))
+  
+  pop_check_random <- sample(1:nrow(epidemics), 3)
+  
+  for(j in 1:nrow(epidemics)){
+    data_sample <<- epidemics[j,]
+    # may need to shift the start date forward to the next monday to match the weeks
+    start_date_late <- as.Date(paste0(as.numeric(data_sample$day), '-', as.numeric(data_sample$month), '-', 
+                                      (start_year + data_sample$simulation_cal_year - 1)), '%d-%m-%Y')
+    original_date <- as.Date(paste0(as.numeric(data_sample$day), '-', data_sample$month, '-', 
+                                    data_sample$year), '%d-%m-%Y')
+    if(!is.na(data_sample$pushback)){
+      pushback <- data_sample$pushback
+      start_date_input <- start_date_late - pushback
+      init_input <- 1
+    }
+    if(is.na(data_sample$pushback)){
+      if(is.na(data_sample$init_ageing_date)){
+        start_date_input <- as.Date(paste0('01-01-', start_year), format = '%d-%m-%Y')
+        init_input <- log10(data_sample$init_nye)
+      }else{
+        ageing_day <- as.numeric(substr(ifelse(hemisphere=='NH', vacc_prog$SH_vacc_date, vacc_prog$NH_vacc_date), 1, 2))
+        ageing_month <- as.numeric(substr(ifelse(hemisphere=='NH', vacc_prog$SH_vacc_date, vacc_prog$NH_vacc_date), 4, 5))
+        ageing_year_start <- year(start_date_late) 
+        if(month(start_date_late) < ageing_month){
+          ageing_year_start <- ageing_year_start - 1
+        }
+        if((month(start_date_late) = ageing_month) & (day(start_date_late) < ageing_day)){
+          ageing_year_start <- ageing_year_start - 1
+        }
+        start_date_input <- as.Date(paste0(ifelse(hemisphere=='NH', vacc_prog$SH_vacc_date, vacc_prog$NH_vacc_date), 
+                                           '-', ageing_year_start), format = '%d-%m-%Y')
+        init_input <- log10(data_sample$init_ageing_date)
+      }
+    }
+    monday_input <- which(weekdays(seq.Date(from = start_date_input, 
+                                            to = start_date_input + 6, 
+                                            by = 1)) == 'Monday')
+    start_date_input <- start_date_input + (monday_input - 1)
+    end_of_period_input <- start_date_input + 365*2
+    
+    # define demography
+    year_index <- (start_year + data_sample$simulation_cal_year - 1)
+    group_pop_vs <- (age_structure %>% filter(week == start_date_input))$value
+    names(group_pop_vs) <- (age_structure %>% filter(week == start_date_input))$name
+    group_pop <- (age_structure %>% filter(week == start_date_input, U == T))$total_as 
+    contact_matrix <- fcn_contact_matrix(country_name = country,
+                                         country_name_altern = country_altern,
+                                         country_name_altern_2 = country_altern_2,
+                                         pop_model = group_pop)
+    yr_res_pop <- c(rep(group_pop[1]/5, 5), rep(group_pop[2]/15, 15),
+                    rep(group_pop[3]/45, 45), rep(group_pop[4]/5, 5))
+    year_of_first_vacc <- case_when(
+      hemisphere == 'NH' & month(start_date_input) < as.numeric(substr(vacc_prog$SH_vacc_date, 4, 5)) ~
+        year(start_date_input) - 1,
+      hemisphere == 'NH' & month(start_date_input) >= as.numeric(substr(vacc_prog$SH_vacc_date, 4, 5)) ~
+        year(start_date_input),
+      hemisphere == 'SH' & month(start_date_input) < as.numeric(substr(vacc_prog$NH_vacc_date, 4, 5)) ~
+        year(start_date_input),
+      hemisphere == 'SH' & month(start_date_input) >= as.numeric(substr(vacc_prog$NH_vacc_date, 4, 5)) ~
+        year(start_date_input) + 1
+    )
+    
+    match_epid <- unname(unlist(data_sample[,paste0(substr(hemisphere, 1, 1), '_', substr(data_sample$strain, 5, 5), '_match')]))
+    contact_matrix_small <- t(t(contact_matrix)/group_pop) 
+    
+    # contact_matrix_scaled <- fcn_scale_contacts(
+    #   trans = data_sample$trans,
+    #   contacts_small = contact_matrix_small, 
+    #   age_groups = group_pop,
+    #   r0 = data_sample$r0)
+    
+    output_epid <- fcn_run_epidemic_exemplar(sus = unlist(data_sample$sus), 
+                                    trans = unlist(data_sample$trans), 
+                                    strain = data_sample$strain,
+                                    sel_cntr = country,
+                                    demography = yr_res_pop, 
+                                    contact_matrix_input = contact_matrix_small,
+                                    start_date = start_date_input, 
+                                    end_of_period = end_of_period_input,
+                                    vaccine_program = vacc_prog,
+                                    match = match_epid,
+                                    init = init_input,
+                                    vacc_spec_pop = group_pop_vs,
+                                    vacc_date = vacc_date_input,
+                                    hemisphere = hemisphere,
+                                    unvaxed_pop = (age_structure2 %>% filter(X2025L == year_of_first_vacc))) 
+    output_epid <- output_epid %>% filter(!year(time) < start_year,
+                                          !year(time) > start_year + years - 1) %>% 
+      select(!c(I1, I2, I3, I4))
+    cases_df[cases_df$week %in% output_epid$time, 
+             (2:9 + 8*(data_sample$strain=='INF_B'))] <- cases_df[cases_df$week %in% output_epid$time, 
+                                                                  (2:9 + 8*(data_sample$strain=='INF_B'))] + 
+      as.matrix(output_epid %>% select(!time), ncol=8)
+  }
+  return(cases_df)
+}
+
+
+fcn_r0_ratio <- function(country_code_input, 
+                                   hemisphere, 
+                                   sampled_epidemics_input, 
+                                   vacc_prog,
+                                   start_year = 2025,
+                                   years = 30){ 
+  # name the country
+  if(country_code_input == 'XKX'){
+    country <- 'Kosovo'
+    country_altern <- 'Kosovo (under UNSC res. 1244)'
+    country_altern_2 <- 'Kosovo'
+  }else{
+    country <- countrycode(country_code_input, origin = 'iso3c', destination = 'country.name')
+    country_altern <- clusters$country_altern[clusters$codes == country_code_input]
+    country_altern_2 <- clusters$country_altern_2[clusters$codes == country_code_input]
+  }
+  exemplar_code_input <- clusters$cluster_code[clusters$codes == country_code_input]
+  # demography data-frame
+  vacc_date_input <- unlist(unname(vacc_prog[paste0(hemisphere, '_vacc_date')]))
+  vacc_details <- vacc_type_list[[vacc_prog$vacc_type]]
+  age_structure <- fcn_weekly_demog(country = c(country, country_altern, country_altern_2),
+                                    pop_coverage = vacc_prog$pop_coverage,
+                                    weeks_vaccinating = vacc_prog$weeks_vaccinating,
+                                    first_year_all = vacc_prog$first_year_all,
+                                    NH_vacc_date = vacc_prog$NH_vacc_date,
+                                    SH_vacc_date = vacc_prog$SH_vacc_date,
+                                    init_vaccinated = vacc_prog$init_vaccinated,
+                                    imm_duration = vacc_details$imm_duration, # in years 
+                                    coverage_pattern = vacc_details$coverage_pattern,
+                                    hemisphere = hemisphere,
+                                    start_year = start_year, years = years) 
+ 
+  epidemics <- sampled_epidemics_input %>% filter(exemplar_code == exemplar_code_input)
+  # each week needs to start on a Monday
+  monday_start <- which(weekdays(seq.Date(from = as.Date(paste0("01-01-", start_year), '%d-%m-%Y'),
+                                          to = as.Date(paste0("07-01-", start_year), '%d-%m-%Y'),
+                                          by = 1)) == 'Monday')
+  
+  # removing any epidemics which start over a month before the first vaccination date,
+  # as these will not be relevant to vaccine effectiveness
+  vacc_date <- unlist(unname(vacc_prog[paste0(hemisphere, '_vacc_date')]))
+  epidemics <- epidemics %>% filter(! (simulation_cal_year == 1 & 
+                                         (as.numeric(substr(vacc_date, 4, 5)) - as.numeric(month)) > 1))
+  
+  r0_ratios <- c()
+  
+  for(j in 1:nrow(epidemics)){
+    data_sample <<- epidemics[j,]
+    # may need to shift the start date forward to the next monday to match the weeks
+    start_date_late <- as.Date(paste0(as.numeric(data_sample$day), '-', as.numeric(data_sample$month), '-', 
+                                      (start_year + data_sample$simulation_cal_year - 1)), '%d-%m-%Y')
+    original_date <- as.Date(paste0(as.numeric(data_sample$day), '-', data_sample$month, '-', 
+                                    data_sample$year), '%d-%m-%Y')
+    if(!is.na(data_sample$pushback)){
+      pushback <- data_sample$pushback
+      start_date_input <- start_date_late - pushback
+      init_input <- 1
+    }
+    if(is.na(data_sample$pushback)){
+      if(is.na(data_sample$init_ageing_date)){
+        start_date_input <- as.Date(paste0('01-01-', start_year), format = '%d-%m-%Y')
+        init_input <- log10(data_sample$init_nye)
+      }else{
+        ageing_day <- as.numeric(substr(ifelse(hemisphere=='NH', vacc_prog$SH_vacc_date, vacc_prog$NH_vacc_date), 1, 2))
+        ageing_month <- as.numeric(substr(ifelse(hemisphere=='NH', vacc_prog$SH_vacc_date, vacc_prog$NH_vacc_date), 4, 5))
+        ageing_year_start <- year(start_date_late) 
+        if(month(start_date_late) < ageing_month){
+          ageing_year_start <- ageing_year_start - 1
+        }
+        if((month(start_date_late) = ageing_month) & (day(start_date_late) < ageing_day)){
+          ageing_year_start <- ageing_year_start - 1
+        }
+        start_date_input <- as.Date(paste0(ifelse(hemisphere=='NH', vacc_prog$SH_vacc_date, vacc_prog$NH_vacc_date), 
+                                           '-', ageing_year_start), format = '%d-%m-%Y')
+        init_input <- log10(data_sample$init_ageing_date)
+      }
+    }
+    monday_input <- which(weekdays(seq.Date(from = start_date_input, 
+                                            to = start_date_input + 6, 
+                                            by = 1)) == 'Monday')
+    start_date_input <- start_date_input + (monday_input - 1)
+    end_of_period_input <- start_date_input + 365*2
+    
+    # define demography
+    year_index <- (start_year + data_sample$simulation_cal_year - 1)
+    group_pop_vs <- (age_structure %>% filter(week == start_date_input))$value
+    names(group_pop_vs) <- (age_structure %>% filter(week == start_date_input))$name
+    group_pop <- (age_structure %>% filter(week == start_date_input, U == T))$total_as 
+    contact_matrix <- fcn_contact_matrix(country_name = country,
+                                         country_name_altern = country_altern,
+                                         country_name_altern_2 = country_altern_2,
+                                         pop_model = group_pop)
+    yr_res_pop <- c(rep(group_pop[1]/5, 5), rep(group_pop[2]/15, 15),
+                    rep(group_pop[3]/45, 45), rep(group_pop[4]/5, 5))
+    year_of_first_vacc <- case_when(
+      hemisphere == 'NH' & month(start_date_input) < as.numeric(substr(vacc_prog$SH_vacc_date, 4, 5)) ~
+        year(start_date_input) - 1,
+      hemisphere == 'NH' & month(start_date_input) >= as.numeric(substr(vacc_prog$SH_vacc_date, 4, 5)) ~
+        year(start_date_input),
+      hemisphere == 'SH' & month(start_date_input) < as.numeric(substr(vacc_prog$NH_vacc_date, 4, 5)) ~
+        year(start_date_input),
+      hemisphere == 'SH' & month(start_date_input) >= as.numeric(substr(vacc_prog$NH_vacc_date, 4, 5)) ~
+        year(start_date_input) + 1
+    )
+    
+    match_epid <- unname(unlist(data_sample[,paste0(substr(hemisphere, 1, 1), '_', substr(data_sample$strain, 5, 5), '_match')]))
+    contact_matrix_small <- t(t(contact_matrix)/group_pop) 
+    r0_here <- fluEvidenceSynthesis::as_R0(
+      transmission_rate = data_sample$trans,
+      contact_matrix = contact_matrix_small, 
+      age_groups = group_pop
+    )
+    
+  r0_ratios <- c(r0_ratios, data_sample$r0/r0_here)
+  
+  }
+  
+  return(data.frame(code = country_code_input, epidID = epidemics$epidID,
+                    r0 = epidemics$r0, r0_ratio = r0_ratios))
+}
 
 
 

@@ -18,7 +18,7 @@ scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)
 ## MAKE SURE THAT THE ORDER OF LOOPS ENSURES THE LEAST COMPUTATIONAL TIME
 
 # loops through each ITZ and vaccination program:
-c_number <- 1
+for(c_number in 1:7){
     c_name <- c("Africa", "Asia-Europe", "Eastern and Southern Asia",
                 "Europe", "Northern America", "Oceania-Melanesia-Polynesia",
                 "Southern America")[c_number]
@@ -86,7 +86,7 @@ c_number <- 1
                  ', cluster: ', c_name))
     write_csv(vacc_doses, file = paste0("data/vacc_doses/vacc_doses_", cluster_code, "_",  scenario_name, ".csv"))
     }
-
+}
 
 
 

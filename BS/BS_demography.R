@@ -1672,7 +1672,10 @@ fcn_vaccine_doses <- function(country, demographic_pars = demog_data,
     uvaccs2nocum = vaccs2 - lead(vaccs2),
     uvaccs3nocum = vaccs3 - lead(vaccs3),
     uvaccs4nocum = vaccs4 - lead(vaccs4)
-  ) %>% filter((vaccs1nocum + uvaccs1nocum) < 0 & 
+  ) %>% filter((vaccs1nocum + uvaccs1nocum +
+                  vaccs2nocum + uvaccs2nocum +
+                  vaccs3nocum + uvaccs3nocum +
+                  vaccs4nocum + uvaccs4nocum) < 0 & 
                  (vaccs1nocum + vaccs2nocum + vaccs3nocum + vaccs4nocum >= 0)) %>% 
     group_by(year) %>% mutate(
       totv1 = sum(vaccs1nocum), totv2 = sum(vaccs2nocum), 
