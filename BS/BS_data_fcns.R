@@ -125,7 +125,7 @@ for(i in 1:nrow(clusters)){
 
 ## loading in the inference parameter samples: ##
 
-post_samples_merged_simulation <- readRDS("data_for_BS/post_samples_merged_simulation.rds")
+#post_samples_merged_simulation <- readRDS("data_for_BS/post_samples_merged_simulation.rds")
 
 ## function to bootstrap the parameters: ##
 
