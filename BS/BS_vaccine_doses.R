@@ -12,7 +12,7 @@ start_year <- 2025
 years <- 30
 
 ## CHANGE THIS EACH TIME
-scenario_name <- c('base', 'low_cov', 'rel_inf')[1]
+scenario_name <- c('base', 'low_cov', 'rel_inf')[2]
 scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]]
 
 ## MAKE SURE THAT THE ORDER OF LOOPS ENSURES THE LEAST COMPUTATIONAL TIME
@@ -84,7 +84,8 @@ for(c_number in 1:7){
       }
     print(paste0('Vaccination program: ', vacc_prog_num,
                  ', cluster: ', c_name))
-    write_csv(vacc_doses, file = paste0("data/vacc_doses/vacc_doses_", cluster_code, "_",  scenario_name, ".csv"))
+    write_csv(vacc_doses, file = paste0("data/vacc_doses_", scenario_name,"/vacc_doses_", 
+                                        cluster_code, "_",  scenario_name, ".csv"))
     }
 }
 

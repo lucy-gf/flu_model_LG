@@ -35,6 +35,66 @@ vacc_type_list <- list(
     coverage_pattern = 1,
     VE = c(0.9, 0.7, 0.9, 0.7),
     mismatch = F
+  ),
+  current_breadth = list(
+    imm_duration = 0.5,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28), 
+    mismatch = T
+  ),
+  improved_minimal_breadth = list(
+    imm_duration = 0.5,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28),
+    mismatch = T
+  ),
+  improved_efficacy_breadth = list(
+    imm_duration = 0.5,
+    coverage_pattern = 1,
+    VE = c(0.9, 0.7, 0.7, 0.4),
+    mismatch = T
+  ),
+  improved_breadth_breadth = list(
+    imm_duration = 0.5,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.7, 0.46),
+    mismatch = F
+  ),
+  universal_breadth = list(
+    imm_duration = 0.5,
+    coverage_pattern = 1,
+    VE = c(0.9, 0.7, 0.9, 0.7),
+    mismatch = F
+  ),
+  current_depth = list(
+    imm_duration = 0.5,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28), 
+    mismatch = T
+  ),
+  improved_minimal_depth = list(
+    imm_duration = 1,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28), 
+    mismatch = T
+  ),
+  improved_efficacy_depth = list(
+    imm_duration = 2,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28), 
+    mismatch = T
+  ),
+  improved_breadth_depth = list(
+    imm_duration = 3,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28), 
+    mismatch = F
+  ),
+  universal_depth = list(
+    imm_duration = 5,
+    coverage_pattern = 1,
+    VE = c(0.7, 0.46, 0.42, 0.28), 
+    mismatch = F
   )
 )
 
@@ -129,11 +189,37 @@ vaccine_programs_rel_inf <- c(
   fcn_vacc_prog(5, cov_main, 0.5)
 )
 
+vaccine_programs_breadth <- c(
+  fcn_vacc_prog(1, cov_main, 1),
+  fcn_vacc_prog(2, cov_main, 1),
+  fcn_vacc_prog(3, cov_main, 1),
+  fcn_vacc_prog(4, cov_main, 1),
+  fcn_vacc_prog(5, cov_main, 1)
+)
+for(i in 1:length(vaccine_programs_breadth)){
+  vaccine_programs_breadth[[i]]$vacc_type <- paste0(vaccine_programs_breadth[[i]]$vacc_type,
+                                                    "_breadth")
+}
+
+vaccine_programs_depth <- c(
+  fcn_vacc_prog(1, cov_main, 1),
+  fcn_vacc_prog(2, cov_main, 1),
+  fcn_vacc_prog(3, cov_main, 1),
+  fcn_vacc_prog(4, cov_main, 1),
+  fcn_vacc_prog(5, cov_main, 1)
+)
+for(i in 1:length(vaccine_programs_depth)){
+  vaccine_programs_depth[[i]]$vacc_type <- paste0(vaccine_programs_depth[[i]]$vacc_type,
+                                                    "_depth")
+}
+
 vaccine_programs_merged <- list(
   vaccine_programs_none = vaccine_programs_none,
   vaccine_programs_base = vaccine_programs_base,
   vaccine_programs_low_cov = vaccine_programs_low_cov,
-  vaccine_programs_rel_inf = vaccine_programs_rel_inf
+  vaccine_programs_rel_inf = vaccine_programs_rel_inf,
+  vaccine_programs_breadth = vaccine_programs_breadth,
+  vaccine_programs_depth = vaccine_programs_depth
 )
 
 

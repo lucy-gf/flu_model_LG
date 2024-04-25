@@ -2,6 +2,10 @@
 ## PLOTTING PROJECTION OUTPUTS
 #setwd("~/Desktop/research asst/Global Code")
 
+folder <- c('vacc_output_base','vacc_output_no_scaling','vacc_output_low_cov',
+            'vacc_output_breadth')[4]
+print(folder)
+
 source("BS/BS_vaccine_programs.R")
 source("BS/BS_colors.R")
 
@@ -45,12 +49,19 @@ eti95U <- function(x){
 }
 
 ## VACC DOSES
-scenario_name <- c('base', 'low_cov', 'rel_inf')[1]
+scenario_name <- c('base')
+if(folder == 'vacc_output_low_cov'){scenario_name <- 'low_cov'}
 vacc_doses <- data.frame()
 for(c_code in c("GHA", "TUR", "CHN", "GBR", "CAN", "AUS", "ARG")){
-  vacc_doses <- rbind(vacc_doses, read_csv(paste0("data/vacc_doses/vacc_doses_", c_code, "_",
-                                                  scenario_name, ".csv")) %>% 
-                        mutate(cluster_code = c_code))
+  if(folder == 'vacc_output_low_cov'){
+    vacc_doses <- rbind(vacc_doses, read_csv(paste0("data/vacc_doses_low_cov/vacc_doses_", c_code, "_",
+                                                    scenario_name, ".csv")) %>% 
+                          mutate(cluster_code = c_code))
+  }else{
+    vacc_doses <- rbind(vacc_doses, read_csv(paste0("data/vacc_doses_base/vacc_doses_", c_code, "_",
+                                                    scenario_name, ".csv")) %>% 
+                          mutate(cluster_code = c_code))
+  }
 }
 
 vacc_doses_g <- vacc_doses %>% select(!c(country)) %>% pivot_longer(!c(country_code, vacc_program, year, cluster_code)) %>% 
@@ -58,47 +69,55 @@ vacc_doses_g <- vacc_doses %>% select(!c(country)) %>% pivot_longer(!c(country_c
   mutate(wasted = grepl('w', name), age_grp = substr(name, 2, 2)) %>%
   mutate(vacc_type = (vacc_program %% 5), age_cov = ceiling(vacc_program/5)) %>% 
   mutate(vacc_type = case_when(vacc_type == 0 ~ 5, .default = vacc_type))
+if(folder=='vacc_output_breadth'){
+  vacc_doses_g <- rbind(vacc_doses_g[vacc_doses_g$vacc_type==1,],
+                        vacc_doses_g[vacc_doses_g$vacc_type==1,],
+                        vacc_doses_g[vacc_doses_g$vacc_type==1,],
+                        vacc_doses_g[vacc_doses_g$vacc_type==1,],
+                        vacc_doses_g[vacc_doses_g$vacc_type==1,])
+  vacc_doses_g$vacc_type <- rep(1:5, each = nrow(vacc_doses_g)/5)
+}
 
-# vacc_doses_g %>% filter(!age_grp == 3, age_cov==5) %>% 
-#   ggplot(aes(fill=wasted, y=value/1000000, x=year)) + 
-#   geom_bar(position="stack", stat="identity") +
-#   scale_fill_brewer(palette = 'Set1', labels = c('Unvaccinated','Vaccinated \n(Ineffective)')) +
-#   xlab('Year') + ylab('Vaccine doses, millions') +
-#   #ggtitle("Annual age-specific vaccine doses given in UK, millions") +
-#   # scale_alpha_discrete(range = c(0.4, 1),
-#   #                      labels = c('0-5','5-20','65+')) +
-#   facet_grid(.~vacc_type, scales='free_y',
-#              labeller = labeller(vacc_type = supp.labs)) + 
-#   theme_bw() + labs(fill = "Vaccine recipient",
-#                     alpha = 'Age group') +
-#   xlab("Year") + theme(text=element_text(size=14))
-# ggsave(paste0("output/plots/BS_plots/vacc_doses/doses_given_by_VS.png"),
-#        width=30,height=7,units="cm")
-# 
-# vacc_doses_g %>% filter(!age_grp == 3, year==2054) %>% select(!c(wasted, age_grp)) %>%
-#   pivot_wider(names_from = name, values_from = value) %>%
-#   mutate(prop1 = w1/(w1+v1), prop2 = w2/(w2+v2), prop4 = w4/(w4+v4),
-#          tot_prop = (w1 + w2 + w4)/(v1 + v2 + v4 + w1 + w2 + w4)) %>%
-#   pivot_longer(!c(cluster_code, year, vacc_program, vacc_type, age_cov)) %>%
-#   filter(grepl('prop', name)) %>% mutate(age_grp = case_when(
-#     name == 'prop1' ~ '0-5',  name == 'prop2' ~ '5-20',
-#     name == 'prop4' ~ '65+',  name == 'tot_prop' ~ 'Total'
-#   )) %>% filter(age_cov == 5) %>% 
-#   ggplot() +
-#   geom_bar(aes(fill=age_grp, x=as.factor(vacc_type), y=value), position="dodge", stat="identity") +
-#   scale_fill_manual(values = age_colors) +
-#   # facet_grid(age_cov~vacc_type, labeller = labeller(vacc_type = supp.labs,
-#   #                                                   age_cov = supp.labs.cov)) +
-#   xlab('') + ylab('Proportion of vaccine doses ineffective') +
-#   theme_bw() + labs(fill='Age group') + 
-#   scale_y_continuous(limits = c(0,0.6), breaks=seq(0,0.6,0.1)) + 
-#   theme(text=element_text(size=14)) +
-#   scale_x_discrete(labels=c("Current", "Improved\n(minimal)",
-#                             "Improved\n(efficacy)", "Improved\n(breadth)",
-#                             "Universal")) +
-#   theme(axis.text.x = element_text(color=1))
-# ggsave(paste0("output/plots/BS_plots/vacc_doses/doses_ineffective_by_age.png"),
-#        width=22,height=10,units="cm")
+vacc_doses_g %>% filter(!age_grp == 3, age_cov==5) %>%
+  ggplot(aes(fill=wasted, y=value/1000000, x=year)) +
+  geom_bar(position="stack", stat="identity") +
+  scale_fill_brewer(palette = 'Set1', labels = c('Unvaccinated','Vaccinated \n(Ineffective)')) +
+  xlab('Year') + ylab('Vaccine doses, millions') +
+  #ggtitle("Annual age-specific vaccine doses given in UK, millions") +
+  # scale_alpha_discrete(range = c(0.4, 1),
+  #                      labels = c('0-5','5-20','65+')) +
+  facet_grid(.~vacc_type, scales='free_y',
+             labeller = labeller(vacc_type = supp.labs)) +
+  theme_bw() + labs(fill = "Vaccine recipient",
+                    alpha = 'Age group') +
+  xlab("Year") + theme(text=element_text(size=14))
+ggsave(paste0("output/plots/",folder,"/vacc_doses/doses_given_by_VS.png"),
+       width=30,height=7,units="cm")
+
+vacc_doses_g %>% filter(!age_grp == 3, year==2054) %>% select(!c(wasted, age_grp)) %>%
+  pivot_wider(names_from = name, values_from = value) %>%
+  mutate(prop1 = w1/(w1+v1), prop2 = w2/(w2+v2), prop4 = w4/(w4+v4),
+         tot_prop = (w1 + w2 + w4)/(v1 + v2 + v4 + w1 + w2 + w4)) %>%
+  pivot_longer(!c(cluster_code, year, vacc_program, vacc_type, age_cov)) %>%
+  filter(grepl('prop', name)) %>% mutate(age_grp = case_when(
+    name == 'prop1' ~ '0-5',  name == 'prop2' ~ '5-20',
+    name == 'prop4' ~ '65+',  name == 'tot_prop' ~ 'Total'
+  )) %>% filter(age_cov == 5) %>%
+  ggplot() +
+  geom_bar(aes(fill=age_grp, x=as.factor(vacc_type), y=value), position="dodge", stat="identity") +
+  scale_fill_manual(values = age_colors) +
+  # facet_grid(age_cov~vacc_type, labeller = labeller(vacc_type = supp.labs,
+  #                                                   age_cov = supp.labs.cov)) +
+  xlab('') + ylab('Proportion of vaccine doses ineffective') +
+  theme_bw() + labs(fill='Age group') +
+  scale_y_continuous(limits = c(0,0.6), breaks=seq(0,0.6,0.1)) +
+  theme(text=element_text(size=14)) +
+  scale_x_discrete(labels=c("Current", "Improved\n(minimal)",
+                            "Improved\n(efficacy)", "Improved\n(breadth)",
+                            "Universal")) +
+  theme(axis.text.x = element_text(color=1))
+ggsave(paste0("output/plots/",folder,"/vacc_doses/doses_ineffective_by_age.png"),
+       width=22,height=10,units="cm")
 
 doses_plot <- vacc_doses_g %>% filter(!age_grp == 3) %>% 
   ggplot(aes(fill=age_grp, y=value/1000000, x=year)) + 
@@ -111,36 +130,55 @@ doses_plot <- vacc_doses_g %>% filter(!age_grp == 3) %>%
   theme_bw() + labs(fill = "Age group") +
   xlab("Year") + 
   theme(text=element_text(size=14)); doses_plot
-# ggsave(paste0("output/plots/BS_plots/vacc_doses/doses_given_by_age.png"),
-#        width=26,height=24,units="cm")
+ggsave(paste0("output/plots/",folder,"/vacc_doses/doses_given_by_age.png"),
+       width=26,height=24,units="cm")
 
 
 ### NATIONAL-LEVEL PLOTS
 
-load('data/vacc_output/nat_ann.Rdata') # nrow 186*30*26*5 = 725400
-load('data/vacc_output/global_weekly.Rdata') # nrow 1565*100*26 = 4069000
+load(paste0('data/',folder,'/nat_ann.Rdata')) # nrow 186*30*26*5 = 725400
+load(paste0('data/',folder,'/global_weekly.Rdata')) # nrow 1565*100*26 = 4069000
+
+# load(paste0('data/',folder,'/nat_ann_ARG.Rdata')) # nrow 186*30*26*5 = 725400
+# load(paste0('data/',folder,'/global_weekly_ARG.Rdata')) # nrow 1565*100*26 = 4069000
+# nat_ann <- copy(nat_ann_c)
+# global_weekly <- copy(global_weekly_c)
+
+## sense check 
+sense_check <- nat_ann[measure=='median' & scenario%in%c('no_vacc','ct_5_vt_5')][,c('year','measure'):=NULL]
+sense_check_m <- data.table(melt(sense_check, id.vars = c("country_code", "scenario")))
+sense_check_m[, variable:=NULL]
+sense_check_sums <- sense_check_m[, lapply(.SD, sum, na.rm=T), by = c('country_code', 'scenario')]
+sense_check_wide <- dcast.data.table(sense_check_sums, country_code~scenario, value.var = "value")
+clusters <- data.table(clusters)
+clusters[,country_code := codes]
+sense_check_wide[clusters, on = c("country_code"), itz := i.cluster_name]
+ggplot(sense_check_wide) +
+  geom_point(aes(x=no_vacc/1000000, y=(ct_5_vt_5/1000000), col=itz)) +
+  scale_color_manual(values=cluster_colors2) +
+  geom_line(aes(x=no_vacc/1000000, y=(no_vacc/1000000)), lty=2, alpha=0.5, col='red') +
+  theme_bw()
+ggsave(paste0("output/plots/",folder,"/sense_check1.png"),
+       width=26,height=24,units="cm")
+ggplot(sense_check_wide) +
+  geom_point(aes(x=log(no_vacc/1000000), y=log(ct_5_vt_5/1000000), col=itz)) +
+  scale_color_manual(values=cluster_colors2) +
+  geom_line(aes(x=log(no_vacc/1000000), y=log(no_vacc/1000000)), lty=2, alpha=0.5, col='red') +
+  theme_bw()
+ggsave(paste0("output/plots/",folder,"/sense_check2.png"),
+       width=26,height=24,units="cm")
 
 nat_ann_m <- data.table(melt(nat_ann, id.vars = c("country_code", "year", "scenario", "measure")))
-nat_ann_m[grepl('U', variable), vacc_status := "U"]
-nat_ann_m[grepl('V', variable), vacc_status := "V"]
-nat_ann_m[grepl('A', variable), strain := "A"]
-nat_ann_m[grepl('B', variable), strain := "B"]
+nat_ann_m[, vacc_status := substr(variable,2,2)]
+nat_ann_m[, strain := substr(variable,4,4)]
 nat_ann_m[grepl('1', variable), age_grp := "0-5"]
 nat_ann_m[grepl('2', variable), age_grp := "5-20"]
 nat_ann_m[grepl('3', variable), age_grp := "20-65"]
 nat_ann_m[grepl('4', variable), age_grp := "65+"]
+nat_ann_m[, ct := substr(scenario,4,4)]
+nat_ann_m[, vt := substr(scenario,9,9)]
 nat_ann_m[grepl('no_vacc', scenario), ct := "0"]
 nat_ann_m[grepl('no_vacc', scenario), vt := "0"]
-nat_ann_m[grepl('ct_1', scenario), ct := "1"]
-nat_ann_m[grepl('ct_2', scenario), ct := "2"]
-nat_ann_m[grepl('ct_3', scenario), ct := "3"]
-nat_ann_m[grepl('ct_4', scenario), ct := "4"]
-nat_ann_m[grepl('ct_5', scenario), ct := "5"]
-nat_ann_m[grepl('vt_1', scenario), vt := "1"]
-nat_ann_m[grepl('vt_2', scenario), vt := "2"]
-nat_ann_m[grepl('vt_3', scenario), vt := "3"]
-nat_ann_m[grepl('vt_4', scenario), vt := "4"]
-nat_ann_m[grepl('vt_5', scenario), vt := "5"]
 
 nat_ann_novs <- nat_ann_m[measure == 'median',]
 nat_ann_novs[, c('ct','vt','variable','vacc_status','measure','strain','age_grp','year') := NULL]
@@ -163,10 +201,11 @@ ggplot(nat_ann_averted[!scenario=='no_vacc',]) +
   scale_fill_manual(values=vt_colors, labels = supp.labs) +
   labs(fill = 'Vaccine type')
 
+clusters <- data.table(clusters)
 clusters[,country_code := codes]
 nat_ann_averted[clusters, on = c("country_code"), itz := i.cluster_name]
 
-for(c_name in unique(clusters$cluster_name)){
+for(c_name in unique(nat_ann_averted$itz)){
   ggplot(nat_ann_averted[!scenario=='no_vacc' & itz==c_name,]) +
     geom_bar(aes(x=country_code, y=prop_of_max, group=vt, fill=vt), 
              position="dodge", stat="identity") +
@@ -175,7 +214,7 @@ for(c_name in unique(clusters$cluster_name)){
     scale_fill_manual(values=vt_colors, labels = supp.labs) +
     labs(fill = 'Vaccine type') +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  ggsave(paste0('output/plots/BS_plots/cumulative/rel_averted/rel_av_',c_name,'.png'),
+  ggsave(paste0('output/plots/',folder,'/cumulative/rel_averted/rel_av_',c_name,'.png'),
          width=38,height=24,units="cm")
 }
 
@@ -218,7 +257,6 @@ global_averted_wide <- dcast.data.table(global_averted,
 global_averted_wide[, ct := substr(scenario, 4,4)]
 global_averted_wide[, vt := substr(scenario, 9,9)]
 
-
 ggplot(global_cumulative_wide[!scenario=='no_vacc',]) +
   geom_ribbon(aes(x=week, ymin=eti95L/1000000, ymax=eti95U/1000000, fill = as.factor(vt)), alpha=0.2) +
   geom_ribbon(aes(x=week, ymin=eti50L/1000000, ymax=eti50U/1000000, fill = as.factor(vt)), alpha=0.4) +
@@ -231,7 +269,7 @@ ggplot(global_cumulative_wide[!scenario=='no_vacc',]) +
   labs(fill = 'Vaccine type') + 
   theme(text=element_text(size=14))
 
-ggsave(paste0("output/plots/BS_plots/cumulative/cumulative_cases.png"),
+ggsave(paste0("output/plots/",folder,"/cumulative/cumulative_cases.png"),
        width=26,height=24,units="cm")
 
 averted_plot <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -247,7 +285,7 @@ averted_plot <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
   labs(fill = 'Vaccine type') + 
   theme(text=element_text(size=14)); averted_plot
 
-ggsave(paste0("output/plots/BS_plots/cumulative/averted_cases.png"),
+ggsave(paste0("output/plots/",folder,"/cumulative/averted_cases.png"),
   width=26,height=24,units="cm")
 
 ggplot(global_cumulative_wide[scenario=='no_vacc',]) +
@@ -261,7 +299,7 @@ ggplot(global_cumulative_wide[scenario=='no_vacc',]) +
   labs(fill = 'Vaccine type') + 
   theme(text=element_text(size=14))
 
-ggsave(paste0("output/plots/BS_plots/cumulative/no_vacc_global.png"),
+ggsave(paste0("output/plots/",folder,"/cumulative/no_vacc_global.png"),
        width=13,height=12,units="cm")
 
 averted_single_facet <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -279,18 +317,18 @@ averted_single_facet <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
   labs(fill = 'Vaccine type', col = 'Vaccine type') + 
   theme(text=element_text(size=14)); averted_single_facet
 
-ggsave(paste0("output/plots/BS_plots/cumulative/averted_cases2.png"),
+ggsave(paste0("output/plots/",folder,"/cumulative/averted_cases2.png"),
        width=26,height=24,units="cm")
 
 averted_single_facet + doses_plot + plot_layout(nrow = 1) +
   plot_annotation(tag_levels = 'a', tag_prefix = '(',
                   tag_suffix = ')  ')
 
-ggsave(paste0("output/plots/BS_plots/cumulative/averted_and_doses.png"),
+ggsave(paste0("output/plots/",folder,"/cumulative/averted_and_doses.png"),
        width=52,height=24,units="cm")
 
 print_df <- global_cumulative_wide[week==max(global_cumulative_wide$week)] 
-write_csv(print_df, file="data/vacc_output/cases2054.csv")
+write_csv(print_df, file=paste0("data/",folder,"/cases2054.csv"))
 
 global_annual <- copy(global_weekly_m)
 global_annual[,year:=as.numeric(substr(week,1,4))]
@@ -325,7 +363,7 @@ ggplot(global_annual_wide[!scenario=='no_vacc',]) +
   geom_errorbar(aes(x = year, ymin = eti95L/1000000, ymax = eti95U/1000000), 
                 width = 0.2, alpha=0.6) 
 
-ggsave(paste0("output/plots/BS_plots/cumulative/annual_cases.png"),
+ggsave(paste0("output/plots/",folder,"/cumulative/annual_cases.png"),
        width=30,height=24,units="cm")
 
 
@@ -333,9 +371,9 @@ ggsave(paste0("output/plots/BS_plots/cumulative/annual_cases.png"),
 
 for(c_number in 1:7){
   c_code <- c("GHA", "TUR", "CHN", "GBR", "CAN", "AUS", "ARG")[c_number]
-  if(file.exists(paste0('data/vacc_output/global_weekly_', c_code, '.Rdata'))){
-    load(paste0('data/vacc_output/global_weekly_', c_code, '.Rdata'))
-  }  
+  if(file.exists(paste0('data/',folder,'/global_weekly_', c_code, '.Rdata'))){
+    load(paste0('data/',folder,'/global_weekly_', c_code, '.Rdata'))
+  
   
   global_weekly_m <- data.table(melt(global_weekly_c, id.vars = c("simulation_index", "week", "scenario")))
   global_weekly_m[, variable:=NULL]
@@ -387,7 +425,7 @@ for(c_number in 1:7){
     labs(fill = 'Vaccine type') + 
     theme(text=element_text(size=14))
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/ITZ_weekly/cumulative_cases/",c_code,".png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/ITZ_weekly/cumulative_cases/",c_code,".png"),
          width=26,height=24,units="cm")
   
   averted_plot <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -403,7 +441,7 @@ for(c_number in 1:7){
     labs(fill = 'Vaccine type') + 
     theme(text=element_text(size=14)); averted_plot
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/ITZ_weekly/averted_cases/",c_code,".png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/ITZ_weekly/averted_cases/",c_code,".png"),
          width=26,height=24,units="cm")
   
   averted_single_facet <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -421,13 +459,14 @@ for(c_number in 1:7){
     labs(fill = 'Vaccine type', col = 'Vaccine type') + 
     theme(text=element_text(size=14)); averted_single_facet
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/ITZ_weekly/averted_cases_single/",c_code,".png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/ITZ_weekly/averted_cases_single/",c_code,".png"),
          width=26,height=24,units="cm")
+  }
 }
 
 ## CUMULATIVE/AVERTED PLOTS FOR EACH STRAIN
 
-load('data/vacc_output/global_weekly.Rdata')  
+load(paste0('data/',folder,'/global_weekly.Rdata'))
 
 for(strain_index in c('A','B')){
   global_weekly_m <- data.table(melt(global_weekly, id.vars = c("simulation_index", "week", "scenario")))
@@ -481,7 +520,7 @@ for(strain_index in c('A','B')){
     labs(fill = 'Vaccine type') + 
     theme(text=element_text(size=14))
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/by_strain/cumulative_cases/",strain_index,".png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/by_strain/cumulative_cases/",strain_index,".png"),
          width=26,height=24,units="cm")
   
   averted_plot <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -497,7 +536,7 @@ for(strain_index in c('A','B')){
     labs(fill = 'Vaccine type') + 
     theme(text=element_text(size=14)); averted_plot
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/by_strain/averted_cases/",strain_index,".png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/by_strain/averted_cases/",strain_index,".png"),
          width=26,height=24,units="cm")
   
   averted_single_facet <- ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -515,13 +554,13 @@ for(strain_index in c('A','B')){
     labs(fill = 'Vaccine type', col = 'Vaccine type') + 
     theme(text=element_text(size=14)); averted_single_facet
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/by_strain/averted_cases_single/",strain_index,".png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/by_strain/averted_cases_single/",strain_index,".png"),
          width=26,height=24,units="cm")
 }
 
 ## AGE-SPECIFIC CUMULATIVE/AVERTED PLOTS 
 
-load('data/vacc_output/global_weekly.Rdata')  
+load(paste0('data/',folder,'/global_weekly.Rdata'))  
 
   global_weekly_m <- data.table(melt(global_weekly, id.vars = c("simulation_index", "week", "scenario")))
   global_weekly_m[grepl('1', variable), age_grp := "0-5"]
@@ -581,7 +620,7 @@ load('data/vacc_output/global_weekly.Rdata')
     labs(fill = 'Age group', color = 'Age group') + 
     theme(text=element_text(size=14))
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/by_age/cumulative_cases.png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/by_age/cumulative_cases.png"),
          width=26,height=24,units="cm")
   
   ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -601,7 +640,7 @@ load('data/vacc_output/global_weekly.Rdata')
     labs(fill = 'Age group', color = 'Age group') + 
     theme(text=element_text(size=14))
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/by_age/averted_cases.png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/by_age/averted_cases.png"),
          width=26,height=24,units="cm")
   
   ggplot(global_averted_wide[!scenario=='no_vacc',]) +
@@ -621,7 +660,7 @@ load('data/vacc_output/global_weekly.Rdata')
     labs(fill = 'Coverage plan', color = 'Coverage plan') + 
     theme(text=element_text(size=14))
   
-  ggsave(paste0("output/plots/BS_plots/cumulative/by_age/agexvacc.png"),
+  ggsave(paste0("output/plots/",folder,"/cumulative/by_age/agexvacc.png"),
          width=26,height=24,units="cm")
 
 
@@ -676,7 +715,7 @@ for(c_name in unique(nnv_fin$itz)){
     scale_fill_manual(values=vt_colors, labels = supp.labs) +
     labs(fill = 'Vaccine type') +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  ggsave(paste0('output/plots/BS_plots/NNV/all/',c_name,'.png'),
+  ggsave(paste0('output/plots/',folder,'/NNV/all/',c_name,'.png'),
          width=38,height=24,units="cm")
   
   ggplot(nnv_fin[itz==c_name,]) +
@@ -687,7 +726,7 @@ for(c_name in unique(nnv_fin$itz)){
     scale_fill_manual(values=vt_colors, labels = supp.labs) +
     labs(fill = 'Vaccine type') +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  ggsave(paste0('output/plots/BS_plots/NNV/nonwasted/',c_name,'.png'),
+  ggsave(paste0('output/plots/',folder,'/NNV/nonwasted/',c_name,'.png'),
          width=38,height=24,units="cm")
 }
 
@@ -698,44 +737,14 @@ ggplot(nnv_fin) +
                                                         itz = supp.labs.ITZ2)) +
   theme_bw() + ylab('Number needed to vaccinate') + xlab('') +
   scale_fill_manual(values=vt_colors, labels = supp.labs) +
-  labs(fill = 'Vaccine type') +
+  labs(fill = 'Vaccine type') + ylim(c(0,NA)) +
   theme(text=element_text(size=14),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
-ggsave(paste0('output/plots/BS_plots/NNV/nnv_boxplot.png'),
+ggsave(paste0('output/plots/',folder,'/NNV/nnv_boxplot.png'),
        width=30,height=30,units="cm")
 
-
-## WTF IS WRONG WITH GERMANY DATA
-
-ggplot(nat_ann_m[country_code %in% c('DEU','FRA') &
-                   scenario %in% c('no_vacc','ct_5_vt_5'),]) +
-  geom_bar(aes(x=year, y=value/1000000, fill=age_grp, group=year),
-           position='stack',stat='identity') +
-  theme_minimal() + ylab('') + xlab('Vaccine type') +
-  scale_fill_manual(values=age_colors) +
-  facet_grid(scenario~country_code) +
-  labs(fill = 'Age') + ylim(c(0,NA)) +
-  theme(text=element_text(size=14))
-
-itz_cases_no_vacc <- data.table(readRDS(paste0("data/vacc_GBR_none_ct_1.rds"))[[1]])
-
-deu <- itz_cases_no_vacc[country %in% c('Germany', 'France'),]
-deu[,country_code:=NULL]
-deu_m <- data.table(melt(deu, id.vars=c('country','simulation_index','week')))
-deu_m[,variable:=NULL]
-deu_m2 <- deu_m[, lapply(.SD, sum, na.rm=T), by=c('country', 'simulation_index','week')]
-
-deu_cum <- copy(deu_m2)
-deu_cum[, cum.sum := cumsum(value), by=list(country, simulation_index)]
-
-ggplot(deu[country=='Germany'&simulation_index<2&year(week)<2030,]) +
-  geom_line(aes(x=week, y=IU3A, col=simulation_index, group=simulation_index)) +
-  theme_minimal() + ylab('') + xlab('Week') +
-  facet_grid(country~.) +
-  ylim(c(0,NA)) +
-  theme(text=element_text(size=14))
 
 
 

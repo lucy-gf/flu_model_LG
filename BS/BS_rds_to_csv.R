@@ -37,19 +37,20 @@ eti95U <- function(x){
   }else{stop('length(x) != 100')}
 }
 
-scenario_name <- c('none', 'base', 'low_cov', 'rel_inf')[2]
+scenario_name <- c('none', 'base', 'low_cov', 'rel_inf', 'depth', 'breadth', 'direct')[6]
 
 start_time <- Sys.time()
 
-c_number <- 5
+c_number <- 1
 c_name <- c("Africa", "Asia-Europe", "Eastern and Southern Asia",
                         "Europe", "Northern America", "Oceania-Melanesia-Polynesia",
                         "Southern America")[c_number]
 c_code <- c("GHA", "TUR", "CHN", "GBR", "CAN", "AUS", "ARG")[c_number]
 hemisphere <- c("NH", "NH", "NH", "NH", "NH", "SH", "SH")[c_number]
+print(paste0(c_code, ', ', scenario_name))
 
 # load no vacc cases
-itz_cases_no_vacc <- data.table(readRDS(paste0("data/vacc_output/no_sync.nosync/vacc_", c_code, '_none_ct_1.rds'))[[1]])
+itz_cases_no_vacc <- data.table(readRDS(paste0("data/vacc_output_base/vacc_", c_code, '_none_ct_1.rds'))[[1]])
 
 itz_cases_no_vacc_y <- copy(itz_cases_no_vacc)
 itz_cases_no_vacc_y <- itz_cases_no_vacc_y[, year := year(week)]
@@ -77,7 +78,7 @@ print('no_vacc done')
 print(Sys.time() - start_time)
 
 for(ct in 1:5){
-  list <-  readRDS(paste0("data/vacc_output/no_sync.nosync/vacc_", c_code, '_', scenario_name, '_ct_', ct,'.rds'))
+  list <-  readRDS(paste0("data/vacc_output_", scenario_name, "/no-sync.nosync/vacc_", c_code, '_', scenario_name, '_ct_', ct,'.rds'))
   for(vt in 1:5){
     itz_cases <- data.table(list[[vt]])
     
@@ -110,8 +111,8 @@ for(ct in 1:5){
 nat_ann_c <- copy(nat_ann)
 global_weekly_c <- copy(global_weekly)
 
-save(nat_ann_c, file = paste0('data/vacc_output/nat_ann_', c_code, '.Rdata'))
-save(global_weekly_c, file = paste0('data/vacc_output/global_weekly_', c_code, '.Rdata'))
+save(nat_ann_c, file = paste0('data/vacc_output_',scenario_name,'/nat_ann_', c_code, '.Rdata'))
+save(global_weekly_c, file = paste0('data/vacc_output_',scenario_name,'/global_weekly_', c_code, '.Rdata'))
 
 print(Sys.time() - start_time)
 

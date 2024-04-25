@@ -268,7 +268,8 @@ fcn_run_epidemic <- function(sus, trans, strain,
                              vaccine_program,
                              match, vacc_spec_pop, 
                              vacc_date, hemisphere,
-                             init = 1, unvaxed_pop){ 
+                             init = 1, unvaxed_pop,
+                             direct = F){ 
   
   dates_to_run <- seq.Date(from = as.Date(start_date), 
                            to = as.Date(end_of_period) + 7,
@@ -359,24 +360,47 @@ fcn_run_epidemic <- function(sus, trans, strain,
   # pars: c(reporting, transmissibility, susceptibility, initial infected)
   pars <- c(NA, trans, sus, init) 
   
-  fit <- incidence_function_fit_VS(
-    demography_input = demography,
-    parameters = pars,
-    calendar_input = vaccine_calendar,
-    contact_ids_sample = NA, 
-    contacts = contact_matrix_input,
-    waning_rate = 1/(365*vacc_details$imm_duration),
-    vaccination_ratio_input = prop_vacc_start,
-    begin_date = start_date, 
-    end_date = end_of_period,  
-    year_to_run = year(vaccine_calendar$dates[1]), 
-    efficacy_now =rep(0,12), 
-    efficacy_next=rep(0,12),
-    efficacy_next2 =rep(0,12), 
-    previous_summary = NA, 
-    age_groups_model = c(5,20,65),
-    kappa_input = vaccine_program$relative_vacc_infec
-  )
+  if(direct == F){
+    fit <- incidence_function_fit_VS(
+      demography_input = demography,
+      parameters = pars,
+      calendar_input = vaccine_calendar,
+      contact_ids_sample = NA, 
+      contacts = contact_matrix_input,
+      waning_rate = 1/(365*vacc_details$imm_duration),
+      vaccination_ratio_input = prop_vacc_start,
+      begin_date = start_date, 
+      end_date = end_of_period,  
+      year_to_run = year(vaccine_calendar$dates[1]), 
+      efficacy_now =rep(0,12), 
+      efficacy_next=rep(0,12),
+      efficacy_next2 =rep(0,12), 
+      previous_summary = NA, 
+      age_groups_model = c(5,20,65),
+      kappa_input = vaccine_program$relative_vacc_infec
+    )
+  }
+  if(direct == T){
+    fit <- incidence_function_fit_VS_direct(
+      demography_input = demography,
+      parameters = pars,
+      calendar_input = vaccine_calendar,
+      contact_ids_sample = NA, 
+      contacts = contact_matrix_input,
+      waning_rate = 1/(365*vacc_details$imm_duration),
+      vaccination_ratio_input = prop_vacc_start,
+      begin_date = start_date, 
+      end_date = end_of_period,  
+      year_to_run = year(vaccine_calendar$dates[1]), 
+      efficacy_now =rep(0,12), 
+      efficacy_next=rep(0,12),
+      efficacy_next2 =rep(0,12), 
+      previous_summary = NA, 
+      age_groups_model = c(5,20,65),
+      kappa_input = vaccine_program$relative_vacc_infec
+    )
+  }
+  
   fit <- data.table(fit)
   return(fit)
 }
@@ -408,9 +432,8 @@ fcn_run_epidemic_exemplar <- function(sus, trans, strain,
   year_index = year_for_vacc
   # if in NH, has vaccinations and epidemic starts in the first half of the year,
   # replace with previous year's vaccination program/match
-  if(hemisphere_input == 'NH' & 
-     sel_cntr %in% c('Canada', 'United Kingdom') & # ignore countries with no vacc
-     month(vaccine_calendar$dates[1]) %in% 1:7){
+  if(sel_cntr %in% c('Canada' ,'United Kingdom') & 
+     month(vaccine_calendar$dates[1]) %in% 1:5){
     year_index <- year_index - 1
   }
   if(year_index < 2010){year_index <- 2010} # quick fix here for if the pushback is too far
@@ -856,7 +879,9 @@ fcn_simulate_epidemics <- function(country_code_input,
                                    sampled_epidemics_input, 
                                    vacc_prog,
                                    start_year = 2025,
-                                   years = 30){ 
+                                   years = 30,
+                                   r0_scale = T,
+                                   direct_input = F){ 
   # name the country
   if(country_code_input == 'XKX'){
     country <- 'Kosovo'
@@ -977,18 +1002,20 @@ fcn_simulate_epidemics <- function(country_code_input,
     match_epid <- unname(unlist(data_sample[,paste0(substr(hemisphere, 1, 1), '_', substr(data_sample$strain, 5, 5), '_match')]))
     contact_matrix_small <- t(t(contact_matrix)/group_pop) 
     
-    contact_matrix_scaled <- fcn_scale_contacts(
-      trans = data_sample$trans,
-      contacts_small = contact_matrix_small, 
-      age_groups = group_pop,
-      r0 = data_sample$r0)
+    if(r0_scale == T){
+      contact_matrix_small <- fcn_scale_contacts(
+        trans = data_sample$trans,
+        contacts_small = contact_matrix_small, 
+        age_groups = group_pop,
+        r0 = data_sample$r0)
+    }
     
     output_epid <- fcn_run_epidemic(sus = unlist(data_sample$sus), 
                                       trans = unlist(data_sample$trans), 
                                       strain = data_sample$strain,
                                       sel_cntr = country,
                                       demography = yr_res_pop, 
-                                      contact_matrix_input = contact_matrix_scaled,
+                                      contact_matrix_input = contact_matrix_small,
                                       start_date = start_date_input, 
                                       end_of_period = end_of_period_input,
                                       vaccine_program = vacc_prog,
@@ -997,7 +1024,8 @@ fcn_simulate_epidemics <- function(country_code_input,
                                       vacc_spec_pop = group_pop_vs,
                                       vacc_date = vacc_date_input,
                                       hemisphere = hemisphere,
-                                      unvaxed_pop = (age_structure2 %>% filter(X2025L == year_of_first_vacc))) 
+                                      unvaxed_pop = (age_structure2 %>% filter(X2025L == year_of_first_vacc)),
+                                      direct = direct_input) 
     ## RANDOMLY CHECKING IN THREE EPIDEMICS THAT AGE- AND VACC STATUS-SPECIFIC POPULATION
     ## SIZES ARE THE SAME TEN WEEKS IN
     if(j %in% pop_check_random){
@@ -1186,6 +1214,8 @@ fcn_simulate_epidemics_exemplar <- function(country_code_input,
                                     demography = yr_res_pop, 
                                     contact_matrix_input = contact_matrix_small,
                                     start_date = start_date_input, 
+                                    #"2016-07-25"
+                                    # "2016-08-01"
                                     end_of_period = end_of_period_input,
                                     vaccine_program = vacc_prog,
                                     match = match_epid,
@@ -1197,6 +1227,11 @@ fcn_simulate_epidemics_exemplar <- function(country_code_input,
     output_epid <- output_epid %>% filter(!year(time) < start_year,
                                           !year(time) > start_year + years - 1) %>% 
       select(!c(I1, I2, I3, I4))
+    
+    ###
+    plot(output_epid$IU1, type='l')
+    ###
+    
     cases_df[cases_df$week %in% output_epid$time, 
              (2:9 + 8*(data_sample$strain=='INF_B'))] <- cases_df[cases_df$week %in% output_epid$time, 
                                                                   (2:9 + 8*(data_sample$strain=='INF_B'))] + 

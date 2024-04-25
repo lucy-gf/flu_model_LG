@@ -11,7 +11,7 @@ start_year <- 2025
 years <- 30
 
 ## change c_number loop for each ITZ 
-c_number <- 1 
+c_number <- 2
 c_name <- c("Africa", "Asia-Europe", "Eastern and Southern Asia",
             "Europe", "Northern America", "Oceania-Melanesia-Polynesia",
             "Southern America")[c_number]
@@ -22,12 +22,9 @@ hemisphere_vacc <- c('NH','NH','NH','NH','NH','SH','SH')[c_number]
 # age-specific targeting strategy, in 1:5
 for(k in 1:3){
   targeting <- paste0('ct_', k)
-  scenario_name <- c('none', 'base', 'low_cov', 'rel_inf', 'depth', 'breadth', 'direct')[7]
+  scenario_name <- c('none', 'base', 'low_cov', 'rel_inf')[3]
   if(scenario_name == 'none'){
     scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]]
-  }
-  if(scenario_name == 'direct'){
-    scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_base')]][1:5 + (k-1)*5]
   }else{
     scenarios <- vaccine_programs_merged[[paste0('vaccine_programs_', scenario_name)]][1:5 + (k-1)*5]
   }
@@ -70,8 +67,7 @@ for(k in 1:3){
                                  hemisphere = hemisphere_vacc,
                                  sampled_epidemics_input =
                                    sampled_epidemics[sampled_epidemics$simulation_index == sims,],
-                                 vacc_prog = scenarios[[vacc_prog_num]],
-                                 direct_input = isTRUE(scenario_name == 'direct')) %>% select(!week)
+                                 vacc_prog = scenarios[[vacc_prog_num]]) %>% select(!week)
         print(paste0(countrycode(country_code_index, origin='iso3c', destination = 'country.name')))
         print(Sys.time() - country_time)
       }
@@ -91,9 +87,9 @@ for(k in 1:3){
   }
 }
 
+    
 
-
-
+ 
 
 
 

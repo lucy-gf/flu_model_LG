@@ -21,14 +21,14 @@ library(viridis)
 library(patchwork)
 library(countrycode)
 
-scenario_name <- c('base', 'low_cov', 'rel_inf')[1]
-
+scenario_name <- c('base', 'low_cov')[2]
 vacc_doses <- data.frame()
 for(c_code in c("GHA", "TUR", "CHN", "GBR", "CAN", "AUS", "ARG")){
-  vacc_doses <- rbind(vacc_doses, read_csv(paste0("data/vacc_doses/vacc_doses_", c_code, "_",
+  vacc_doses <- rbind(vacc_doses, read_csv(paste0("data/vacc_doses_", scenario_name, "/vacc_doses_", c_code, "_",
                                                   scenario_name, ".csv")) %>% 
                         mutate(cluster_code = c_code))
 }
+save(vacc_doses, file = paste0('data/vacc_doses_', scenario_name, '.Rdata'))
 
 clusters <- read_csv("data/new_clustering.csv")
 
