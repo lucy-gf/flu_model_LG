@@ -12,10 +12,13 @@ library(tidyverse)
 library(wpp2022)
 library(fitdistrplus)
 
-## fcn_beta - make mortality CI into a beta distribution
-
 f.beta <- function(alpha, beta, x) {
   p <- pbeta(x, alpha, beta)
+  # return both
+  return(c(p))
+}
+f.gamma <- function(shape, rate, x) {
+  p <- pgamma(x, shape, rate)
   # return both
   return(c(p))
 }
@@ -24,35 +27,22 @@ delta <- function(fit, actual) sum((fit-actual)^2)
 
 objective <- function(theta, x, prob, ...) {
   ab <- (theta) 
-  fit <- f.beta(ab[1], ab[2], x=as.numeric(x),...)
+  fit <- f.gamma(ab[1], ab[2], x=as.numeric(x),...)
+  # fit <- f.beta(ab[1], ab[2], x=as.numeric(x),...)
   return (delta(fit, prob))
 }
 
-fcn_beta <- function(mort_rates,
+fcn_fitting <- function(mort_rates,
                      mort_probs){
-  
-  # parms <- fitdist(data=c(unlist(unname(mort_rates)))[c(1,3)], distr="beta", 
-  #             method='qme', probs=mort_probs[c(1,3)])$estimate
-  # qbeta(0.5, shape1=parms[1], shape2=parms[2])
-  # qbeta(0.975, shape1=parms[1], shape2=parms[2])
-  # qbeta(0.025, shape1=parms[1], shape2=parms[2])
   
   x <- c(unlist(unname(mort_rates)))
   sol <- suppressWarnings(optim(f=objective,p=c(1,1),
                # method="BFGS",
                x=x,
-               prob=c(mort_probs)
+               prob=c(mort_probs),
+               control = list(reltol = 1e-20)
   ))
-  parms <- (sol$par)           # estimates of alpha and beta
-  if(delta(mort_rates, qbeta(mort_probs, shape1=parms[1], shape2=parms[2]))>0.01){
-    print('Fit is bad (1)')
-  }
-  if(100*abs(mort_rates[,'med'] - qbeta(0.5, shape1=parms[1], shape2=parms[2]))/mort_rates[,'med'] > 15){
-    print('Fit is bad (2)')
-  }
-  if(100*abs(mort_rates[,'u95'] - qbeta(0.975, shape1=parms[1], shape2=parms[2]))/mort_rates[,'u95'] > 25){
-    print(paste0('Fit is bad (3), ', mort_rates[,'u95'], ', ', qbeta(0.975, shape1=parms[1], shape2=parms[2])))
-  }
+  parms <- (sol$par)       
 
   return(parms)
 }
@@ -94,21 +84,24 @@ fcn_ifr <- function(
   ## make incidence a data.table if not already
   incidence <- data.table(incidence)
   
-  ## 1: make mortality rates interval into beta distributions
+  ## 1: make mortality rates interval into continuous distributions
   for(i in 1:nrow(mortality_rates)){
-    parms <- fcn_beta(mort_rates = mortality_rates[i,c(2:4)], 
+    parms <- fcn_fitting(mort_rates = mortality_rates[i,c(2:4)], 
                       mort_probs = mortality_probs[c(1:3)])
-    mortality_rates[i,"alpha"] <- parms[1]
-    mortality_rates[i,"beta"] <- parms[2]
+    mortality_rates[i,"shape"] <- parms[1]
+    mortality_rates[i,"rate"] <- parms[2]
   }
   
   ## 2: get 100 mortality rate samples for each age group
   mortality_samples <- data.table(age_grp = rep(c('<65','65-75','75+'), each=100),
                                   simulation_index = rep(1:100,3))
   for(age_grp_i in unique(mortality_samples$age_grp)){
-    mortality_samples[age_grp==age_grp_i, 
-                  value:= c(rbeta(n = 100, shape1 = as.numeric(mortality_rates[age_grp==age_grp_i, 'alpha']),
-                                  shape2 = as.numeric(mortality_rates[age_grp==age_grp_i, 'beta'])))]  
+    # mortality_samples[age_grp==age_grp_i,
+    #               value:= c(rbeta(n = 100, shape1 = as.numeric(mortality_rates[age_grp==age_grp_i, 'shape']),
+    #                               shape2 = as.numeric(mortality_rates[age_grp==age_grp_i, 'rate'])))]
+    mortality_samples[age_grp==age_grp_i,
+                      value:= c(rgamma(n = 100, shape = as.numeric(mortality_rates[age_grp==age_grp_i, 'shape']),
+                                       rate = as.numeric(mortality_rates[age_grp==age_grp_i, 'rate'])))]
   }
   
   # check quantiles of samples 
@@ -236,31 +229,6 @@ fcn_ifr <- function(
   
   return(ifrs)
 }
-
-
-
-## AZE testing:
-
-AZE_inc <- data.table(read_csv('IHME_exemplar_IFRs/data/AZE_inc.csv',
-                               show_col_types=F))
-AZE_mort <- data.table(
-  age_grp = c('<65','65-75','75+'),
-  med = c(0.000036, 0.000074, 0.000251),
-  l95 = c(0.000004, 0.000007, 0.000029),
-  u95 = c(0.000229, 0.000337, 0.001477)
-)
-
-output <- fcn_ifr(
-    country_code = 'AZE', 
-    mortality_rates = AZE_mort, 
-    mortality_probs = c(0.5, 0.025, 0.975), 
-    incidence = AZE_inc, 
-    incidence_ages = c(0,5,20,65))
-
-fcn_beta(AZE_mort[3,2:4], c(0.5,0.025,0.975))
-## issue is really bad fits in age 75+ 
-
-
 
 
 
