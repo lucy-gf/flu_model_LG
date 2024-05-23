@@ -24,6 +24,7 @@ library(WDI)
 # are we happy with carrat et al. symptomatic & fever probabilities?
 # are we happy with mild/fever/hospitalisation DALY weights from Dawa et al.?
 # at what rate are we discounting YLLs outside of DALY_discount_rate (as in in the YLL function?)
+# also currently calculating YLLs not DALYs, presumably we need to adjust for disability?
 # also should we use 'lx' or 'lxqx' method in YLL function
 # is 2022 GDP fine? This is what I trained the cost-regression model on but can change
 
@@ -309,6 +310,7 @@ agg_out[ct==5, ct_n:='0-18, 65+']
 agg_out$ct_n <- factor(agg_out$ct_n, levels = unique(agg_out$ct_n))
 
 write_csv(agg_out, file = 'econ/agg_out.csv')
+agg_out <- read_csv('econ/agg_out.csv',show_col_types=F)
 
 ggplot(agg_out) + 
   geom_boxplot(aes(x=ct_n, y=threshold_price, 
