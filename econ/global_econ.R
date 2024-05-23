@@ -18,14 +18,23 @@ library(patchwork)
 library(wpp2022)
 library(WDI)
 
+##### QUESTIONS ##### 
+# are we using 4/365 flu duration, and should this differ for hospitalisations?
+# what should the values be for no. of outpatient/non-hospitalised visits in their sens. analysis
+# are we happy with carrat et al. symptomatic & fever probabilities?
+# are we happy with mild/fever/hospitalisation DALY weights from Dawa et al.?
+# at what rate are we discounting YLLs outside of DALY_discount_rate (as in in the YLL function?)
+# also should we use 'lx' or 'lxqx' method in YLL function
+# is 2022 GDP fine? This is what I trained the cost-regression model on but can change
+
 ## SENSITIVITY ANALYSES
-outp_include <- F # are we including outpatient/non-hospitalisation visits?
-WTP_GDP_ratio <- 1 # what proportion of GDP per capita is the willingness_to_pay threshold?
+outp_include <- F # including outpatient/non-hospitalisation visits T/F
+WTP_GDP_ratio <- 1 # proportion of GDP per capita for the willingness_to_pay threshold
 
 ## PARAMETERS
 cost_discount_rate_val <- 0.03
 DALY_discount_rate_val <- 0.03
-threshold <- 30000 ## NEED TO DECIDE 
+flu_duration <- 4/365 ## IS THIS CORRECT?
 
 ## LOADING DATA (BASE CASE)
 print('loading data')
@@ -70,7 +79,7 @@ global_ihrs <- data.table(read_csv('econ/outcome_calculations/data/global_ihrs.c
 econ_cases_agg <- econ_cases_agg[global_ihrs, on=c('simulation_index','age_grp')]
 econ_cases_agg[,hospitalisations := ihr*infections]
 
-## FOR NOW ADDING PROXY RISK OF OUTPATIENT (50x HOSP)
+## Proxy value for now 
 if(outp_include == T){
   econ_cases_agg[, outpatients := 50*hospitalisations]
 }
@@ -170,7 +179,6 @@ econ_cases_agg[, c('ifr','ihr','symp_prob','fever_prob','yll'):=NULL]
 ## YLDs
 print('YLDs')
 
-flu_duration <- 4/365 ## IS THIS CORRECT?
 ## weights from Dawa et al. - is this ok?
 DALY_weights <- data.table(
   outcome = c('mild','fever','hospitalisation'),
