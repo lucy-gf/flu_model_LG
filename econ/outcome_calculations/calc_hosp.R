@@ -298,9 +298,9 @@ ggplot(global_ihrs) +
   theme(text=element_text(size=14),
         legend.position='none')  
 
-
+global_ihrs[, lapply(.SD, eti95L), by=c('age_grp')]$ihr*100000
 global_ihrs[, lapply(.SD, median), by=c('age_grp')]$ihr*100000
-
+global_ihrs[, lapply(.SD, eti95U), by=c('age_grp')]$ihr*100000
 
 
 
