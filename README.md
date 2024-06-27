@@ -28,7 +28,11 @@ In ``` /BS/ ```. Main files include
 - ``` runARG.R ``` etc. for running the simulations in a given ITZ (here Southern America)
 - ``` BS_projection_plots.R ``` for viewing simulation outputs
 
-
 ## Files for running and viewing the economic analysis:
 
+In ```econ```. Main files:
+
+- ```global_econ.R``` runs the economic analysis, including sensitivity analyses
+- ```econ_plots.R``` produces figures of economic outcomes
+- ```/outcome_calculations/``` has all input data for the economic model, and the files which calculate them when relevant
 
