@@ -2,7 +2,7 @@
 
 flu_model, adapted from https://github.com/mbkoltai/flu_model/tree/main.
 
-Data are mainly in ``` /data/ ``` and ``` /data_for_BS/ ```.
+Data are mainly in ``` /data/ ```, ```data_for_cluster```, and ``` /data_for_BS/ ```.
 
 ## Files for FluNet data cleaning, epidemic identification, ITZ expansion:
 
