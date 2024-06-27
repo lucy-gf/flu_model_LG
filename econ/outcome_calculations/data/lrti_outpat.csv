@@ -1,0 +1,15 @@
+﻿region,outcome,med,L95,U95
+"Central Europe, Eastern Europe, and Central Asia",hospitalisation,1609000,660000,3731000
+Latin America and Caribbean,hospitalisation,434000,177000,1029000
+North Africa and Middle East,hospitalisation,746000,253000,2027000
+South Asia,hospitalisation,765000,255000,2096000
+"Southeast Asia, East Asia, and Oceania",hospitalisation,2330000,919000,5592000
+Sub-Saharan Africa,hospitalisation,1598000,556000,4250000
+High-income,hospitalisation,821000,366000,1725000
+"Central Europe, Eastern Europe, and Central Asia",outpatient,6624000,4796000,8752000
+Latin America and Caribbean,outpatient,2664000,1871000,3628000
+North Africa and Middle East,outpatient,4656000,3180000,6468000
+South Asia,outpatient,18950000,12935000,26374000
+"Southeast Asia, East Asia, and Oceania",outpatient,13256000,9342000,17963000
+Sub-Saharan Africa,outpatient,6052000,4189000,8318000
+High-income,outpatient,2269000,1668000,2963000

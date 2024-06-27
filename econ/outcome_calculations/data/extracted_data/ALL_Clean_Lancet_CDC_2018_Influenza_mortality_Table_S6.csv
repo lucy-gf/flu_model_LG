@@ -1,0 +1,1666 @@
+country,age_grp,meas,iso3c,value,itz
+Afghanistan,<65,median,AFG,3.7999999999999995e-5,Asia-Europe
+Albania,<65,median,ALB,4e-6,Europe
+Algeria,<65,median,DZA,3.7999999999999995e-5,Europe
+Angola,<65,median,AGO,3.7999999999999995e-5,Africa
+Antigua_and_Barbuda,<65,median,ATG,1.2e-5,NA
+Argentina,<65,median,ARG,3e-5,Southern America
+Armenia,<65,median,ARM,4e-6,Asia-Europe
+Australia,<65,median,AUS,5e-6,Oceania-Melanesia-Polynesia
+Austria,<65,median,AUT,1e-5,Europe
+Azerbaijan,<65,median,AZE,3.6e-5,Asia-Europe
+Bahamas,<65,median,BHS,1.4e-5,Northern America
+Bahrain,<65,median,BHR,4e-6,Asia-Europe
+Bangladesh,<65,median,BGD,3.7000000000000005e-5,Eastern and Southern Asia
+Barbados,<65,median,BRB,2.5e-5,Southern America
+Belarus,<65,median,BLR,7e-6,Europe
+Belgium,<65,median,BEL,8e-6,Europe
+Belize,<65,median,BLZ,1.2e-5,Northern America
+Benin,<65,median,BEN,3.7000000000000005e-5,Africa
+Bhutan,<65,median,BTN,3.7000000000000005e-5,Eastern and Southern Asia
+Bolivia,<65,median,BOL,3.7000000000000005e-5,Southern America
+Bosnia_and_Herzegovina,<65,median,BIH,4e-6,Europe
+Botswana,<65,median,BWA,3.7000000000000005e-5,Africa
+Brazil,<65,median,BRA,1.4e-5,Southern America
+Brunei_Darussalam,<65,median,BRN,7e-6,Eastern and Southern Asia
+Bulgaria,<65,median,BGR,1e-5,Europe
+Burkina_Faso,<65,median,BFA,3.7000000000000005e-5,Africa
+Burundi,<65,median,BDI,3.7999999999999995e-5,Africa
+Cambodia,<65,median,KHM,3.7999999999999995e-5,Eastern and Southern Asia
+Cameroon,<65,median,CMR,3.7000000000000005e-5,Africa
+Canada,<65,median,CAN,4e-6,Northern America
+Cape_Verde,<65,median,CPV,3.6e-5,Africa
+Central_African_Republic,<65,median,CAF,3.7000000000000005e-5,Africa
+Chad,<65,median,TCD,3.7000000000000005e-5,Africa
+Chile,<65,median,CHL,1.4e-5,Southern America
+Hong_Kong,<65,median,HKG,4e-6,Eastern and Southern Asia
+China,<65,median,CHN,7e-6,Eastern and Southern Asia
+Colombia,<65,median,COL,9e-6,Southern America
+Comoros,<65,median,COM,3.7999999999999995e-5,Africa
+Congo,<65,median,COG,3.7000000000000005e-5,Africa
+Costa_Rica,<65,median,CRI,9e-6,Southern America
+Côte_d'Ivoire,<65,median,CIV,3.7000000000000005e-5,Africa
+Croatia,<65,median,HRV,5e-6,Europe
+Cuba,<65,median,CUB,8e-6,Northern America
+Cyprus,<65,median,CYP,4e-6,Asia-Europe
+Czech_Republic,<65,median,CZE,5e-6,Europe
+Democratic_People's_Republic_of_Korea,<65,median,PRK,1e-5,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,<65,median,COD,3.7000000000000005e-5,Africa
+Denmark,<65,median,DNK,6e-6,Europe
+Djibouti,<65,median,DJI,3.6e-5,Asia-Europe
+Dominican_Republic,<65,median,DOM,9e-6,Southern America
+Ecuador,<65,median,ECU,1.5e-5,Northern America
+Egypt,<65,median,EGY,3.9e-5,Asia-Europe
+El_Salvador,<65,median,SLV,3.7000000000000005e-5,Southern America
+Equatorial_Guinea,<65,median,GNQ,3.7999999999999995e-5,Africa
+Eritrea,<65,median,ERI,3.6e-5,Asia-Europe
+Estonia,<65,median,EST,8e-6,Europe
+Ethiopia,<65,median,ETH,3.7000000000000005e-5,Africa
+Fiji,<65,median,FJI,2.1000000000000002e-5,Oceania-Melanesia-Polynesia
+Finland,<65,median,FIN,2e-6,Europe
+France,<65,median,FRA,4e-6,Europe
+Gabon,<65,median,GAB,3.7000000000000005e-5,Africa
+Gambia,<65,median,GMB,3.7999999999999995e-5,Africa
+Georgia,<65,median,GEO,1e-5,Asia-Europe
+Germany,<65,median,DEU,4e-6,Europe
+Ghana,<65,median,GHA,3.7000000000000005e-5,Africa
+Greece,<65,median,GRC,4e-6,Europe
+Grenada,<65,median,GRD,2e-5,NA
+Guatemala,<65,median,GTM,3e-5,Northern America
+Guinea,<65,median,GIN,3.7999999999999995e-5,Africa
+Guinea-Bissau,<65,median,GNB,3.7999999999999995e-5,Africa
+Guyana,<65,median,GUY,2.6000000000000002e-5,Southern America
+Haiti,<65,median,HTI,3.7999999999999995e-5,Southern America
+Honduras,<65,median,HND,1e-5,Northern America
+Hungary,<65,median,HUN,5e-6,Europe
+Iceland,<65,median,ISL,0,Europe
+India,<65,median,IND,2.1000000000000002e-5,Eastern and Southern Asia
+Indonesia,<65,median,IDN,3.7999999999999995e-5,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),<65,median,IRN,7e-6,Asia-Europe
+Iraq,<65,median,IRQ,3.7999999999999995e-5,Asia-Europe
+Ireland,<65,median,IRL,2e-6,Europe
+Israel,<65,median,ISR,2e-6,Asia-Europe
+Italy,<65,median,ITA,2e-6,Europe
+Jamaica,<65,median,JAM,9e-6,Southern America
+Japan,<65,median,JPN,2e-6,Eastern and Southern Asia
+Jordan,<65,median,JOR,1e-5,Asia-Europe
+Kazakhstan,<65,median,KAZ,2.4e-5,Asia-Europe
+Kenya,<65,median,KEN,3.7999999999999995e-5,Africa
+Kiribati,<65,median,KIR,3.7000000000000005e-5,NA
+Kuwait,<65,median,KWT,9e-6,Asia-Europe
+Kyrgyzstan,<65,median,KGZ,1.3000000000000001e-5,Asia-Europe
+Lao_People's_Democratic_Republic,<65,median,LAO,3.7000000000000005e-5,Eastern and Southern Asia
+Latvia,<65,median,LVA,1.3000000000000001e-5,Europe
+Lebanon,<65,median,LBN,4e-6,Asia-Europe
+Lesotho,<65,median,LSO,3.7999999999999995e-5,Africa
+Liberia,<65,median,LBR,3.7999999999999995e-5,Africa
+Libya,<65,median,LBY,1e-5,Europe
+Lithuania,<65,median,LTU,9e-6,Europe
+Luxembourg,<65,median,LUX,4e-6,Europe
+Madagascar,<65,median,MDG,3.7999999999999995e-5,Africa
+Malawi,<65,median,MWI,3.7999999999999995e-5,Africa
+Malaysia,<65,median,MYS,3.7999999999999995e-5,Eastern and Southern Asia
+Maldives,<65,median,MDV,6e-6,Eastern and Southern Asia
+Mali,<65,median,MLI,3.7000000000000005e-5,Africa
+Malta,<65,median,MLT,6e-6,Europe
+Mauritania,<65,median,MRT,3.7999999999999995e-5,Africa
+Mauritius,<65,median,MUS,1e-5,Africa
+Mexico,<65,median,MEX,1.4e-5,Northern America
+Micronesia_(Federated_States_of),<65,median,FSM,4e-5,NA
+Mongolia,<65,median,MNG,1.5e-5,Eastern and Southern Asia
+Montenegro,<65,median,MNE,4e-6,Europe
+Morocco,<65,median,MAR,3.7000000000000005e-5,Europe
+Mozambique,<65,median,MOZ,3.7999999999999995e-5,Africa
+Myanmar,<65,median,MMR,3.7000000000000005e-5,Eastern and Southern Asia
+Namibia,<65,median,NAM,3.7000000000000005e-5,Africa
+Nepal,<65,median,NPL,3.9e-5,Eastern and Southern Asia
+Netherlands,<65,median,NLD,4e-6,Europe
+New_Zealand,<65,median,NZL,3e-6,Oceania-Melanesia-Polynesia
+Nicaragua,<65,median,NIC,9e-6,Northern America
+Niger,<65,median,NER,3.7000000000000005e-5,Africa
+Nigeria,<65,median,NGA,3.7999999999999995e-5,Africa
+Norway,<65,median,NOR,9e-6,Europe
+Oman,<65,median,OMN,1e-5,Asia-Europe
+Pakistan,<65,median,PAK,3.7000000000000005e-5,Asia-Europe
+Panama,<65,median,PAN,1.1000000000000001e-5,Southern America
+Papua_New_Guinea,<65,median,PNG,3.7000000000000005e-5,Eastern and Southern Asia
+Paraguay,<65,median,PRY,2.2000000000000003e-5,Southern America
+Peru,<65,median,PER,3.7000000000000005e-5,Northern America
+Philippines,<65,median,PHL,4e-5,Eastern and Southern Asia
+Poland,<65,median,POL,8e-6,Europe
+Portugal,<65,median,PRT,6e-6,Europe
+Qatar,<65,median,QAT,5e-6,Asia-Europe
+Republic_of_Korea,<65,median,KOR,1e-6,Eastern and Southern Asia
+Moldova,<65,median,MDA,2.6000000000000002e-5,Europe
+Romania,<65,median,ROU,6e-6,Europe
+Russia,<65,median,RUS,2.9e-5,Eastern and Southern Asia
+Rwanda,<65,median,RWA,3.7999999999999995e-5,Asia-Europe
+Saint_Lucia,<65,median,LCA,1.2e-5,Southern America
+Saint_Vincent_and_the_Grenadines,<65,median,VCT,2e-5,Southern America
+Samoa,<65,median,WSM,1.1000000000000001e-5,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,<65,median,STP,3.7999999999999995e-5,Africa
+Saudi_Arabia,<65,median,SAU,9e-6,Asia-Europe
+Senegal,<65,median,SEN,3.7000000000000005e-5,Africa
+Serbia,<65,median,SRB,7e-6,Europe
+Seychelles,<65,median,SYC,2.2000000000000003e-5,NA
+Sierra_Leone,<65,median,SLE,3.6e-5,Africa
+Singapore,<65,median,SGP,1.5e-5,Eastern and Southern Asia
+Slovakia,<65,median,SVK,9e-6,Europe
+Slovenia,<65,median,SVN,3e-6,Europe
+Solomon_Islands,<65,median,SLB,3.7000000000000005e-5,Oceania-Melanesia-Polynesia
+Somalia,<65,median,SOM,3.7999999999999995e-5,Africa
+South_Africa,<65,median,ZAF,5.1e-5,Africa
+South_Sudan,<65,median,SSD,3.7000000000000005e-5,Africa
+Spain,<65,median,ESP,3e-6,Europe
+Sri_Lanka,<65,median,LKA,9e-6,Eastern and Southern Asia
+Sudan,<65,median,SDN,3.6e-5,Africa
+Suriname,<65,median,SUR,1.4e-5,Southern America
+Swaziland,<65,median,SWZ,3.7999999999999995e-5,Africa
+Sweden,<65,median,SWE,4e-6,Europe
+Switzerland,<65,median,CHE,3e-6,Europe
+Syria,<65,median,SYR,1e-5,Asia-Europe
+Taiwan,<65,median,TWN,2e-6,Eastern and Southern Asia
+Tajikistan,<65,median,TJK,3.7000000000000005e-5,Asia-Europe
+Thailand,<65,median,THA,1.3000000000000001e-5,Eastern and Southern Asia
+Macedonia,<65,median,MKD,4e-6,Europe
+Timor-Leste,<65,median,TLS,3.7000000000000005e-5,Eastern and Southern Asia
+Togo,<65,median,TGO,3.7999999999999995e-5,Africa
+Tonga,<65,median,TON,1e-5,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,<65,median,TTO,1.2e-5,Southern America
+Tunisia,<65,median,TUN,1e-5,Europe
+Turkey,<65,median,TUR,6e-6,Asia-Europe
+Turkmenistan,<65,median,TKM,3.7999999999999995e-5,Asia-Europe
+Uganda,<65,median,UGA,3.7000000000000005e-5,Africa
+Ukraine,<65,median,UKR,1.1000000000000001e-5,Europe
+United_Arab_Emirates,<65,median,ARE,4e-6,Asia-Europe
+United_Kingdom,<65,median,GBR,2.1000000000000002e-5,Europe
+Tanzania,<65,median,TZA,3.7999999999999995e-5,Africa
+United_States_of_America,<65,median,USA,6e-6,Northern America
+Uruguay,<65,median,URY,1.8e-5,Southern America
+Uzbekistan,<65,median,UZB,2.7000000000000002e-5,Asia-Europe
+Vanuatu,<65,median,VUT,3.9e-5,Oceania-Melanesia-Polynesia
+Venezuela,<65,median,VEN,9e-6,Southern America
+Vietnam,<65,median,VNM,1e-5,Eastern and Southern Asia
+Yemen,<65,median,YEM,3.7000000000000005e-5,Asia-Europe
+Zambia,<65,median,ZMB,3.7999999999999995e-5,Africa
+Zimbabwe,<65,median,ZWE,3.7000000000000005e-5,Africa
+Afghanistan,<65,L95,AFG,4e-6,Asia-Europe
+Albania,<65,L95,ALB,1e-6,Europe
+Algeria,<65,L95,DZA,5e-6,Europe
+Angola,<65,L95,AGO,4e-6,Africa
+Antigua_and_Barbuda,<65,L95,ATG,0,NA
+Argentina,<65,L95,ARG,1.8e-5,Southern America
+Armenia,<65,L95,ARM,1e-6,Asia-Europe
+Australia,<65,L95,AUS,2e-6,Oceania-Melanesia-Polynesia
+Austria,<65,L95,AUT,4e-6,Europe
+Azerbaijan,<65,L95,AZE,4e-6,Asia-Europe
+Bahamas,<65,L95,BHS,3e-6,Northern America
+Bahrain,<65,L95,BHR,1e-6,Asia-Europe
+Bangladesh,<65,L95,BGD,4e-6,Eastern and Southern Asia
+Barbados,<65,L95,BRB,4e-6,Southern America
+Belarus,<65,L95,BLR,2e-6,Europe
+Belgium,<65,L95,BEL,2e-6,Europe
+Belize,<65,L95,BLZ,3e-6,Northern America
+Benin,<65,L95,BEN,4e-6,Africa
+Bhutan,<65,L95,BTN,4e-6,Eastern and Southern Asia
+Bolivia,<65,L95,BOL,4e-6,Southern America
+Bosnia_and_Herzegovina,<65,L95,BIH,1e-6,Europe
+Botswana,<65,L95,BWA,4e-6,Africa
+Brazil,<65,L95,BRA,3e-6,Southern America
+Brunei_Darussalam,<65,L95,BRN,2e-6,Eastern and Southern Asia
+Bulgaria,<65,L95,BGR,2e-6,Europe
+Burkina_Faso,<65,L95,BFA,5e-6,Africa
+Burundi,<65,L95,BDI,5e-6,Africa
+Cambodia,<65,L95,KHM,4e-6,Eastern and Southern Asia
+Cameroon,<65,L95,CMR,4e-6,Africa
+Canada,<65,L95,CAN,1e-6,Northern America
+Cape_Verde,<65,L95,CPV,4e-6,Africa
+Central_African_Republic,<65,L95,CAF,4e-6,Africa
+Chad,<65,L95,TCD,4e-6,Africa
+Chile,<65,L95,CHL,1.1000000000000001e-5,Southern America
+Hong_Kong,<65,L95,HKG,3e-6,Eastern and Southern Asia
+China,<65,L95,CHN,2e-6,Eastern and Southern Asia
+Colombia,<65,L95,COL,2e-6,Southern America
+Comoros,<65,L95,COM,4e-6,Africa
+Congo,<65,L95,COG,4e-6,Africa
+Costa_Rica,<65,L95,CRI,2e-6,Southern America
+Côte_d'Ivoire,<65,L95,CIV,4e-6,Africa
+Croatia,<65,L95,HRV,1e-6,Europe
+Cuba,<65,L95,CUB,2e-6,Northern America
+Cyprus,<65,L95,CYP,1e-6,Asia-Europe
+Czech_Republic,<65,L95,CZE,3e-6,Europe
+Democratic_People's_Republic_of_Korea,<65,L95,PRK,2e-6,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,<65,L95,COD,4e-6,Africa
+Denmark,<65,L95,DNK,3e-6,Europe
+Djibouti,<65,L95,DJI,5e-6,Asia-Europe
+Dominican_Republic,<65,L95,DOM,2e-6,Southern America
+Ecuador,<65,L95,ECU,2e-6,Northern America
+Egypt,<65,L95,EGY,4e-6,Asia-Europe
+El_Salvador,<65,L95,SLV,4e-6,Southern America
+Equatorial_Guinea,<65,L95,GNQ,5e-6,Africa
+Eritrea,<65,L95,ERI,4e-6,Asia-Europe
+Estonia,<65,L95,EST,2e-6,Europe
+Ethiopia,<65,L95,ETH,4e-6,Africa
+Fiji,<65,L95,FJI,4e-6,Oceania-Melanesia-Polynesia
+Finland,<65,L95,FIN,0,Europe
+France,<65,L95,FRA,1e-6,Europe
+Gabon,<65,L95,GAB,4e-6,Africa
+Gambia,<65,L95,GMB,5e-6,Africa
+Georgia,<65,L95,GEO,2e-6,Asia-Europe
+Germany,<65,L95,DEU,1e-6,Europe
+Ghana,<65,L95,GHA,5e-6,Africa
+Greece,<65,L95,GRC,1e-6,Europe
+Grenada,<65,L95,GRD,0,NA
+Guatemala,<65,L95,GTM,4e-6,Northern America
+Guinea,<65,L95,GIN,5e-6,Africa
+Guinea-Bissau,<65,L95,GNB,4e-6,Africa
+Guyana,<65,L95,GUY,4e-6,Southern America
+Haiti,<65,L95,HTI,5e-6,Southern America
+Honduras,<65,L95,HND,2e-6,Northern America
+Hungary,<65,L95,HUN,1e-6,Europe
+Iceland,<65,L95,ISL,0,Europe
+India,<65,L95,IND,6e-6,Eastern and Southern Asia
+Indonesia,<65,L95,IDN,4e-6,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),<65,L95,IRN,2e-6,Asia-Europe
+Iraq,<65,L95,IRQ,4e-6,Asia-Europe
+Ireland,<65,L95,IRL,0,Europe
+Israel,<65,L95,ISR,1e-6,Asia-Europe
+Italy,<65,L95,ITA,1e-6,Europe
+Jamaica,<65,L95,JAM,2e-6,Southern America
+Japan,<65,L95,JPN,2e-6,Eastern and Southern Asia
+Jordan,<65,L95,JOR,2e-6,Asia-Europe
+Kazakhstan,<65,L95,KAZ,3e-6,Asia-Europe
+Kenya,<65,L95,KEN,4e-6,Africa
+Kiribati,<65,L95,KIR,0,NA
+Kuwait,<65,L95,KWT,2e-6,Asia-Europe
+Kyrgyzstan,<65,L95,KGZ,3e-6,Asia-Europe
+Lao_People's_Democratic_Republic,<65,L95,LAO,4e-6,Eastern and Southern Asia
+Latvia,<65,L95,LVA,3e-6,Europe
+Lebanon,<65,L95,LBN,1e-6,Asia-Europe
+Lesotho,<65,L95,LSO,4e-6,Africa
+Liberia,<65,L95,LBR,5e-6,Africa
+Libya,<65,L95,LBY,2e-6,Europe
+Lithuania,<65,L95,LTU,2e-6,Europe
+Luxembourg,<65,L95,LUX,0,Europe
+Madagascar,<65,L95,MDG,4e-6,Africa
+Malawi,<65,L95,MWI,4e-6,Africa
+Malaysia,<65,L95,MYS,4e-6,Eastern and Southern Asia
+Maldives,<65,L95,MDV,0,Eastern and Southern Asia
+Mali,<65,L95,MLI,4e-6,Africa
+Malta,<65,L95,MLT,0,Europe
+Mauritania,<65,L95,MRT,4e-6,Africa
+Mauritius,<65,L95,MUS,3e-6,Africa
+Mexico,<65,L95,MEX,9e-6,Northern America
+Micronesia_(Federated_States_of),<65,L95,FSM,0,NA
+Mongolia,<65,L95,MNG,2e-6,Eastern and Southern Asia
+Montenegro,<65,L95,MNE,0,Europe
+Morocco,<65,L95,MAR,4e-6,Europe
+Mozambique,<65,L95,MOZ,5e-6,Africa
+Myanmar,<65,L95,MMR,4e-6,Eastern and Southern Asia
+Namibia,<65,L95,NAM,4e-6,Africa
+Nepal,<65,L95,NPL,5e-6,Eastern and Southern Asia
+Netherlands,<65,L95,NLD,2e-6,Europe
+New_Zealand,<65,L95,NZL,2e-6,Oceania-Melanesia-Polynesia
+Nicaragua,<65,L95,NIC,2e-6,Northern America
+Niger,<65,L95,NER,5e-6,Africa
+Nigeria,<65,L95,NGA,4e-6,Africa
+Norway,<65,L95,NOR,6e-6,Europe
+Oman,<65,L95,OMN,2e-6,Asia-Europe
+Pakistan,<65,L95,PAK,4e-6,Asia-Europe
+Panama,<65,L95,PAN,2e-6,Southern America
+Papua_New_Guinea,<65,L95,PNG,5e-6,Eastern and Southern Asia
+Paraguay,<65,L95,PRY,8e-6,Southern America
+Peru,<65,L95,PER,4e-6,Northern America
+Philippines,<65,L95,PHL,6e-6,Eastern and Southern Asia
+Poland,<65,L95,POL,2e-6,Europe
+Portugal,<65,L95,PRT,3e-6,Europe
+Qatar,<65,L95,QAT,1e-6,Asia-Europe
+Republic_of_Korea,<65,L95,KOR,1e-6,Eastern and Southern Asia
+Moldova,<65,L95,MDA,4e-6,Europe
+Romania,<65,L95,ROU,4e-6,Europe
+Russia,<65,L95,RUS,4e-6,Eastern and Southern Asia
+Rwanda,<65,L95,RWA,4e-6,Asia-Europe
+Saint_Lucia,<65,L95,LCA,0,Southern America
+Saint_Vincent_and_the_Grenadines,<65,L95,VCT,0,Southern America
+Samoa,<65,L95,WSM,0,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,<65,L95,STP,5e-6,Africa
+Saudi_Arabia,<65,L95,SAU,2e-6,Asia-Europe
+Senegal,<65,L95,SEN,5e-6,Africa
+Serbia,<65,L95,SRB,3e-6,Europe
+Seychelles,<65,L95,SYC,0,NA
+Sierra_Leone,<65,L95,SLE,5e-6,Africa
+Singapore,<65,L95,SGP,1.2e-5,Eastern and Southern Asia
+Slovakia,<65,L95,SVK,2e-6,Europe
+Slovenia,<65,L95,SVN,1e-6,Europe
+Solomon_Islands,<65,L95,SLB,4e-6,Oceania-Melanesia-Polynesia
+Somalia,<65,L95,SOM,4e-6,Africa
+South_Africa,<65,L95,ZAF,4.4000000000000006e-5,Africa
+South_Sudan,<65,L95,SSD,4e-6,Africa
+Spain,<65,L95,ESP,2e-6,Europe
+Sri_Lanka,<65,L95,LKA,2e-6,Eastern and Southern Asia
+Sudan,<65,L95,SDN,4e-6,Africa
+Suriname,<65,L95,SUR,4e-6,Southern America
+Swaziland,<65,L95,SWZ,5e-6,Africa
+Sweden,<65,L95,SWE,1e-6,Europe
+Switzerland,<65,L95,CHE,3e-6,Europe
+Syria,<65,L95,SYR,2e-6,Asia-Europe
+Taiwan,<65,L95,TWN,1e-6,Eastern and Southern Asia
+Tajikistan,<65,L95,TJK,4e-6,Asia-Europe
+Thailand,<65,L95,THA,1e-6,Eastern and Southern Asia
+Macedonia,<65,L95,MKD,1e-6,Europe
+Timor-Leste,<65,L95,TLS,4e-6,Eastern and Southern Asia
+Togo,<65,L95,TGO,4e-6,Africa
+Tonga,<65,L95,TON,0,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,<65,L95,TTO,3e-6,Southern America
+Tunisia,<65,L95,TUN,2e-6,Europe
+Turkey,<65,L95,TUR,1e-6,Asia-Europe
+Turkmenistan,<65,L95,TKM,4e-6,Asia-Europe
+Uganda,<65,L95,UGA,5e-6,Africa
+Ukraine,<65,L95,UKR,3e-6,Europe
+United_Arab_Emirates,<65,L95,ARE,1e-6,Asia-Europe
+United_Kingdom,<65,L95,GBR,1e-6,Europe
+Tanzania,<65,L95,TZA,4e-6,Africa
+United_States_of_America,<65,L95,USA,4e-6,Northern America
+Uruguay,<65,L95,URY,4e-6,Southern America
+Uzbekistan,<65,L95,UZB,4e-6,Asia-Europe
+Vanuatu,<65,L95,VUT,4e-6,Oceania-Melanesia-Polynesia
+Venezuela,<65,L95,VEN,2e-6,Southern America
+Vietnam,<65,L95,VNM,2e-6,Eastern and Southern Asia
+Yemen,<65,L95,YEM,4e-6,Asia-Europe
+Zambia,<65,L95,ZMB,4e-6,Africa
+Zimbabwe,<65,L95,ZWE,4e-6,Africa
+Afghanistan,<65,U95,AFG,2.32e-4,Asia-Europe
+Albania,<65,U95,ALB,3.2e-5,Europe
+Algeria,<65,U95,DZA,2.34e-4,Europe
+Angola,<65,U95,AGO,2.25e-4,Africa
+Antigua_and_Barbuda,<65,U95,ATG,2.2999999999999997e-5,NA
+Argentina,<65,U95,ARG,4.0999999999999994e-5,Southern America
+Armenia,<65,U95,ARM,3.2e-5,Asia-Europe
+Australia,<65,U95,AUS,8e-6,Oceania-Melanesia-Polynesia
+Austria,<65,U95,AUT,1.8e-5,Europe
+Azerbaijan,<65,U95,AZE,2.2899999999999998e-4,Asia-Europe
+Bahamas,<65,U95,BHS,3.4e-5,Northern America
+Bahrain,<65,U95,BHR,3.1e-5,Asia-Europe
+Bangladesh,<65,U95,BGD,2.28e-4,Eastern and Southern Asia
+Barbados,<65,U95,BRB,4.9000000000000005e-5,Southern America
+Belarus,<65,U95,BLR,1.8e-5,Europe
+Belgium,<65,U95,BEL,5.3e-5,Europe
+Belize,<65,U95,BLZ,2.9e-5,Northern America
+Benin,<65,U95,BEN,2.21e-4,Africa
+Bhutan,<65,U95,BTN,2.31e-4,Eastern and Southern Asia
+Bolivia,<65,U95,BOL,2.22e-4,Southern America
+Bosnia_and_Herzegovina,<65,U95,BIH,3.1e-5,Europe
+Botswana,<65,U95,BWA,2.2600000000000002e-4,Africa
+Brazil,<65,U95,BRA,3.4e-5,Southern America
+Brunei_Darussalam,<65,U95,BRN,5.7e-5,Eastern and Southern Asia
+Bulgaria,<65,U95,BGR,2.4e-5,Europe
+Burkina_Faso,<65,U95,BFA,2.18e-4,Africa
+Burundi,<65,U95,BDI,2.31e-4,Africa
+Cambodia,<65,U95,KHM,2.24e-4,Eastern and Southern Asia
+Cameroon,<65,U95,CMR,2.31e-4,Africa
+Canada,<65,U95,CAN,6e-6,Northern America
+Cape_Verde,<65,U95,CPV,2.15e-4,Africa
+Central_African_Republic,<65,U95,CAF,2.13e-4,Africa
+Chad,<65,U95,TCD,2.2600000000000002e-4,Africa
+Chile,<65,U95,CHL,1.7e-5,Southern America
+Hong_Kong,<65,U95,HKG,5e-6,Eastern and Southern Asia
+China,<65,U95,CHN,1.2e-5,Eastern and Southern Asia
+Colombia,<65,U95,COL,2.2999999999999997e-5,Southern America
+Comoros,<65,U95,COM,2.17e-4,Africa
+Congo,<65,U95,COG,2.2600000000000002e-4,Africa
+Costa_Rica,<65,U95,CRI,5.8e-5,Southern America
+Côte_d'Ivoire,<65,U95,CIV,2.23e-4,Africa
+Croatia,<65,U95,HRV,3.2e-5,Europe
+Cuba,<65,U95,CUB,2e-5,Northern America
+Cyprus,<65,U95,CYP,3.2e-5,Asia-Europe
+Czech_Republic,<65,U95,CZE,7e-6,Europe
+Democratic_People's_Republic_of_Korea,<65,U95,PRK,2.7000000000000002e-5,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,<65,U95,COD,2.24e-4,Africa
+Denmark,<65,U95,DNK,9e-6,Europe
+Djibouti,<65,U95,DJI,2.25e-4,Asia-Europe
+Dominican_Republic,<65,U95,DOM,2.7000000000000002e-5,Southern America
+Ecuador,<65,U95,ECU,3.2999999999999996e-5,Northern America
+Egypt,<65,U95,EGY,2.2899999999999998e-4,Asia-Europe
+El_Salvador,<65,U95,SLV,2.1899999999999998e-4,Southern America
+Equatorial_Guinea,<65,U95,GNQ,2.24e-4,Africa
+Eritrea,<65,U95,ERI,2.14e-4,Asia-Europe
+Estonia,<65,U95,EST,2.1000000000000002e-5,Europe
+Ethiopia,<65,U95,ETH,2.32e-4,Africa
+Fiji,<65,U95,FJI,4.5e-5,Oceania-Melanesia-Polynesia
+Finland,<65,U95,FIN,1.3000000000000001e-5,Europe
+France,<65,U95,FRA,3e-5,Europe
+Gabon,<65,U95,GAB,2.1600000000000002e-4,Africa
+Gambia,<65,U95,GMB,2.15e-4,Africa
+Georgia,<65,U95,GEO,2.7000000000000002e-5,Asia-Europe
+Germany,<65,U95,DEU,6e-6,Europe
+Ghana,<65,U95,GHA,2.23e-4,Africa
+Greece,<65,U95,GRC,2.8e-5,Europe
+Grenada,<65,U95,GRD,5e-5,NA
+Guatemala,<65,U95,GTM,6.3e-5,Northern America
+Guinea,<65,U95,GIN,2.23e-4,Africa
+Guinea-Bissau,<65,U95,GNB,2.1600000000000002e-4,Africa
+Guyana,<65,U95,GUY,5.4000000000000005e-5,Southern America
+Haiti,<65,U95,HTI,2.32e-4,Southern America
+Honduras,<65,U95,HND,2.7000000000000002e-5,Northern America
+Hungary,<65,U95,HUN,3.4e-5,Europe
+Iceland,<65,U95,ISL,1.1000000000000001e-5,Europe
+India,<65,U95,IND,4.2000000000000004e-5,Eastern and Southern Asia
+Indonesia,<65,U95,IDN,2.23e-4,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),<65,U95,IRN,1.6e-5,Asia-Europe
+Iraq,<65,U95,IRQ,2.21e-4,Asia-Europe
+Ireland,<65,U95,IRL,1.7e-5,Europe
+Israel,<65,U95,ISR,3e-6,Asia-Europe
+Italy,<65,U95,ITA,1.7e-5,Europe
+Jamaica,<65,U95,JAM,5.8e-5,Southern America
+Japan,<65,U95,JPN,3e-6,Eastern and Southern Asia
+Jordan,<65,U95,JOR,2.8e-5,Asia-Europe
+Kazakhstan,<65,U95,KAZ,5.2000000000000004e-5,Asia-Europe
+Kenya,<65,U95,KEN,2.41e-4,Africa
+Kiribati,<65,U95,KIR,2.31e-4,NA
+Kuwait,<65,U95,KWT,5.8e-5,Asia-Europe
+Kyrgyzstan,<65,U95,KGZ,3.2999999999999996e-5,Asia-Europe
+Lao_People's_Democratic_Republic,<65,U95,LAO,2.2e-4,Eastern and Southern Asia
+Latvia,<65,U95,LVA,3.2999999999999996e-5,Europe
+Lebanon,<65,U95,LBN,3.2999999999999996e-5,Asia-Europe
+Lesotho,<65,U95,LSO,2.31e-4,Africa
+Liberia,<65,U95,LBR,2.2e-4,Africa
+Libya,<65,U95,LBY,2.7000000000000002e-5,Europe
+Lithuania,<65,U95,LTU,2.2999999999999997e-5,Europe
+Luxembourg,<65,U95,LUX,2.2999999999999997e-5,Europe
+Madagascar,<65,U95,MDG,2.33e-4,Africa
+Malawi,<65,U95,MWI,2.24e-4,Africa
+Malaysia,<65,U95,MYS,2.2e-4,Eastern and Southern Asia
+Maldives,<65,U95,MDV,3.2e-5,Eastern and Southern Asia
+Mali,<65,U95,MLI,2.2e-4,Africa
+Malta,<65,U95,MLT,3.5e-5,Europe
+Mauritania,<65,U95,MRT,2.3e-4,Africa
+Mauritius,<65,U95,MUS,2.4e-5,Africa
+Mexico,<65,U95,MEX,2e-5,Northern America
+Micronesia_(Federated_States_of),<65,U95,FSM,2.3e-4,NA
+Mongolia,<65,U95,MNG,3.2999999999999996e-5,Eastern and Southern Asia
+Montenegro,<65,U95,MNE,2.6000000000000002e-5,Europe
+Morocco,<65,U95,MAR,2.23e-4,Europe
+Mozambique,<65,U95,MOZ,2.2600000000000002e-4,Africa
+Myanmar,<65,U95,MMR,2.3e-4,Eastern and Southern Asia
+Namibia,<65,U95,NAM,2.31e-4,Africa
+Nepal,<65,U95,NPL,2.37e-4,Eastern and Southern Asia
+Netherlands,<65,U95,NLD,6e-6,Europe
+New_Zealand,<65,U95,NZL,5e-6,Oceania-Melanesia-Polynesia
+Nicaragua,<65,U95,NIC,2.7000000000000002e-5,Northern America
+Niger,<65,U95,NER,2.23e-4,Africa
+Nigeria,<65,U95,NGA,2.1899999999999998e-4,Africa
+Norway,<65,U95,NOR,1.3000000000000001e-5,Europe
+Oman,<65,U95,OMN,2.7000000000000002e-5,Asia-Europe
+Pakistan,<65,U95,PAK,2.25e-4,Asia-Europe
+Panama,<65,U95,PAN,2.6000000000000002e-5,Southern America
+Papua_New_Guinea,<65,U95,PNG,2.25e-4,Eastern and Southern Asia
+Paraguay,<65,U95,PRY,3.7999999999999995e-5,Southern America
+Peru,<65,U95,PER,2.28e-4,Northern America
+Philippines,<65,U95,PHL,8.5e-5,Eastern and Southern Asia
+Poland,<65,U95,POL,2e-5,Europe
+Portugal,<65,U95,PRT,8e-6,Europe
+Qatar,<65,U95,QAT,3.2999999999999996e-5,Asia-Europe
+Republic_of_Korea,<65,U95,KOR,2e-6,Eastern and Southern Asia
+Moldova,<65,U95,MDA,5.5e-5,Europe
+Romania,<65,U95,ROU,8e-6,Europe
+Russia,<65,U95,RUS,6.2e-5,Eastern and Southern Asia
+Rwanda,<65,U95,RWA,2.22e-4,Asia-Europe
+Saint_Lucia,<65,U95,LCA,2.4e-5,Southern America
+Saint_Vincent_and_the_Grenadines,<65,U95,VCT,4.9000000000000005e-5,Southern America
+Samoa,<65,U95,WSM,2.7000000000000002e-5,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,<65,U95,STP,2.33e-4,Africa
+Saudi_Arabia,<65,U95,SAU,2.7000000000000002e-5,Asia-Europe
+Senegal,<65,U95,SEN,2.23e-4,Africa
+Serbia,<65,U95,SRB,1.1000000000000001e-5,Europe
+Seychelles,<65,U95,SYC,5.6e-5,NA
+Sierra_Leone,<65,U95,SLE,2.23e-4,Africa
+Singapore,<65,U95,SGP,1.8e-5,Eastern and Southern Asia
+Slovakia,<65,U95,SVK,2.2000000000000003e-5,Europe
+Slovenia,<65,U95,SVN,2e-5,Europe
+Solomon_Islands,<65,U95,SLB,2.1600000000000002e-4,Oceania-Melanesia-Polynesia
+Somalia,<65,U95,SOM,2.32e-4,Africa
+South_Africa,<65,U95,ZAF,6e-5,Africa
+South_Sudan,<65,U95,SSD,2.2600000000000002e-4,Africa
+Spain,<65,U95,ESP,4e-6,Europe
+Sri_Lanka,<65,U95,LKA,2.7000000000000002e-5,Eastern and Southern Asia
+Sudan,<65,U95,SDN,2.28e-4,Africa
+Suriname,<65,U95,SUR,3.4e-5,Southern America
+Swaziland,<65,U95,SWZ,2.22e-4,Africa
+Sweden,<65,U95,SWE,2.8e-5,Europe
+Switzerland,<65,U95,CHE,4e-6,Europe
+Syria,<65,U95,SYR,2.7000000000000002e-5,Asia-Europe
+Taiwan,<65,U95,TWN,3e-6,Eastern and Southern Asia
+Tajikistan,<65,U95,TJK,2.17e-4,Asia-Europe
+Thailand,<65,U95,THA,3.6e-5,Eastern and Southern Asia
+Macedonia,<65,U95,MKD,2.7000000000000002e-5,Europe
+Timor-Leste,<65,U95,TLS,2.24e-4,Eastern and Southern Asia
+Togo,<65,U95,TGO,2.15e-4,Africa
+Tonga,<65,U95,TON,3e-5,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,<65,U95,TTO,3e-5,Southern America
+Tunisia,<65,U95,TUN,2.7000000000000002e-5,Europe
+Turkey,<65,U95,TUR,1.4e-5,Asia-Europe
+Turkmenistan,<65,U95,TKM,2.1600000000000002e-4,Asia-Europe
+Uganda,<65,U95,UGA,2.23e-4,Africa
+Ukraine,<65,U95,UKR,2.6000000000000002e-5,Europe
+United_Arab_Emirates,<65,U95,ARE,3.2999999999999996e-5,Asia-Europe
+United_Kingdom,<65,U95,GBR,6.900000000000001e-5,Europe
+Tanzania,<65,U95,TZA,2.25e-4,Africa
+United_States_of_America,<65,U95,USA,7e-6,Northern America
+Uruguay,<65,U95,URY,9.1e-5,Southern America
+Uzbekistan,<65,U95,UZB,5.6e-5,Asia-Europe
+Vanuatu,<65,U95,VUT,2.25e-4,Oceania-Melanesia-Polynesia
+Venezuela,<65,U95,VEN,2.2999999999999997e-5,Southern America
+Vietnam,<65,U95,VNM,2.6000000000000002e-5,Eastern and Southern Asia
+Yemen,<65,U95,YEM,2.22e-4,Asia-Europe
+Zambia,<65,U95,ZMB,2.23e-4,Africa
+Zimbabwe,<65,U95,ZWE,2.21e-4,Africa
+Afghanistan,65-75,median,AFG,3.7200000000000004e-4,Asia-Europe
+Albania,65-75,median,ALB,7.5e-5,Europe
+Algeria,65-75,median,DZA,9.300000000000001e-5,Europe
+Angola,65-75,median,AGO,3.71e-4,Africa
+Antigua_and_Barbuda,65-75,median,ATG,0,NA
+Argentina,65-75,median,ARG,4.39e-4,Southern America
+Armenia,65-75,median,ARM,7.5e-5,Asia-Europe
+Australia,65-75,median,AUS,3.4e-5,Oceania-Melanesia-Polynesia
+Austria,65-75,median,AUT,1.16e-4,Europe
+Azerbaijan,65-75,median,AZE,7.400000000000001e-5,Asia-Europe
+Bahamas,65-75,median,BHS,9.900000000000001e-5,Northern America
+Bahrain,65-75,median,BHR,8.800000000000001e-5,Asia-Europe
+Bangladesh,65-75,median,BGD,9.400000000000001e-5,Eastern and Southern Asia
+Barbados,65-75,median,BRB,2.61e-4,Southern America
+Belarus,65-75,median,BLR,2.6000000000000002e-5,Europe
+Belgium,65-75,median,BEL,9.300000000000001e-5,Europe
+Belize,65-75,median,BLZ,2.27e-4,Northern America
+Benin,65-75,median,BEN,3.74e-4,Africa
+Bhutan,65-75,median,BTN,3.64e-4,Eastern and Southern Asia
+Bolivia,65-75,median,BOL,3.74e-4,Southern America
+Bosnia_and_Herzegovina,65-75,median,BIH,7.599999999999999e-5,Europe
+Botswana,65-75,median,BWA,3.7600000000000003e-4,Africa
+Brazil,65-75,median,BRA,1.8800000000000002e-4,Southern America
+Brunei_Darussalam,65-75,median,BRN,7.900000000000001e-5,Eastern and Southern Asia
+Bulgaria,65-75,median,BGR,1.28e-4,Europe
+Burkina_Faso,65-75,median,BFA,3.75e-4,Africa
+Burundi,65-75,median,BDI,3.8e-4,Africa
+Cambodia,65-75,median,KHM,3.7200000000000004e-4,Eastern and Southern Asia
+Cameroon,65-75,median,CMR,3.7299999999999996e-4,Africa
+Canada,65-75,median,CAN,6.1e-5,Northern America
+Cape_Verde,65-75,median,CPV,3.6799999999999995e-4,Africa
+Central_African_Republic,65-75,median,CAF,3.7799999999999997e-4,Africa
+Chad,65-75,median,TCD,3.6899999999999997e-4,Africa
+Chile,65-75,median,CHL,3.0199999999999997e-4,Southern America
+Hong_Kong,65-75,median,HKG,1.19e-4,Eastern and Southern Asia
+China,65-75,median,CHN,1.9e-4,Eastern and Southern Asia
+Colombia,65-75,median,COL,9.800000000000001e-5,Southern America
+Comoros,65-75,median,COM,3.9200000000000004e-4,Africa
+Congo,65-75,median,COG,3.7600000000000003e-4,Africa
+Costa_Rica,65-75,median,CRI,1.1e-4,Southern America
+Côte_d'Ivoire,65-75,median,CIV,3.6899999999999997e-4,Africa
+Croatia,65-75,median,HRV,7.400000000000001e-5,Europe
+Cuba,65-75,median,CUB,1.4099999999999998e-4,Northern America
+Cyprus,65-75,median,CYP,7.900000000000001e-5,Asia-Europe
+Czech_Republic,65-75,median,CZE,5.5e-5,Europe
+Democratic_People's_Republic_of_Korea,65-75,median,PRK,9.400000000000001e-5,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,65-75,median,COD,3.71e-4,Africa
+Denmark,65-75,median,DNK,4.0999999999999994e-5,Europe
+Djibouti,65-75,median,DJI,3.83e-4,Asia-Europe
+Dominican_Republic,65-75,median,DOM,9.1e-5,Southern America
+Ecuador,65-75,median,ECU,1.4199999999999998e-4,Northern America
+Egypt,65-75,median,EGY,3.6899999999999997e-4,Asia-Europe
+El_Salvador,65-75,median,SLV,3.7200000000000004e-4,Southern America
+Equatorial_Guinea,65-75,median,GNQ,3.74e-4,Africa
+Eritrea,65-75,median,ERI,3.64e-4,Asia-Europe
+Estonia,65-75,median,EST,1.21e-4,Europe
+Ethiopia,65-75,median,ETH,3.75e-4,Africa
+Fiji,65-75,median,FJI,2.1e-4,Oceania-Melanesia-Polynesia
+Finland,65-75,median,FIN,1.7e-5,Europe
+France,65-75,median,FRA,7.3e-5,Europe
+Gabon,65-75,median,GAB,3.6799999999999995e-4,Africa
+Gambia,65-75,median,GMB,3.62e-4,Africa
+Georgia,65-75,median,GEO,7.7e-5,Asia-Europe
+Germany,65-75,median,DEU,2.9e-5,Europe
+Ghana,65-75,median,GHA,3.74e-4,Africa
+Greece,65-75,median,GRC,8.199999999999999e-5,Europe
+Grenada,65-75,median,GRD,2.42e-4,NA
+Guatemala,65-75,median,GTM,2.48e-4,Northern America
+Guinea,65-75,median,GIN,3.66e-4,Africa
+Guinea-Bissau,65-75,median,GNB,3.64e-4,Africa
+Guyana,65-75,median,GUY,2.2e-4,Southern America
+Haiti,65-75,median,HTI,3.6700000000000003e-4,Southern America
+Honduras,65-75,median,HND,7.8e-5,Northern America
+Hungary,65-75,median,HUN,5.7e-5,Europe
+Iceland,65-75,median,ISL,3.9e-5,Europe
+India,65-75,median,IND,3.51e-4,Eastern and Southern Asia
+Indonesia,65-75,median,IDN,9.400000000000001e-5,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),65-75,median,IRN,7.599999999999999e-5,Asia-Europe
+Iraq,65-75,median,IRQ,9.5e-5,Asia-Europe
+Ireland,65-75,median,IRL,7.900000000000001e-5,Europe
+Israel,65-75,median,ISR,3.2e-5,Asia-Europe
+Italy,65-75,median,ITA,5e-5,Europe
+Jamaica,65-75,median,JAM,6.5e-5,Southern America
+Japan,65-75,median,JPN,3.5e-5,Eastern and Southern Asia
+Jordan,65-75,median,JOR,9.5e-5,Asia-Europe
+Kazakhstan,65-75,median,KAZ,1.01e-4,Asia-Europe
+Kenya,65-75,median,KEN,3.6799999999999995e-4,Africa
+Kiribati,65-75,median,KIR,3.4700000000000003e-4,NA
+Kuwait,65-75,median,KWT,3.03e-4,Asia-Europe
+Kyrgyzstan,65-75,median,KGZ,5.1e-5,Asia-Europe
+Lao_People's_Democratic_Republic,65-75,median,LAO,3.74e-4,Eastern and Southern Asia
+Latvia,65-75,median,LVA,1.22e-4,Europe
+Lebanon,65-75,median,LBN,7.599999999999999e-5,Asia-Europe
+Lesotho,65-75,median,LSO,3.7299999999999996e-4,Africa
+Liberia,65-75,median,LBR,3.7200000000000004e-4,Africa
+Libya,65-75,median,LBY,3.71e-4,Europe
+Lithuania,65-75,median,LTU,1.12e-4,Europe
+Luxembourg,65-75,median,LUX,9.5e-5,Europe
+Madagascar,65-75,median,MDG,3.61e-4,Africa
+Malawi,65-75,median,MWI,3.7200000000000004e-4,Africa
+Malaysia,65-75,median,MYS,3.79e-4,Eastern and Southern Asia
+Maldives,65-75,median,MDV,9.900000000000001e-5,Eastern and Southern Asia
+Mali,65-75,median,MLI,3.79e-4,Africa
+Malta,65-75,median,MLT,1.01e-4,Europe
+Mauritania,65-75,median,MRT,3.65e-4,Africa
+Mauritius,65-75,median,MUS,7.5e-5,Africa
+Mexico,65-75,median,MEX,1.92e-4,Northern America
+Micronesia_(Federated_States_of),65-75,median,FSM,3.23e-4,NA
+Mongolia,65-75,median,MNG,1.0300000000000001e-4,Eastern and Southern Asia
+Montenegro,65-75,median,MNE,6.3e-5,Europe
+Morocco,65-75,median,MAR,3.7200000000000004e-4,Europe
+Mozambique,65-75,median,MOZ,3.7299999999999996e-4,Africa
+Myanmar,65-75,median,MMR,3.7200000000000004e-4,Eastern and Southern Asia
+Namibia,65-75,median,NAM,3.7e-4,Africa
+Nepal,65-75,median,NPL,3.6899999999999997e-4,Eastern and Southern Asia
+Netherlands,65-75,median,NLD,1.26e-4,Europe
+New_Zealand,65-75,median,NZL,4.7000000000000004e-5,Oceania-Melanesia-Polynesia
+Nicaragua,65-75,median,NIC,9.6e-5,Northern America
+Niger,65-75,median,NER,3.77e-4,Africa
+Nigeria,65-75,median,NGA,3.7e-4,Africa
+Norway,65-75,median,NOR,8.800000000000001e-5,Europe
+Oman,65-75,median,OMN,3.79e-4,Asia-Europe
+Pakistan,65-75,median,PAK,9.300000000000001e-5,Asia-Europe
+Panama,65-75,median,PAN,9.1e-5,Southern America
+Papua_New_Guinea,65-75,median,PNG,3.8e-4,Eastern and Southern Asia
+Paraguay,65-75,median,PRY,2.49e-4,Southern America
+Peru,65-75,median,PER,3.7299999999999996e-4,Northern America
+Philippines,65-75,median,PHL,5.08e-4,Eastern and Southern Asia
+Poland,65-75,median,POL,8.699999999999999e-5,Europe
+Portugal,65-75,median,PRT,1.0300000000000001e-4,Europe
+Qatar,65-75,median,QAT,1.14e-4,Asia-Europe
+Republic_of_Korea,65-75,median,KOR,3.7000000000000005e-5,Eastern and Southern Asia
+Moldova,65-75,median,MDA,7.900000000000001e-5,Europe
+Romania,65-75,median,ROU,6.7e-5,Europe
+Russia,65-75,median,RUS,9.6e-5,Eastern and Southern Asia
+Rwanda,65-75,median,RWA,3.7200000000000004e-4,Asia-Europe
+Saint_Lucia,65-75,median,LCA,1.0800000000000001e-4,Southern America
+Saint_Vincent_and_the_Grenadines,65-75,median,VCT,2.2e-4,Southern America
+Samoa,65-75,median,WSM,3.26e-4,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,65-75,median,STP,3.3200000000000005e-4,Africa
+Saudi_Arabia,65-75,median,SAU,3.7299999999999996e-4,Asia-Europe
+Senegal,65-75,median,SEN,3.66e-4,Africa
+Serbia,65-75,median,SRB,6.5e-5,Europe
+Seychelles,65-75,median,SYC,2.83e-4,NA
+Sierra_Leone,65-75,median,SLE,3.66e-4,Africa
+Singapore,65-75,median,SGP,3.95e-4,Eastern and Southern Asia
+Slovakia,65-75,median,SVK,1.02e-4,Europe
+Slovenia,65-75,median,SVN,5.6e-5,Europe
+Solomon_Islands,65-75,median,SLB,3.57e-4,Oceania-Melanesia-Polynesia
+Somalia,65-75,median,SOM,3.7200000000000004e-4,Africa
+South_Africa,65-75,median,ZAF,3.74e-4,Africa
+South_Sudan,65-75,median,SSD,3.7e-4,Africa
+Spain,65-75,median,ESP,6.8e-5,Europe
+Sri_Lanka,65-75,median,LKA,9.400000000000001e-5,Eastern and Southern Asia
+Sudan,65-75,median,SDN,3.64e-4,Africa
+Suriname,65-75,median,SUR,1.73e-4,Southern America
+Swaziland,65-75,median,SWZ,3.7e-4,Africa
+Sweden,65-75,median,SWE,1.12e-4,Europe
+Switzerland,65-75,median,CHE,4.7000000000000004e-5,Europe
+Syria,65-75,median,SYR,9.300000000000001e-5,Asia-Europe
+Taiwan,65-75,median,TWN,3.4e-5,Eastern and Southern Asia
+Tajikistan,65-75,median,TJK,3.7299999999999996e-4,Asia-Europe
+Thailand,65-75,median,THA,2.2600000000000002e-4,Eastern and Southern Asia
+Macedonia,65-75,median,MKD,5.7e-5,Europe
+Timor-Leste,65-75,median,TLS,3.63e-4,Eastern and Southern Asia
+Togo,65-75,median,TGO,3.7600000000000003e-4,Africa
+Tonga,65-75,median,TON,2.85e-4,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,65-75,median,TTO,1.3099999999999999e-4,Southern America
+Tunisia,65-75,median,TUN,3.7e-4,Europe
+Turkey,65-75,median,TUR,1.22e-4,Asia-Europe
+Turkmenistan,65-75,median,TKM,9.800000000000001e-5,Asia-Europe
+Uganda,65-75,median,UGA,3.6899999999999997e-4,Africa
+Ukraine,65-75,median,UKR,5.7e-5,Europe
+United_Arab_Emirates,65-75,median,ARE,3.7200000000000004e-4,Asia-Europe
+United_Kingdom,65-75,median,GBR,1.5099999999999998e-4,Europe
+Tanzania,65-75,median,TZA,3.7e-4,Africa
+United_States_of_America,65-75,median,USA,8.599999999999999e-5,Northern America
+Uruguay,65-75,median,URY,3.19e-4,Southern America
+Uzbekistan,65-75,median,UZB,1.34e-4,Asia-Europe
+Vanuatu,65-75,median,VUT,3.82e-4,Oceania-Melanesia-Polynesia
+Venezuela,65-75,median,VEN,9.1e-5,Southern America
+Vietnam,65-75,median,VNM,9.300000000000001e-5,Eastern and Southern Asia
+Yemen,65-75,median,YEM,3.77e-4,Asia-Europe
+Zambia,65-75,median,ZMB,3.71e-4,Africa
+Zimbabwe,65-75,median,ZWE,3.64e-4,Africa
+Afghanistan,65-75,L95,AFG,7.8e-5,Asia-Europe
+Albania,65-75,L95,ALB,9e-6,Europe
+Algeria,65-75,L95,DZA,1.6e-5,Europe
+Angola,65-75,L95,AGO,7.2e-5,Africa
+Antigua_and_Barbuda,65-75,L95,ATG,0,NA
+Argentina,65-75,L95,ARG,2.83e-4,Southern America
+Armenia,65-75,L95,ARM,7e-6,Asia-Europe
+Australia,65-75,L95,AUS,6e-6,Oceania-Melanesia-Polynesia
+Austria,65-75,L95,AUT,4.599999999999999e-5,Europe
+Azerbaijan,65-75,L95,AZE,7e-6,Asia-Europe
+Bahamas,65-75,L95,BHS,0,Northern America
+Bahrain,65-75,L95,BHR,0,Asia-Europe
+Bangladesh,65-75,L95,BGD,1.7e-5,Eastern and Southern Asia
+Barbados,65-75,L95,BRB,4.2999999999999995e-5,Southern America
+Belarus,65-75,L95,BLR,5e-6,Europe
+Belgium,65-75,L95,BEL,1.6e-5,Europe
+Belize,65-75,L95,BLZ,1.1300000000000001e-4,Northern America
+Benin,65-75,L95,BEN,7.3e-5,Africa
+Bhutan,65-75,L95,BTN,8.099999999999999e-5,Eastern and Southern Asia
+Bolivia,65-75,L95,BOL,7.599999999999999e-5,Southern America
+Bosnia_and_Herzegovina,65-75,L95,BIH,9e-6,Europe
+Botswana,65-75,L95,BWA,7.2e-5,Africa
+Brazil,65-75,L95,BRA,4.8e-5,Southern America
+Brunei_Darussalam,65-75,L95,BRN,0,Eastern and Southern Asia
+Bulgaria,65-75,L95,BGR,2e-5,Europe
+Burkina_Faso,65-75,L95,BFA,7.5e-5,Africa
+Burundi,65-75,L95,BDI,7.400000000000001e-5,Africa
+Cambodia,65-75,L95,KHM,7.7e-5,Eastern and Southern Asia
+Cameroon,65-75,L95,CMR,8e-5,Africa
+Canada,65-75,L95,CAN,1.7e-5,Northern America
+Cape_Verde,65-75,L95,CPV,9.199999999999999e-5,Africa
+Central_African_Republic,65-75,L95,CAF,7.7e-5,Africa
+Chad,65-75,L95,TCD,7e-5,Africa
+Chile,65-75,L95,CHL,1.81e-4,Southern America
+Hong_Kong,65-75,L95,HKG,9.5e-5,Eastern and Southern Asia
+China,65-75,L95,CHN,5.9000000000000004e-5,Eastern and Southern Asia
+Colombia,65-75,L95,COL,1.7e-5,Southern America
+Comoros,65-75,L95,COM,6.5e-5,Africa
+Congo,65-75,L95,COG,7e-5,Africa
+Costa_Rica,65-75,L95,CRI,1.8999999999999998e-5,Southern America
+Côte_d'Ivoire,65-75,L95,CIV,7.900000000000001e-5,Africa
+Croatia,65-75,L95,HRV,1.2e-5,Europe
+Cuba,65-75,L95,CUB,3.5e-5,Northern America
+Cyprus,65-75,L95,CYP,1.1000000000000001e-5,Asia-Europe
+Czech_Republic,65-75,L95,CZE,3.9e-5,Europe
+Democratic_People's_Republic_of_Korea,65-75,L95,PRK,1.6e-5,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,65-75,L95,COD,7.5e-5,Africa
+Denmark,65-75,L95,DNK,1.4e-5,Europe
+Djibouti,65-75,L95,DJI,7.7e-5,Asia-Europe
+Dominican_Republic,65-75,L95,DOM,1.7e-5,Southern America
+Ecuador,65-75,L95,ECU,2.5e-5,Northern America
+Egypt,65-75,L95,EGY,7.400000000000001e-5,Asia-Europe
+El_Salvador,65-75,L95,SLV,6.5e-5,Southern America
+Equatorial_Guinea,65-75,L95,GNQ,6.2e-5,Africa
+Eritrea,65-75,L95,ERI,7.7e-5,Asia-Europe
+Estonia,65-75,L95,EST,1.6e-5,Europe
+Ethiopia,65-75,L95,ETH,7e-5,Africa
+Fiji,65-75,L95,FJI,5.3e-5,Oceania-Melanesia-Polynesia
+Finland,65-75,L95,FIN,3e-6,Europe
+France,65-75,L95,FRA,1.2e-5,Europe
+Gabon,65-75,L95,GAB,7.400000000000001e-5,Africa
+Gambia,65-75,L95,GMB,9e-5,Africa
+Georgia,65-75,L95,GEO,1.1000000000000001e-5,Asia-Europe
+Germany,65-75,L95,DEU,6e-6,Europe
+Ghana,65-75,L95,GHA,8.199999999999999e-5,Africa
+Greece,65-75,L95,GRC,1.3000000000000001e-5,Europe
+Grenada,65-75,L95,GRD,0,NA
+Guatemala,65-75,L95,GTM,6.2e-5,Northern America
+Guinea,65-75,L95,GIN,7e-5,Africa
+Guinea-Bissau,65-75,L95,GNB,6.8e-5,Africa
+Guyana,65-75,L95,GUY,7.3e-5,Southern America
+Haiti,65-75,L95,HTI,7.099999999999999e-5,Southern America
+Honduras,65-75,L95,HND,9e-6,Northern America
+Hungary,65-75,L95,HUN,9e-6,Europe
+Iceland,65-75,L95,ISL,0,Europe
+India,65-75,L95,IND,1.34e-4,Eastern and Southern Asia
+Indonesia,65-75,L95,IDN,1.6e-5,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),65-75,L95,IRN,1.3000000000000001e-5,Asia-Europe
+Iraq,65-75,L95,IRQ,1.6e-5,Asia-Europe
+Ireland,65-75,L95,IRL,1.4e-5,Europe
+Israel,65-75,L95,ISR,1.7e-5,Asia-Europe
+Italy,65-75,L95,ITA,8e-6,Europe
+Jamaica,65-75,L95,JAM,1.4e-5,Southern America
+Japan,65-75,L95,JPN,2.7000000000000002e-5,Eastern and Southern Asia
+Jordan,65-75,L95,JOR,1.6e-5,Asia-Europe
+Kazakhstan,65-75,L95,KAZ,1.8e-5,Asia-Europe
+Kenya,65-75,L95,KEN,7.599999999999999e-5,Africa
+Kiribati,65-75,L95,KIR,0,NA
+Kuwait,65-75,L95,KWT,7.099999999999999e-5,Asia-Europe
+Kyrgyzstan,65-75,L95,KGZ,7e-6,Asia-Europe
+Lao_People's_Democratic_Republic,65-75,L95,LAO,7.400000000000001e-5,Eastern and Southern Asia
+Latvia,65-75,L95,LVA,2e-5,Europe
+Lebanon,65-75,L95,LBN,1e-5,Asia-Europe
+Lesotho,65-75,L95,LSO,7.099999999999999e-5,Africa
+Liberia,65-75,L95,LBR,8e-5,Africa
+Libya,65-75,L95,LBY,7.5e-5,Europe
+Lithuania,65-75,L95,LTU,1.8999999999999998e-5,Europe
+Luxembourg,65-75,L95,LUX,2.4e-5,Europe
+Madagascar,65-75,L95,MDG,7.900000000000001e-5,Africa
+Malawi,65-75,L95,MWI,7.400000000000001e-5,Africa
+Malaysia,65-75,L95,MYS,7.8e-5,Eastern and Southern Asia
+Maldives,65-75,L95,MDV,0,Eastern and Southern Asia
+Mali,65-75,L95,MLI,7.8e-5,Africa
+Malta,65-75,L95,MLT,2e-5,Europe
+Mauritania,65-75,L95,MRT,7.5e-5,Africa
+Mauritius,65-75,L95,MUS,1.3000000000000001e-5,Africa
+Mexico,65-75,L95,MEX,1.01e-4,Northern America
+Micronesia_(Federated_States_of),65-75,L95,FSM,0,NA
+Mongolia,65-75,L95,MNG,1.3000000000000001e-5,Eastern and Southern Asia
+Montenegro,65-75,L95,MNE,0,Europe
+Morocco,65-75,L95,MAR,7.099999999999999e-5,Europe
+Mozambique,65-75,L95,MOZ,7.2e-5,Africa
+Myanmar,65-75,L95,MMR,7.3e-5,Eastern and Southern Asia
+Namibia,65-75,L95,NAM,8.400000000000001e-5,Africa
+Nepal,65-75,L95,NPL,7.400000000000001e-5,Eastern and Southern Asia
+Netherlands,65-75,L95,NLD,7.400000000000001e-5,Europe
+New_Zealand,65-75,L95,NZL,2.6000000000000002e-5,Oceania-Melanesia-Polynesia
+Nicaragua,65-75,L95,NIC,1.7e-5,Northern America
+Niger,65-75,L95,NER,7.2e-5,Africa
+Nigeria,65-75,L95,NGA,7.8e-5,Africa
+Norway,65-75,L95,NOR,6e-5,Europe
+Oman,65-75,L95,OMN,7.3e-5,Asia-Europe
+Pakistan,65-75,L95,PAK,1.7e-5,Asia-Europe
+Panama,65-75,L95,PAN,1.7e-5,Southern America
+Papua_New_Guinea,65-75,L95,PNG,7.7e-5,Eastern and Southern Asia
+Paraguay,65-75,L95,PRY,1.25e-4,Southern America
+Peru,65-75,L95,PER,8.099999999999999e-5,Northern America
+Philippines,65-75,L95,PHL,1.29e-4,Eastern and Southern Asia
+Poland,65-75,L95,POL,1.6e-5,Europe
+Portugal,65-75,L95,PRT,3.7999999999999995e-5,Europe
+Qatar,65-75,L95,QAT,0,Asia-Europe
+Republic_of_Korea,65-75,L95,KOR,2e-5,Eastern and Southern Asia
+Moldova,65-75,L95,MDA,1.3000000000000001e-5,Europe
+Romania,65-75,L95,ROU,4.7000000000000004e-5,Europe
+Russia,65-75,L95,RUS,1.7e-5,Eastern and Southern Asia
+Rwanda,65-75,L95,RWA,8e-5,Asia-Europe
+Saint_Lucia,65-75,L95,LCA,0,Southern America
+Saint_Vincent_and_the_Grenadines,65-75,L95,VCT,0,Southern America
+Samoa,65-75,L95,WSM,0,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,65-75,L95,STP,0,Africa
+Saudi_Arabia,65-75,L95,SAU,7.2e-5,Asia-Europe
+Senegal,65-75,L95,SEN,7.400000000000001e-5,Africa
+Serbia,65-75,L95,SRB,2.6000000000000002e-5,Europe
+Seychelles,65-75,L95,SYC,0,NA
+Sierra_Leone,65-75,L95,SLE,7.3e-5,Africa
+Singapore,65-75,L95,SGP,3.12e-4,Eastern and Southern Asia
+Slovakia,65-75,L95,SVK,1.8e-5,Europe
+Slovenia,65-75,L95,SVN,1e-5,Europe
+Solomon_Islands,65-75,L95,SLB,7.099999999999999e-5,Oceania-Melanesia-Polynesia
+Somalia,65-75,L95,SOM,7.400000000000001e-5,Africa
+South_Africa,65-75,L95,ZAF,2.99e-4,Africa
+South_Sudan,65-75,L95,SSD,7.3e-5,Africa
+Spain,65-75,L95,ESP,3.7000000000000005e-5,Europe
+Sri_Lanka,65-75,L95,LKA,1.6e-5,Eastern and Southern Asia
+Sudan,65-75,L95,SDN,7.900000000000001e-5,Africa
+Suriname,65-75,L95,SUR,4.2999999999999995e-5,Southern America
+Swaziland,65-75,L95,SWZ,6.2e-5,Africa
+Sweden,65-75,L95,SWE,1.8999999999999998e-5,Europe
+Switzerland,65-75,L95,CHE,3.5e-5,Europe
+Syria,65-75,L95,SYR,1.6e-5,Asia-Europe
+Taiwan,65-75,L95,TWN,1.7e-5,Eastern and Southern Asia
+Tajikistan,65-75,L95,TJK,7.5e-5,Asia-Europe
+Thailand,65-75,L95,THA,1.7e-5,Eastern and Southern Asia
+Macedonia,65-75,L95,MKD,6e-6,Europe
+Timor-Leste,65-75,L95,TLS,7.599999999999999e-5,Eastern and Southern Asia
+Togo,65-75,L95,TGO,7.3e-5,Africa
+Tonga,65-75,L95,TON,0,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,65-75,L95,TTO,2.4e-5,Southern America
+Tunisia,65-75,L95,TUN,8e-5,Europe
+Turkey,65-75,L95,TUR,2e-5,Asia-Europe
+Turkmenistan,65-75,L95,TKM,1.5e-5,Asia-Europe
+Uganda,65-75,L95,UGA,7.900000000000001e-5,Africa
+Ukraine,65-75,L95,UKR,1e-5,Europe
+United_Arab_Emirates,65-75,L95,ARE,7.2e-5,Asia-Europe
+United_Kingdom,65-75,L95,GBR,9e-6,Europe
+Tanzania,65-75,L95,TZA,7.3e-5,Africa
+United_States_of_America,65-75,L95,USA,6.599999999999999e-5,Northern America
+Uruguay,65-75,L95,URY,5e-5,Southern America
+Uzbekistan,65-75,L95,UZB,2.2000000000000003e-5,Asia-Europe
+Vanuatu,65-75,L95,VUT,1.27e-4,Oceania-Melanesia-Polynesia
+Venezuela,65-75,L95,VEN,1.6e-5,Southern America
+Vietnam,65-75,L95,VNM,1.6e-5,Eastern and Southern Asia
+Yemen,65-75,L95,YEM,7.7e-5,Asia-Europe
+Zambia,65-75,L95,ZMB,7.2e-5,Africa
+Zimbabwe,65-75,L95,ZWE,6.900000000000001e-5,Africa
+Afghanistan,65-75,U95,AFG,0.001365,Asia-Europe
+Albania,65-75,U95,ALB,3.22e-4,Europe
+Algeria,65-75,U95,DZA,3.5200000000000005e-4,Europe
+Angola,65-75,U95,AGO,0.00137,Africa
+Antigua_and_Barbuda,65-75,U95,ATG,2.65e-4,NA
+Argentina,65-75,U95,ARG,5.97e-4,Southern America
+Armenia,65-75,U95,ARM,3.2700000000000003e-4,Asia-Europe
+Australia,65-75,U95,AUS,7.099999999999999e-5,Oceania-Melanesia-Polynesia
+Austria,65-75,U95,AUT,1.9800000000000002e-4,Europe
+Azerbaijan,65-75,U95,AZE,3.37e-4,Asia-Europe
+Bahamas,65-75,U95,BHS,3.46e-4,Northern America
+Bahrain,65-75,U95,BHR,3.5200000000000005e-4,Asia-Europe
+Bangladesh,65-75,U95,BGD,3.57e-4,Eastern and Southern Asia
+Barbados,65-75,U95,BRB,4.7799999999999996e-4,Southern America
+Belarus,65-75,U95,BLR,9.1e-5,Europe
+Belgium,65-75,U95,BEL,3.19e-4,Europe
+Belize,65-75,U95,BLZ,4.5299999999999995e-4,Northern America
+Benin,65-75,U95,BEN,0.00137,Africa
+Bhutan,65-75,U95,BTN,0.001377,Eastern and Southern Asia
+Bolivia,65-75,U95,BOL,0.001377,Southern America
+Bosnia_and_Herzegovina,65-75,U95,BIH,3.25e-4,Europe
+Botswana,65-75,U95,BWA,0.001379,Africa
+Brazil,65-75,U95,BRA,3.5600000000000003e-4,Southern America
+Brunei_Darussalam,65-75,U95,BRN,3.9700000000000005e-4,Eastern and Southern Asia
+Bulgaria,65-75,U95,BGR,4.56e-4,Europe
+Burkina_Faso,65-75,U95,BFA,0.001368,Africa
+Burundi,65-75,U95,BDI,0.001409,Africa
+Cambodia,65-75,U95,KHM,0.001406,Eastern and Southern Asia
+Cameroon,65-75,U95,CMR,0.001389,Africa
+Canada,65-75,U95,CAN,1.05e-4,Northern America
+Cape_Verde,65-75,U95,CPV,0.00138,Africa
+Central_African_Republic,65-75,U95,CAF,0.001374,Africa
+Chad,65-75,U95,TCD,0.0013959999999999999,Africa
+Chile,65-75,U95,CHL,4.3700000000000005e-4,Southern America
+Hong_Kong,65-75,U95,HKG,1.45e-4,Eastern and Southern Asia
+China,65-75,U95,CHN,3.37e-4,Eastern and Southern Asia
+Colombia,65-75,U95,COL,3.37e-4,Southern America
+Comoros,65-75,U95,COM,0.001372,Africa
+Congo,65-75,U95,COG,0.0013909999999999999,Africa
+Costa_Rica,65-75,U95,CRI,4e-4,Southern America
+Côte_d'Ivoire,65-75,U95,CIV,0.001404,Africa
+Croatia,65-75,U95,HRV,2.61e-4,Europe
+Cuba,65-75,U95,CUB,2.67e-4,Northern America
+Cyprus,65-75,U95,CYP,3.17e-4,Asia-Europe
+Czech_Republic,65-75,U95,CZE,7.3e-5,Europe
+Democratic_People's_Republic_of_Korea,65-75,U95,PRK,3.6e-4,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,65-75,U95,COD,0.001355,Africa
+Denmark,65-75,U95,DNK,7.599999999999999e-5,Europe
+Djibouti,65-75,U95,DJI,0.001378,Asia-Europe
+Dominican_Republic,65-75,U95,DOM,3.61e-4,Southern America
+Ecuador,65-75,U95,ECU,4.85e-4,Northern America
+Egypt,65-75,U95,EGY,0.001353,Asia-Europe
+El_Salvador,65-75,U95,SLV,0.001378,Southern America
+Equatorial_Guinea,65-75,U95,GNQ,0.001371,Africa
+Eritrea,65-75,U95,ERI,0.0014190000000000001,Asia-Europe
+Estonia,65-75,U95,EST,4.27e-4,Europe
+Ethiopia,65-75,U95,ETH,0.001399,Africa
+Fiji,65-75,U95,FJI,3.6799999999999995e-4,Oceania-Melanesia-Polynesia
+Finland,65-75,U95,FIN,6.2e-5,Europe
+France,65-75,U95,FRA,2.61e-4,Europe
+Gabon,65-75,U95,GAB,0.0013809999999999998,Africa
+Gambia,65-75,U95,GMB,0.0013880000000000001,Africa
+Georgia,65-75,U95,GEO,3.2700000000000003e-4,Asia-Europe
+Germany,65-75,U95,DEU,5.6e-5,Europe
+Ghana,65-75,U95,GHA,0.001368,Africa
+Greece,65-75,U95,GRC,2.94e-4,Europe
+Grenada,65-75,U95,GRD,4.84e-4,NA
+Guatemala,65-75,U95,GTM,4.68e-4,Northern America
+Guinea,65-75,U95,GIN,0.001406,Africa
+Guinea-Bissau,65-75,U95,GNB,0.001411,Africa
+Guyana,65-75,U95,GUY,4.39e-4,Southern America
+Haiti,65-75,U95,HTI,0.001351,Southern America
+Honduras,65-75,U95,HND,3.2799999999999995e-4,Northern America
+Hungary,65-75,U95,HUN,2.05e-4,Europe
+Iceland,65-75,U95,ISL,1.1800000000000001e-4,Europe
+India,65-75,U95,IND,6.15e-4,Eastern and Southern Asia
+Indonesia,65-75,U95,IDN,3.55e-4,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),65-75,U95,IRN,2.6e-4,Asia-Europe
+Iraq,65-75,U95,IRQ,3.6e-4,Asia-Europe
+Ireland,65-75,U95,IRL,2.8199999999999997e-4,Europe
+Israel,65-75,U95,ISR,5e-5,Asia-Europe
+Italy,65-75,U95,ITA,1.7800000000000002e-4,Europe
+Jamaica,65-75,U95,JAM,2.31e-4,Southern America
+Japan,65-75,U95,JPN,4.2999999999999995e-5,Eastern and Southern Asia
+Jordan,65-75,U95,JOR,3.5299999999999996e-4,Asia-Europe
+Kazakhstan,65-75,U95,KAZ,3.5e-4,Asia-Europe
+Kenya,65-75,U95,KEN,0.001384,Africa
+Kiribati,65-75,U95,KIR,0.0013859999999999999,NA
+Kuwait,65-75,U95,KWT,5.7e-4,Asia-Europe
+Kyrgyzstan,65-75,U95,KGZ,1.91e-4,Asia-Europe
+Lao_People's_Democratic_Republic,65-75,U95,LAO,0.0013469999999999999,Eastern and Southern Asia
+Latvia,65-75,U95,LVA,4.3700000000000005e-4,Europe
+Lebanon,65-75,U95,LBN,3.26e-4,Asia-Europe
+Lesotho,65-75,U95,LSO,0.001404,Africa
+Liberia,65-75,U95,LBR,0.001346,Africa
+Libya,65-75,U95,LBY,0.0013930000000000001,Europe
+Lithuania,65-75,U95,LTU,3.99e-4,Europe
+Luxembourg,65-75,U95,LUX,3.57e-4,Europe
+Madagascar,65-75,U95,MDG,0.001389,Africa
+Malawi,65-75,U95,MWI,0.001389,Africa
+Malaysia,65-75,U95,MYS,0.00136,Eastern and Southern Asia
+Maldives,65-75,U95,MDV,3.9700000000000005e-4,Eastern and Southern Asia
+Mali,65-75,U95,MLI,0.001405,Africa
+Malta,65-75,U95,MLT,3.64e-4,Europe
+Mauritania,65-75,U95,MRT,0.0013859999999999999,Africa
+Mauritius,65-75,U95,MUS,2.5100000000000003e-4,Africa
+Mexico,65-75,U95,MEX,2.81e-4,Northern America
+Micronesia_(Federated_States_of),65-75,U95,FSM,0.001291,NA
+Mongolia,65-75,U95,MNG,3.4700000000000003e-4,Eastern and Southern Asia
+Montenegro,65-75,U95,MNE,2.0899999999999998e-4,Europe
+Morocco,65-75,U95,MAR,0.0013809999999999998,Europe
+Mozambique,65-75,U95,MOZ,0.0013369999999999999,Africa
+Myanmar,65-75,U95,MMR,0.0013869999999999998,Eastern and Southern Asia
+Namibia,65-75,U95,NAM,0.001379,Africa
+Nepal,65-75,U95,NPL,0.0013490000000000002,Eastern and Southern Asia
+Netherlands,65-75,U95,NLD,1.77e-4,Europe
+New_Zealand,65-75,U95,NZL,7.400000000000001e-5,Oceania-Melanesia-Polynesia
+Nicaragua,65-75,U95,NIC,3.61e-4,Northern America
+Niger,65-75,U95,NER,0.001394,Africa
+Nigeria,65-75,U95,NGA,0.0014219999999999999,Africa
+Norway,65-75,U95,NOR,1.4199999999999998e-4,Europe
+Oman,65-75,U95,OMN,0.001345,Asia-Europe
+Pakistan,65-75,U95,PAK,3.5600000000000003e-4,Asia-Europe
+Panama,65-75,U95,PAN,3.1800000000000003e-4,Southern America
+Papua_New_Guinea,65-75,U95,PNG,0.001358,Eastern and Southern Asia
+Paraguay,65-75,U95,PRY,3.9799999999999997e-4,Southern America
+Peru,65-75,U95,PER,0.0014030000000000002,Northern America
+Philippines,65-75,U95,PHL,9.609999999999999e-4,Eastern and Southern Asia
+Poland,65-75,U95,POL,2.99e-4,Europe
+Portugal,65-75,U95,PRT,1.67e-4,Europe
+Qatar,65-75,U95,QAT,3.41e-4,Asia-Europe
+Republic_of_Korea,65-75,U95,KOR,5.7e-5,Eastern and Southern Asia
+Moldova,65-75,U95,MDA,2.7100000000000003e-4,Europe
+Romania,65-75,U95,ROU,8.900000000000001e-5,Europe
+Russia,65-75,U95,RUS,3.31e-4,Eastern and Southern Asia
+Rwanda,65-75,U95,RWA,0.001363,Asia-Europe
+Saint_Lucia,65-75,U95,LCA,4.3e-4,Southern America
+Saint_Vincent_and_the_Grenadines,65-75,U95,VCT,4.39e-4,Southern America
+Samoa,65-75,U95,WSM,0.001304,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,65-75,U95,STP,0.0013269999999999998,Africa
+Saudi_Arabia,65-75,U95,SAU,0.00134,Asia-Europe
+Senegal,65-75,U95,SEN,0.001357,Africa
+Serbia,65-75,U95,SRB,1.14e-4,Europe
+Seychelles,65-75,U95,SYC,8.49e-4,NA
+Sierra_Leone,65-75,U95,SLE,0.001377,Africa
+Singapore,65-75,U95,SGP,4.76e-4,Eastern and Southern Asia
+Slovakia,65-75,U95,SVK,3.51e-4,Europe
+Slovenia,65-75,U95,SVN,2.05e-4,Europe
+Solomon_Islands,65-75,U95,SLB,0.001355,Oceania-Melanesia-Polynesia
+Somalia,65-75,U95,SOM,0.0014,Africa
+South_Africa,65-75,U95,ZAF,4.5299999999999995e-4,Africa
+South_Sudan,65-75,U95,SSD,0.001361,Africa
+Spain,65-75,U95,ESP,9.900000000000001e-5,Europe
+Sri_Lanka,65-75,U95,LKA,3.61e-4,Eastern and Southern Asia
+Sudan,65-75,U95,SDN,0.0013919999999999998,Africa
+Suriname,65-75,U95,SUR,3.0199999999999997e-4,Southern America
+Swaziland,65-75,U95,SWZ,0.001389,Africa
+Sweden,65-75,U95,SWE,4.01e-4,Europe
+Switzerland,65-75,U95,CHE,6e-5,Europe
+Syria,65-75,U95,SYR,3.59e-4,Asia-Europe
+Taiwan,65-75,U95,TWN,5.6e-5,Eastern and Southern Asia
+Tajikistan,65-75,U95,TJK,0.001369,Asia-Europe
+Thailand,65-75,U95,THA,6.05e-4,Eastern and Southern Asia
+Macedonia,65-75,U95,MKD,2.03e-4,Europe
+Timor-Leste,65-75,U95,TLS,0.001375,Eastern and Southern Asia
+Togo,65-75,U95,TGO,0.0013859999999999999,Africa
+Tonga,65-75,U95,TON,0.0014230000000000002,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,65-75,U95,TTO,4.4100000000000004e-4,Southern America
+Tunisia,65-75,U95,TUN,0.0013969999999999998,Europe
+Turkey,65-75,U95,TUR,4.36e-4,Asia-Europe
+Turkmenistan,65-75,U95,TKM,3.6899999999999997e-4,Asia-Europe
+Uganda,65-75,U95,UGA,0.001367,Africa
+Ukraine,65-75,U95,UKR,2.05e-4,Europe
+United_Arab_Emirates,65-75,U95,ARE,0.00137,Asia-Europe
+United_Kingdom,65-75,U95,GBR,4.88e-4,Europe
+Tanzania,65-75,U95,TZA,0.001379,Africa
+United_States_of_America,65-75,U95,USA,1.06e-4,Northern America
+Uruguay,65-75,U95,URY,0.001426,Southern America
+Uzbekistan,65-75,U95,UZB,4.8100000000000004e-4,Asia-Europe
+Vanuatu,65-75,U95,VUT,0.001277,Oceania-Melanesia-Polynesia
+Venezuela,65-75,U95,VEN,3.14e-4,Southern America
+Vietnam,65-75,U95,VNM,3.58e-4,Eastern and Southern Asia
+Yemen,65-75,U95,YEM,0.0013080000000000001,Asia-Europe
+Zambia,65-75,U95,ZMB,0.001373,Africa
+Zimbabwe,65-75,U95,ZWE,0.001399,Africa
+Afghanistan,75+,median,AFG,6.42e-4,Asia-Europe
+Albania,75+,median,ALB,2.49e-4,Europe
+Algeria,75+,median,DZA,6.4e-4,Europe
+Angola,75+,median,AGO,0.001138,Africa
+Antigua_and_Barbuda,75+,median,ATG,7.120000000000001e-4,NA
+Argentina,75+,median,ARG,0.002235,Southern America
+Armenia,75+,median,ARM,2.5e-4,Asia-Europe
+Australia,75+,median,AUS,2.01e-4,Oceania-Melanesia-Polynesia
+Austria,75+,median,AUT,6.360000000000001e-4,Europe
+Azerbaijan,75+,median,AZE,2.5100000000000003e-4,Asia-Europe
+Bahamas,75+,median,BHS,6.720000000000001e-4,Northern America
+Bahrain,75+,median,BHR,6.690000000000001e-4,Asia-Europe
+Bangladesh,75+,median,BGD,2.49e-4,Eastern and Southern Asia
+Barbados,75+,median,BRB,0.001275,Southern America
+Belarus,75+,median,BLR,1.5e-5,Europe
+Belgium,75+,median,BEL,8.2e-4,Europe
+Belize,75+,median,BLZ,0.001278,Northern America
+Benin,75+,median,BEN,0.001126,Africa
+Bhutan,75+,median,BTN,6.19e-4,Eastern and Southern Asia
+Bolivia,75+,median,BOL,0.001093,Southern America
+Bosnia_and_Herzegovina,75+,median,BIH,2.55e-4,Europe
+Botswana,75+,median,BWA,0.001115,Africa
+Brazil,75+,median,BRA,8.02e-4,Southern America
+Brunei_Darussalam,75+,median,BRN,6.55e-4,Eastern and Southern Asia
+Bulgaria,75+,median,BGR,2.69e-4,Europe
+Burkina_Faso,75+,median,BFA,0.001133,Africa
+Burundi,75+,median,BDI,0.001118,Africa
+Cambodia,75+,median,KHM,0.001117,Eastern and Southern Asia
+Cameroon,75+,median,CMR,0.001129,Africa
+Canada,75+,median,CAN,4.45e-4,Northern America
+Cape_Verde,75+,median,CPV,0.001079,Africa
+Central_African_Republic,75+,median,CAF,0.001129,Africa
+Chad,75+,median,TCD,0.001121,Africa
+Chile,75+,median,CHL,0.001871,Southern America
+Hong_Kong,75+,median,HKG,8.45e-4,Eastern and Southern Asia
+China,75+,median,CHN,0.00114,Eastern and Southern Asia
+Colombia,75+,median,COL,5.1e-4,Southern America
+Comoros,75+,median,COM,0.00119,Africa
+Congo,75+,median,COG,0.001112,Africa
+Costa_Rica,75+,median,CRI,3.9299999999999996e-4,Southern America
+Côte_d'Ivoire,75+,median,CIV,0.001118,Africa
+Croatia,75+,median,HRV,1.91e-4,Europe
+Cuba,75+,median,CUB,6.43e-4,Northern America
+Cyprus,75+,median,CYP,2.52e-4,Asia-Europe
+Czech_Republic,75+,median,CZE,2.01e-4,Europe
+Democratic_People's_Republic_of_Korea,75+,median,PRK,6.479999999999999e-4,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,75+,median,COD,0.001139,Africa
+Denmark,75+,median,DNK,5.08e-4,Europe
+Djibouti,75+,median,DJI,0.001085,Asia-Europe
+Dominican_Republic,75+,median,DOM,6.479999999999999e-4,Southern America
+Ecuador,75+,median,ECU,7.21e-4,Northern America
+Egypt,75+,median,EGY,6.51e-4,Asia-Europe
+El_Salvador,75+,median,SLV,0.001127,Southern America
+Equatorial_Guinea,75+,median,GNQ,0.001079,Africa
+Eritrea,75+,median,ERI,0.001112,Asia-Europe
+Estonia,75+,median,EST,1.6399999999999997e-4,Europe
+Ethiopia,75+,median,ETH,0.001127,Africa
+Fiji,75+,median,FJI,6.46e-4,Oceania-Melanesia-Polynesia
+Finland,75+,median,FIN,9e-5,Europe
+France,75+,median,FRA,4.93e-4,Europe
+Gabon,75+,median,GAB,0.001096,Africa
+Gambia,75+,median,GMB,0.0010840000000000001,Africa
+Georgia,75+,median,GEO,2.49e-4,Asia-Europe
+Germany,75+,median,DEU,2.0800000000000001e-4,Europe
+Ghana,75+,median,GHA,0.0011040000000000002,Africa
+Greece,75+,median,GRC,3.64e-4,Europe
+Grenada,75+,median,GRD,0.0014230000000000002,NA
+Guatemala,75+,median,GTM,0.001122,Northern America
+Guinea,75+,median,GIN,0.001122,Africa
+Guinea-Bissau,75+,median,GNB,0.001103,Africa
+Guyana,75+,median,GUY,9.91e-4,Southern America
+Haiti,75+,median,HTI,0.001106,Southern America
+Honduras,75+,median,HND,2.49e-4,Northern America
+Hungary,75+,median,HUN,1.54e-4,Europe
+Iceland,75+,median,ISL,5.05e-4,Europe
+India,75+,median,IND,8.709999999999999e-4,Eastern and Southern Asia
+Indonesia,75+,median,IDN,6.39e-4,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),75+,median,IRN,5.870000000000001e-4,Asia-Europe
+Iraq,75+,median,IRQ,2.55e-4,Asia-Europe
+Ireland,75+,median,IRL,6.82e-4,Europe
+Israel,75+,median,ISR,2.91e-4,Asia-Europe
+Italy,75+,median,ITA,2.9600000000000004e-4,Europe
+Jamaica,75+,median,JAM,5.229999999999999e-4,Southern America
+Japan,75+,median,JPN,2.75e-4,Eastern and Southern Asia
+Jordan,75+,median,JOR,6.46e-4,Asia-Europe
+Kazakhstan,75+,median,KAZ,2.74e-4,Asia-Europe
+Kenya,75+,median,KEN,0.0011229999999999999,Africa
+Kiribati,75+,median,KIR,7.82e-4,NA
+Kuwait,75+,median,KWT,0.001409,Asia-Europe
+Kyrgyzstan,75+,median,KGZ,9.6e-5,Asia-Europe
+Lao_People's_Democratic_Republic,75+,median,LAO,0.001127,Eastern and Southern Asia
+Latvia,75+,median,LVA,1.5099999999999998e-4,Europe
+Lebanon,75+,median,LBN,2.55e-4,Asia-Europe
+Lesotho,75+,median,LSO,0.001118,Africa
+Liberia,75+,median,LBR,0.001137,Africa
+Libya,75+,median,LBY,0.001109,Europe
+Lithuania,75+,median,LTU,1.93e-4,Europe
+Luxembourg,75+,median,LUX,4.56e-4,Europe
+Madagascar,75+,median,MDG,0.001121,Africa
+Malawi,75+,median,MWI,0.001118,Africa
+Malaysia,75+,median,MYS,0.001119,Eastern and Southern Asia
+Maldives,75+,median,MDV,7.120000000000001e-4,Eastern and Southern Asia
+Mali,75+,median,MLI,0.001081,Africa
+Malta,75+,median,MLT,8.359999999999999e-4,Europe
+Mauritania,75+,median,MRT,0.001134,Africa
+Mauritius,75+,median,MUS,6.44e-4,Africa
+Mexico,75+,median,MEX,6.82e-4,Northern America
+Micronesia_(Federated_States_of),75+,median,FSM,0.001377,NA
+Mongolia,75+,median,MNG,1.67e-4,Eastern and Southern Asia
+Montenegro,75+,median,MNE,1.8600000000000002e-4,Europe
+Morocco,75+,median,MAR,6.46e-4,Europe
+Mozambique,75+,median,MOZ,0.00113,Africa
+Myanmar,75+,median,MMR,6.44e-4,Eastern and Southern Asia
+Namibia,75+,median,NAM,0.0011409999999999999,Africa
+Nepal,75+,median,NPL,0.001148,Eastern and Southern Asia
+Netherlands,75+,median,NLD,9.12e-4,Europe
+New_Zealand,75+,median,NZL,3.6700000000000003e-4,Oceania-Melanesia-Polynesia
+Nicaragua,75+,median,NIC,6.44e-4,Northern America
+Niger,75+,median,NER,0.0011279999999999999,Africa
+Nigeria,75+,median,NGA,0.001139,Africa
+Norway,75+,median,NOR,7.459999999999999e-4,Europe
+Oman,75+,median,OMN,0.0010840000000000001,Asia-Europe
+Pakistan,75+,median,PAK,2.52e-4,Asia-Europe
+Panama,75+,median,PAN,6.39e-4,Southern America
+Papua_New_Guinea,75+,median,PNG,0.001119,Eastern and Southern Asia
+Paraguay,75+,median,PRY,0.00116,Southern America
+Peru,75+,median,PER,0.0011229999999999999,Northern America
+Philippines,75+,median,PHL,0.00225,Eastern and Southern Asia
+Poland,75+,median,POL,4.5799999999999997e-4,Europe
+Portugal,75+,median,PRT,9.2e-4,Europe
+Qatar,75+,median,QAT,2.25e-4,Asia-Europe
+Republic_of_Korea,75+,median,KOR,2.47e-4,Eastern and Southern Asia
+Moldova,75+,median,MDA,1.3099999999999999e-4,Europe
+Romania,75+,median,ROU,2.02e-4,Europe
+Russia,75+,median,RUS,2.65e-4,Eastern and Southern Asia
+Rwanda,75+,median,RWA,0.001114,Asia-Europe
+Saint_Lucia,75+,median,LCA,5.45e-4,Southern America
+Saint_Vincent_and_the_Grenadines,75+,median,VCT,8.640000000000001e-4,Southern America
+Samoa,75+,median,WSM,0.001005,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,75+,median,STP,0.001049,Africa
+Saudi_Arabia,75+,median,SAU,0.001116,Asia-Europe
+Senegal,75+,median,SEN,0.001119,Africa
+Serbia,75+,median,SRB,1.7399999999999997e-4,Europe
+Seychelles,75+,median,SYC,0.001289,NA
+Sierra_Leone,75+,median,SLE,0.001119,Africa
+Singapore,75+,median,SGP,0.0018859999999999999,Eastern and Southern Asia
+Slovakia,75+,median,SVK,6.540000000000001e-4,Europe
+Slovenia,75+,median,SVN,6.34e-4,Europe
+Solomon_Islands,75+,median,SLB,0.001036,Oceania-Melanesia-Polynesia
+Somalia,75+,median,SOM,0.001106,Africa
+South_Africa,75+,median,ZAF,0.0012309999999999999,Africa
+South_Sudan,75+,median,SSD,0.0011070000000000001,Africa
+Spain,75+,median,ESP,5.45e-4,Europe
+Sri_Lanka,75+,median,LKA,6.43e-4,Eastern and Southern Asia
+Sudan,75+,median,SDN,0.0011309999999999998,Africa
+Suriname,75+,median,SUR,6.320000000000001e-4,Southern America
+Swaziland,75+,median,SWZ,0.001166,Africa
+Sweden,75+,median,SWE,5.97e-4,Europe
+Switzerland,75+,median,CHE,3.3200000000000005e-4,Europe
+Syria,75+,median,SYR,6.41e-4,Asia-Europe
+Taiwan,75+,median,TWN,3.31e-4,Eastern and Southern Asia
+Tajikistan,75+,median,TJK,6.43e-4,Asia-Europe
+Thailand,75+,median,THA,0.001117,Eastern and Southern Asia
+Macedonia,75+,median,MKD,8.099999999999999e-5,Europe
+Timor-Leste,75+,median,TLS,0.001165,Eastern and Southern Asia
+Togo,75+,median,TGO,0.00113,Africa
+Tonga,75+,median,TON,0.0011020000000000001,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,75+,median,TTO,6.35e-4,Southern America
+Tunisia,75+,median,TUN,6.479999999999999e-4,Europe
+Turkey,75+,median,TUR,4.08e-4,Asia-Europe
+Turkmenistan,75+,median,TKM,2.43e-4,Asia-Europe
+Uganda,75+,median,UGA,0.00112,Africa
+Ukraine,75+,median,UKR,4.7000000000000004e-5,Europe
+United_Arab_Emirates,75+,median,ARE,0.001144,Asia-Europe
+United_Kingdom,75+,median,GBR,6.25e-4,Europe
+Tanzania,75+,median,TZA,0.001133,Africa
+United_States_of_America,75+,median,USA,4.93e-4,Northern America
+Uruguay,75+,median,URY,0.001692,Southern America
+Uzbekistan,75+,median,UZB,1.54e-4,Asia-Europe
+Vanuatu,75+,median,VUT,0.001227,Oceania-Melanesia-Polynesia
+Venezuela,75+,median,VEN,7.02e-4,Southern America
+Vietnam,75+,median,VNM,6.360000000000001e-4,Eastern and Southern Asia
+Yemen,75+,median,YEM,0.001126,Asia-Europe
+Zambia,75+,median,ZMB,0.001138,Africa
+Zimbabwe,75+,median,ZWE,0.001111,Africa
+Afghanistan,75+,L95,AFG,8.900000000000001e-5,Asia-Europe
+Albania,75+,L95,ALB,2.8e-5,Europe
+Algeria,75+,L95,DZA,8.900000000000001e-5,Europe
+Angola,75+,L95,AGO,1.83e-4,Africa
+Antigua_and_Barbuda,75+,L95,ATG,0,NA
+Argentina,75+,L95,ARG,0.001341,Southern America
+Armenia,75+,L95,ARM,3.2999999999999996e-5,Asia-Europe
+Australia,75+,L95,AUS,3.9e-5,Oceania-Melanesia-Polynesia
+Austria,75+,L95,AUT,4.5e-4,Europe
+Azerbaijan,75+,L95,AZE,2.9e-5,Asia-Europe
+Bahamas,75+,L95,BHS,8.400000000000001e-5,Northern America
+Bahrain,75+,L95,BHR,9.6e-5,Asia-Europe
+Bangladesh,75+,L95,BGD,2.4e-5,Eastern and Southern Asia
+Barbados,75+,L95,BRB,2.32e-4,Southern America
+Belarus,75+,L95,BLR,5e-6,Europe
+Belgium,75+,L95,BEL,1.14e-4,Europe
+Belize,75+,L95,BLZ,2.13e-4,Northern America
+Benin,75+,L95,BEN,1.9600000000000002e-4,Africa
+Bhutan,75+,L95,BTN,6.900000000000001e-5,Eastern and Southern Asia
+Bolivia,75+,L95,BOL,1.81e-4,Southern America
+Bosnia_and_Herzegovina,75+,L95,BIH,2.2999999999999997e-5,Europe
+Botswana,75+,L95,BWA,1.9600000000000002e-4,Africa
+Brazil,75+,L95,BRA,1.4099999999999998e-4,Southern America
+Brunei_Darussalam,75+,L95,BRN,1.6399999999999997e-4,Eastern and Southern Asia
+Bulgaria,75+,L95,BGR,7.400000000000001e-5,Europe
+Burkina_Faso,75+,L95,BFA,1.8600000000000002e-4,Africa
+Burundi,75+,L95,BDI,1.8399999999999997e-4,Africa
+Cambodia,75+,L95,KHM,1.8399999999999997e-4,Eastern and Southern Asia
+Cameroon,75+,L95,CMR,1.87e-4,Africa
+Canada,75+,L95,CAN,1.9e-4,Northern America
+Cape_Verde,75+,L95,CPV,1.54e-4,Africa
+Central_African_Republic,75+,L95,CAF,2.02e-4,Africa
+Chad,75+,L95,TCD,1.85e-4,Africa
+Chile,75+,L95,CHL,0.001088,Southern America
+Hong_Kong,75+,L95,HKG,6.640000000000001e-4,Eastern and Southern Asia
+China,75+,L95,CHN,4.5e-4,Eastern and Southern Asia
+Colombia,75+,L95,COL,7.099999999999999e-5,Southern America
+Comoros,75+,L95,COM,1.4900000000000002e-4,Africa
+Congo,75+,L95,COG,1.82e-4,Africa
+Costa_Rica,75+,L95,CRI,1.09e-4,Southern America
+Côte_d'Ivoire,75+,L95,CIV,1.8800000000000002e-4,Africa
+Croatia,75+,L95,HRV,5.2000000000000004e-5,Europe
+Cuba,75+,L95,CUB,1.14e-4,Northern America
+Cyprus,75+,L95,CYP,1.6e-5,Asia-Europe
+Czech_Republic,75+,L95,CZE,1.43e-4,Europe
+Democratic_People's_Republic_of_Korea,75+,L95,PRK,8.699999999999999e-5,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,75+,L95,COD,1.91e-4,Africa
+Denmark,75+,L95,DNK,2.3e-4,Europe
+Djibouti,75+,L95,DJI,1.81e-4,Asia-Europe
+Dominican_Republic,75+,L95,DOM,8.800000000000001e-5,Southern America
+Ecuador,75+,L95,ECU,1.27e-4,Northern America
+Egypt,75+,L95,EGY,9e-5,Asia-Europe
+El_Salvador,75+,L95,SLV,1.81e-4,Southern America
+Equatorial_Guinea,75+,L95,GNQ,2.4e-4,Africa
+Eritrea,75+,L95,ERI,1.8e-4,Asia-Europe
+Estonia,75+,L95,EST,4.9000000000000005e-5,Europe
+Ethiopia,75+,L95,ETH,1.8600000000000002e-4,Africa
+Fiji,75+,L95,FJI,1.44e-4,Oceania-Melanesia-Polynesia
+Finland,75+,L95,FIN,2.5e-5,Europe
+France,75+,L95,FRA,6.8e-5,Europe
+Gabon,75+,L95,GAB,1.7800000000000002e-4,Africa
+Gambia,75+,L95,GMB,1.55e-4,Africa
+Georgia,75+,L95,GEO,2.4e-5,Asia-Europe
+Germany,75+,L95,DEU,6.4e-5,Europe
+Ghana,75+,L95,GHA,1.8800000000000002e-4,Africa
+Greece,75+,L95,GRC,1e-4,Europe
+Grenada,75+,L95,GRD,2.85e-4,NA
+Guatemala,75+,L95,GTM,1.9800000000000002e-4,Northern America
+Guinea,75+,L95,GIN,1.95e-4,Africa
+Guinea-Bissau,75+,L95,GNB,2.07e-4,Africa
+Guyana,75+,L95,GUY,1.8e-4,Southern America
+Haiti,75+,L95,HTI,1.92e-4,Southern America
+Honduras,75+,L95,HND,2.5e-5,Northern America
+Hungary,75+,L95,HUN,4.2000000000000004e-5,Europe
+Iceland,75+,L95,ISL,5.1e-5,Europe
+India,75+,L95,IND,3.35e-4,Eastern and Southern Asia
+Indonesia,75+,L95,IDN,8.800000000000001e-5,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),75+,L95,IRN,8.199999999999999e-5,Asia-Europe
+Iraq,75+,L95,IRQ,2.7000000000000002e-5,Asia-Europe
+Ireland,75+,L95,IRL,9.7e-5,Europe
+Israel,75+,L95,ISR,2.01e-4,Asia-Europe
+Italy,75+,L95,ITA,8.099999999999999e-5,Europe
+Jamaica,75+,L95,JAM,7.7e-5,Southern America
+Japan,75+,L95,JPN,2.1899999999999998e-4,Eastern and Southern Asia
+Jordan,75+,L95,JOR,9.199999999999999e-5,Asia-Europe
+Kazakhstan,75+,L95,KAZ,7.400000000000001e-5,Asia-Europe
+Kenya,75+,L95,KEN,1.82e-4,Africa
+Kiribati,75+,L95,KIR,0,NA
+Kuwait,75+,L95,KWT,2.43e-4,Asia-Europe
+Kyrgyzstan,75+,L95,KGZ,2.6000000000000002e-5,Asia-Europe
+Lao_People's_Democratic_Republic,75+,L95,LAO,1.94e-4,Eastern and Southern Asia
+Latvia,75+,L95,LVA,4.2999999999999995e-5,Europe
+Lebanon,75+,L95,LBN,2.7000000000000002e-5,Asia-Europe
+Lesotho,75+,L95,LSO,1.8600000000000002e-4,Africa
+Liberia,75+,L95,LBR,1.94e-4,Africa
+Libya,75+,L95,LBY,1.92e-4,Europe
+Lithuania,75+,L95,LTU,5.5e-5,Europe
+Luxembourg,75+,L95,LUX,1.34e-4,Europe
+Madagascar,75+,L95,MDG,1.9600000000000002e-4,Africa
+Malawi,75+,L95,MWI,1.85e-4,Africa
+Malaysia,75+,L95,MYS,1.85e-4,Eastern and Southern Asia
+Maldives,75+,L95,MDV,1.4199999999999998e-4,Eastern and Southern Asia
+Mali,75+,L95,MLI,1.9e-4,Africa
+Malta,75+,L95,MLT,1.29e-4,Europe
+Mauritania,75+,L95,MRT,1.87e-4,Africa
+Mauritius,75+,L95,MUS,9.5e-5,Africa
+Mexico,75+,L95,MEX,2.56e-4,Northern America
+Micronesia_(Federated_States_of),75+,L95,FSM,0,NA
+Mongolia,75+,L95,MNG,4.8e-5,Eastern and Southern Asia
+Montenegro,75+,L95,MNE,5.3e-5,Europe
+Morocco,75+,L95,MAR,8.599999999999999e-5,Europe
+Mozambique,75+,L95,MOZ,1.87e-4,Africa
+Myanmar,75+,L95,MMR,8.699999999999999e-5,Eastern and Southern Asia
+Namibia,75+,L95,NAM,1.8399999999999997e-4,Africa
+Nepal,75+,L95,NPL,1.9899999999999999e-4,Eastern and Southern Asia
+Netherlands,75+,L95,NLD,5.239999999999999e-4,Europe
+New_Zealand,75+,L95,NZL,2.14e-4,Oceania-Melanesia-Polynesia
+Nicaragua,75+,L95,NIC,8.300000000000001e-5,Northern America
+Niger,75+,L95,NER,1.6199999999999998e-4,Africa
+Nigeria,75+,L95,NGA,1.85e-4,Africa
+Norway,75+,L95,NOR,6.03e-4,Europe
+Oman,75+,L95,OMN,1.7600000000000002e-4,Asia-Europe
+Pakistan,75+,L95,PAK,2.2000000000000003e-5,Asia-Europe
+Panama,75+,L95,PAN,8.900000000000001e-5,Southern America
+Papua_New_Guinea,75+,L95,PNG,1.9800000000000002e-4,Eastern and Southern Asia
+Paraguay,75+,L95,PRY,3.9799999999999997e-4,Southern America
+Peru,75+,L95,PER,1.8600000000000002e-4,Northern America
+Philippines,75+,L95,PHL,3.9600000000000003e-4,Eastern and Southern Asia
+Poland,75+,L95,POL,6.4e-5,Europe
+Portugal,75+,L95,PRT,4.8100000000000004e-4,Europe
+Qatar,75+,L95,QAT,0,Asia-Europe
+Republic_of_Korea,75+,L95,KOR,1.1800000000000001e-4,Eastern and Southern Asia
+Moldova,75+,L95,MDA,3.4e-5,Europe
+Romania,75+,L95,ROU,1.3199999999999998e-4,Europe
+Russia,75+,L95,RUS,7.2e-5,Eastern and Southern Asia
+Rwanda,75+,L95,RWA,1.8399999999999997e-4,Asia-Europe
+Saint_Lucia,75+,L95,LCA,1.36e-4,Southern America
+Saint_Vincent_and_the_Grenadines,75+,L95,VCT,0,Southern America
+Samoa,75+,L95,WSM,2.5100000000000003e-4,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,75+,L95,STP,3.5e-4,Africa
+Saudi_Arabia,75+,L95,SAU,1.92e-4,Asia-Europe
+Senegal,75+,L95,SEN,1.7800000000000002e-4,Africa
+Serbia,75+,L95,SRB,7.599999999999999e-5,Europe
+Seychelles,75+,L95,SYC,3.22e-4,NA
+Sierra_Leone,75+,L95,SLE,1.6800000000000002e-4,Africa
+Singapore,75+,L95,SGP,0.0015569999999999998,Eastern and Southern Asia
+Slovakia,75+,L95,SVK,9.1e-5,Europe
+Slovenia,75+,L95,SVN,9.1e-5,Europe
+Solomon_Islands,75+,L95,SLB,1.73e-4,Oceania-Melanesia-Polynesia
+Somalia,75+,L95,SOM,1.79e-4,Africa
+South_Africa,75+,L95,ZAF,0.001081,Africa
+South_Sudan,75+,L95,SSD,2.01e-4,Africa
+Spain,75+,L95,ESP,2.59e-4,Europe
+Sri_Lanka,75+,L95,LKA,8.400000000000001e-5,Eastern and Southern Asia
+Sudan,75+,L95,SDN,1.87e-4,Africa
+Suriname,75+,L95,SUR,1.4e-4,Southern America
+Swaziland,75+,L95,SWZ,2.1899999999999998e-4,Africa
+Sweden,75+,L95,SWE,8.300000000000001e-5,Europe
+Switzerland,75+,L95,CHE,2.14e-4,Europe
+Syria,75+,L95,SYR,8.199999999999999e-5,Asia-Europe
+Taiwan,75+,L95,TWN,2.12e-4,Eastern and Southern Asia
+Tajikistan,75+,L95,TJK,9.300000000000001e-5,Asia-Europe
+Thailand,75+,L95,THA,8e-5,Eastern and Southern Asia
+Macedonia,75+,L95,MKD,2e-5,Europe
+Timor-Leste,75+,L95,TLS,1.46e-4,Eastern and Southern Asia
+Togo,75+,L95,TGO,1.9800000000000002e-4,Africa
+Tonga,75+,L95,TON,0,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,75+,L95,TTO,9.1e-5,Southern America
+Tunisia,75+,L95,TUN,9.1e-5,Europe
+Turkey,75+,L95,TUR,1.11e-4,Asia-Europe
+Turkmenistan,75+,L95,TKM,2.2000000000000003e-5,Asia-Europe
+Uganda,75+,L95,UGA,1.93e-4,Africa
+Ukraine,75+,L95,UKR,1.3000000000000001e-5,Europe
+United_Arab_Emirates,75+,L95,ARE,1.91e-4,Asia-Europe
+United_Kingdom,75+,L95,GBR,7e-5,Europe
+Tanzania,75+,L95,TZA,1.94e-4,Africa
+United_States_of_America,75+,L95,USA,3.71e-4,Northern America
+Uruguay,75+,L95,URY,2.12e-4,Southern America
+Uzbekistan,75+,L95,UZB,4.2000000000000004e-5,Asia-Europe
+Vanuatu,75+,L95,VUT,3.07e-4,Oceania-Melanesia-Polynesia
+Venezuela,75+,L95,VEN,9.800000000000001e-5,Southern America
+Vietnam,75+,L95,VNM,8.900000000000001e-5,Eastern and Southern Asia
+Yemen,75+,L95,YEM,1.97e-4,Asia-Europe
+Zambia,75+,L95,ZMB,1.92e-4,Africa
+Zimbabwe,75+,L95,ZWE,1.9600000000000002e-4,Africa
+Afghanistan,75+,U95,AFG,0.0018069999999999998,Asia-Europe
+Albania,75+,U95,ALB,0.001481,Europe
+Algeria,75+,U95,DZA,0.0018230000000000002,Europe
+Angola,75+,U95,AGO,0.004011,Africa
+Antigua_and_Barbuda,75+,U95,ATG,0.0014240000000000001,NA
+Argentina,75+,U95,ARG,0.003127,Southern America
+Armenia,75+,U95,ARM,0.001491,Asia-Europe
+Australia,75+,U95,AUS,4.2899999999999997e-4,Oceania-Melanesia-Polynesia
+Austria,75+,U95,AUT,8.259999999999999e-4,Europe
+Azerbaijan,75+,U95,AZE,0.0014769999999999998,Asia-Europe
+Bahamas,75+,U95,BHS,0.001681,Northern America
+Bahrain,75+,U95,BHR,0.001911,Asia-Europe
+Bangladesh,75+,U95,BGD,0.0014969999999999998,Eastern and Southern Asia
+Barbados,75+,U95,BRB,0.002955,Southern America
+Belarus,75+,U95,BLR,6.900000000000001e-5,Europe
+Belgium,75+,U95,BEL,0.002098,Europe
+Belize,75+,U95,BLZ,0.002983,Northern America
+Benin,75+,U95,BEN,0.003842,Africa
+Bhutan,75+,U95,BTN,0.001789,Eastern and Southern Asia
+Bolivia,75+,U95,BOL,0.0039510000000000005,Southern America
+Bosnia_and_Herzegovina,75+,U95,BIH,0.001516,Europe
+Botswana,75+,U95,BWA,0.003952,Africa
+Brazil,75+,U95,BRA,0.0018869999999999998,Southern America
+Brunei_Darussalam,75+,U95,BRN,0.001475,Eastern and Southern Asia
+Bulgaria,75+,U95,BGR,0.00121,Europe
+Burkina_Faso,75+,U95,BFA,0.004035,Africa
+Burundi,75+,U95,BDI,0.003943,Africa
+Cambodia,75+,U95,KHM,0.004021,Eastern and Southern Asia
+Cameroon,75+,U95,CMR,0.004005,Africa
+Canada,75+,U95,CAN,7.03e-4,Northern America
+Cape_Verde,75+,U95,CPV,0.0040089999999999995,Africa
+Central_African_Republic,75+,U95,CAF,0.00391,Africa
+Chad,75+,U95,TCD,0.003802,Africa
+Chile,75+,U95,CHL,0.002693,Southern America
+Hong_Kong,75+,U95,HKG,0.001031,Eastern and Southern Asia
+China,75+,U95,CHN,0.001824,Eastern and Southern Asia
+Colombia,75+,U95,COL,0.001305,Southern America
+Comoros,75+,U95,COM,0.004015,Africa
+Congo,75+,U95,COG,0.003993,Africa
+Costa_Rica,75+,U95,CRI,0.0017530000000000002,Southern America
+Côte_d'Ivoire,75+,U95,CIV,0.0038360000000000004,Africa
+Croatia,75+,U95,HRV,8.53e-4,Europe
+Cuba,75+,U95,CUB,0.0015119999999999999,Northern America
+Cyprus,75+,U95,CYP,0.0014980000000000002,Asia-Europe
+Czech_Republic,75+,U95,CZE,2.8e-4,Europe
+Democratic_People's_Republic_of_Korea,75+,U95,PRK,0.001872,Eastern and Southern Asia
+Democratic_Republic_of_the_Congo,75+,U95,COD,0.004157,Africa
+Denmark,75+,U95,DNK,7.98e-4,Europe
+Djibouti,75+,U95,DJI,0.00398,Asia-Europe
+Dominican_Republic,75+,U95,DOM,0.001851,Southern America
+Ecuador,75+,U95,ECU,0.001696,Northern America
+Egypt,75+,U95,EGY,0.001845,Asia-Europe
+El_Salvador,75+,U95,SLV,0.003799,Southern America
+Equatorial_Guinea,75+,U95,GNQ,0.003957,Africa
+Eritrea,75+,U95,ERI,0.004147,Asia-Europe
+Estonia,75+,U95,EST,7.53e-4,Europe
+Ethiopia,75+,U95,ETH,0.003894,Africa
+Fiji,75+,U95,FJI,0.001435,Oceania-Melanesia-Polynesia
+Finland,75+,U95,FIN,4.07e-4,Europe
+France,75+,U95,FRA,0.001261,Europe
+Gabon,75+,U95,GAB,0.004058,Africa
+Gambia,75+,U95,GMB,0.004104,Africa
+Georgia,75+,U95,GEO,0.001508,Asia-Europe
+Germany,75+,U95,DEU,3.71e-4,Europe
+Ghana,75+,U95,GHA,0.003823,Africa
+Greece,75+,U95,GRC,0.0016359999999999999,Europe
+Grenada,75+,U95,GRD,0.0036989999999999996,NA
+Guatemala,75+,U95,GTM,0.002638,Northern America
+Guinea,75+,U95,GIN,0.004118,Africa
+Guinea-Bissau,75+,U95,GNB,0.003929,Africa
+Guyana,75+,U95,GUY,0.002252,Southern America
+Haiti,75+,U95,HTI,0.0038,Southern America
+Honduras,75+,U95,HND,0.0014340000000000002,Northern America
+Hungary,75+,U95,HUN,6.9e-4,Europe
+Iceland,75+,U95,ISL,0.001314,Europe
+India,75+,U95,IND,0.001494,Eastern and Southern Asia
+Indonesia,75+,U95,IDN,0.001863,Eastern and Southern Asia
+Iran_(Islamic_Republic_of),75+,U95,IRN,0.001501,Asia-Europe
+Iraq,75+,U95,IRQ,0.0015140000000000002,Asia-Europe
+Ireland,75+,U95,IRL,0.0017480000000000002,Europe
+Israel,75+,U95,ISR,3.95e-4,Asia-Europe
+Italy,75+,U95,ITA,0.0013269999999999998,Europe
+Jamaica,75+,U95,JAM,0.001345,Southern America
+Japan,75+,U95,JPN,3.3299999999999996e-4,Eastern and Southern Asia
+Jordan,75+,U95,JOR,0.0019169999999999999,Asia-Europe
+Kazakhstan,75+,U95,KAZ,0.001227,Asia-Europe
+Kenya,75+,U95,KEN,0.004095,Africa
+Kiribati,75+,U95,KIR,0.003912,NA
+Kuwait,75+,U95,KWT,0.003352,Asia-Europe
+Kyrgyzstan,75+,U95,KGZ,4.43e-4,Asia-Europe
+Lao_People's_Democratic_Republic,75+,U95,LAO,0.003829,Eastern and Southern Asia
+Latvia,75+,U95,LVA,6.87e-4,Europe
+Lebanon,75+,U95,LBN,0.0015480000000000001,Asia-Europe
+Lesotho,75+,U95,LSO,0.004008,Africa
+Liberia,75+,U95,LBR,0.004216,Africa
+Libya,75+,U95,LBY,0.0037730000000000003,Europe
+Lithuania,75+,U95,LTU,8.740000000000001e-4,Europe
+Luxembourg,75+,U95,LUX,0.002065,Europe
+Madagascar,75+,U95,MDG,0.003897,Africa
+Malawi,75+,U95,MWI,0.00391,Africa
+Malaysia,75+,U95,MYS,0.004241,Eastern and Southern Asia
+Maldives,75+,U95,MDV,0.001852,Eastern and Southern Asia
+Mali,75+,U95,MLI,0.003913,Africa
+Malta,75+,U95,MLT,0.0021230000000000003,Europe
+Mauritania,75+,U95,MRT,0.003843,Africa
+Mauritius,75+,U95,MUS,0.001645,Africa
+Mexico,75+,U95,MEX,0.001162,Northern America
+Micronesia_(Federated_States_of),75+,U95,FSM,0.004132,NA
+Mongolia,75+,U95,MNG,7.890000000000001e-4,Eastern and Southern Asia
+Montenegro,75+,U95,MNE,8.259999999999999e-4,Europe
+Morocco,75+,U95,MAR,0.001867,Europe
+Mozambique,75+,U95,MOZ,0.0038410000000000002,Africa
+Myanmar,75+,U95,MMR,0.001869,Eastern and Southern Asia
+Namibia,75+,U95,NAM,0.0039369999999999995,Africa
+Nepal,75+,U95,NPL,0.003874,Eastern and Southern Asia
+Netherlands,75+,U95,NLD,0.0013219999999999998,Europe
+New_Zealand,75+,U95,NZL,5.2e-4,Oceania-Melanesia-Polynesia
+Nicaragua,75+,U95,NIC,0.001879,Northern America
+Niger,75+,U95,NER,0.003821,Africa
+Nigeria,75+,U95,NGA,0.004096,Africa
+Norway,75+,U95,NOR,9.209999999999999e-4,Europe
+Oman,75+,U95,OMN,0.00384,Asia-Europe
+Pakistan,75+,U95,PAK,0.001462,Asia-Europe
+Panama,75+,U95,PAN,0.0016419999999999998,Southern America
+Papua_New_Guinea,75+,U95,PNG,0.004033999999999999,Eastern and Southern Asia
+Paraguay,75+,U95,PRY,0.0020469999999999998,Southern America
+Peru,75+,U95,PER,0.0039310000000000005,Northern America
+Philippines,75+,U95,PHL,0.00529,Eastern and Southern Asia
+Poland,75+,U95,POL,0.00117,Europe
+Portugal,75+,U95,PRT,0.00138,Europe
+Qatar,75+,U95,QAT,0.001465,Asia-Europe
+Republic_of_Korea,75+,U95,KOR,3.95e-4,Eastern and Southern Asia
+Moldova,75+,U95,MDA,5.74e-4,Europe
+Romania,75+,U95,ROU,2.7600000000000004e-4,Europe
+Russia,75+,U95,RUS,0.00119,Eastern and Southern Asia
+Rwanda,75+,U95,RWA,0.004067,Asia-Europe
+Saint_Lucia,75+,U95,LCA,0.001361,Southern America
+Saint_Vincent_and_the_Grenadines,75+,U95,VCT,0.0017280000000000002,Southern America
+Samoa,75+,U95,WSM,0.004021,Oceania-Melanesia-Polynesia
+Sao_Tome_and_Principe,75+,U95,STP,0.0038469999999999997,Africa
+Saudi_Arabia,75+,U95,SAU,0.003972,Asia-Europe
+Senegal,75+,U95,SEN,0.003883,Africa
+Serbia,75+,U95,SRB,2.99e-4,Europe
+Seychelles,75+,U95,SYC,0.0028989999999999997,NA
+Sierra_Leone,75+,U95,SLE,0.00386,Africa
+Singapore,75+,U95,SGP,0.0021709999999999998,Eastern and Southern Asia
+Slovakia,75+,U95,SVK,0.00167,Europe
+Slovenia,75+,U95,SVN,0.001625,Europe
+Solomon_Islands,75+,U95,SLB,0.004145,Oceania-Melanesia-Polynesia
+Somalia,75+,U95,SOM,0.004189,Africa
+South_Africa,75+,U95,ZAF,0.001378,Africa
+South_Sudan,75+,U95,SSD,0.0038339999999999997,Africa
+Spain,75+,U95,ESP,8.54e-4,Europe
+Sri_Lanka,75+,U95,LKA,0.001869,Eastern and Southern Asia
+Sudan,75+,U95,SDN,0.003921,Africa
+Suriname,75+,U95,SUR,0.001545,Southern America
+Swaziland,75+,U95,SWZ,0.003865,Africa
+Sweden,75+,U95,SWE,0.001527,Europe
+Switzerland,75+,U95,CHE,4.6e-4,Europe
+Syria,75+,U95,SYR,0.001841,Asia-Europe
+Taiwan,75+,U95,TWN,4.67e-4,Eastern and Southern Asia
+Tajikistan,75+,U95,TJK,0.0018809999999999999,Asia-Europe
+Thailand,75+,U95,THA,0.002884,Eastern and Southern Asia
+Macedonia,75+,U95,MKD,3.85e-4,Europe
+Timor-Leste,75+,U95,TLS,0.0039310000000000005,Eastern and Southern Asia
+Togo,75+,U95,TGO,0.003945,Africa
+Tonga,75+,U95,TON,0.00404,Oceania-Melanesia-Polynesia
+Trinidad_and_Tobago,75+,U95,TTO,0.001656,Southern America
+Tunisia,75+,U95,TUN,0.00187,Europe
+Turkey,75+,U95,TUR,0.001831,Asia-Europe
+Turkmenistan,75+,U95,TKM,0.001501,Asia-Europe
+Uganda,75+,U95,UGA,0.003995,Africa
+Ukraine,75+,U95,UKR,2.12e-4,Europe
+United_Arab_Emirates,75+,U95,ARE,0.0040539999999999994,Asia-Europe
+United_Kingdom,75+,U95,GBR,0.001543,Europe
+Tanzania,75+,U95,TZA,0.003995,Africa
+United_States_of_America,75+,U95,USA,6.19e-4,Northern America
+Uruguay,75+,U95,URY,0.005854,Southern America
+Uzbekistan,75+,U95,UZB,6.929999999999999e-4,Asia-Europe
+Vanuatu,75+,U95,VUT,0.003987,Oceania-Melanesia-Polynesia
+Venezuela,75+,U95,VEN,0.001795,Southern America
+Vietnam,75+,U95,VNM,0.001851,Eastern and Southern Asia
+Yemen,75+,U95,YEM,0.003852,Asia-Europe
+Zambia,75+,U95,ZMB,0.0039310000000000005,Africa
+Zimbabwe,75+,U95,ZWE,0.004001,Africa
