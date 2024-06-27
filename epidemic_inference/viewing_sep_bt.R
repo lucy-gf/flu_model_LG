@@ -1,6 +1,3 @@
-
-#setwd("~/Desktop/research asst/Global Code")
-
 # READING IN AND VIEWING RESULTS FROM THE COMMAND LINE
 
 library(data.table)
