@@ -401,6 +401,7 @@ fun_cntr_agestr <- function(i_cntr,i_year,age_low_vals,age_high_vals){
   age_groups=data.frame(age_low=seq(0,75,5), age_high=c(seq(4,74,5),100))
   if (!any((.packages()) %in% "wpp2019")) {library(wpp2019)}; if (!exists("popF")) {data("pop")}
   if(i_cntr[1] == 'Kosovo'){
+    pop_hist_WPP_data <- data.frame(pop_hist_WPP_data)
     vals <- unname(unlist(pop_hist_WPP_data %>% filter(grepl('Kos', name), Year == 2020) %>% 
       select(!c(name, Type, Year))))
     cntr_agestr = data.frame(agegroups=popF[popF$name %in% 'France',"age"],

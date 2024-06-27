@@ -154,7 +154,7 @@ custom_inference <- function(
   ### FUNCTION: llprior ### 
   llprior <- function(pars) {
 
-    # 1 is reporting prob, 2/10 is transmission, 3 is susceptibility, 10^4 is initial infections
+    # [1] is reporting prob, [2]/10 is transmission, [3] is susceptibility, 10^[4] is initial infections
     r0_gamma_pars <- c(11.082591, 9.248767)
     names(r0_gamma_pars) = c('shape', 'rate')
     sus_beta_pars <- c(50.19925, 32.55043)
@@ -167,7 +167,7 @@ custom_inference <- function(
         pars[(e-1)*6+2] < 0 || # transmissibility must be geq 0
         pars[(e-1)*6+3] < 0 || # susceptibility is a probability
         pars[(e-1)*6+3] > 1  ||
-        pars[(e-1)*6+4] < -1 || # minimum of 1 infected individual in each age group
+        pars[(e-1)*6+4] < 0 || # minimum of 1 infected individual in each age group
         pars[(e-1)*6+4] > log10(min(age.groups)) # demography-specific upper bound for init_inf
       ) {print('Parameter out of prior bounds'); return(-Inf)}
     }
@@ -822,6 +822,8 @@ incidence_function_fit_VS <- function(
       new_cij[lk:(lk + 4 - 1), ll:(ll + 4 - 1)] <- contacts
     }
   }
+  
+  # print(initial_vaccinated_prop)
   
   # specify the model
   mod <- gen_seeiir_ag_vacc_waning_updated$new(
