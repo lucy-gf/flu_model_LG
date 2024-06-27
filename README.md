@@ -6,7 +6,7 @@ Data are mainly in ``` /data/ ```, ```data_for_cluster```, and ``` /data_for_BS/
 
 ## Files for FluNet data cleaning, epidemic identification, ITZ expansion:
 
-In ```/prelim/```. Main files include:
+In ```/prelim/``` and ```/fcns/```. Main files include:
 
 - ``` itz_expansion.R ``` for geographical expansion of the ITZs by k-means clustering
 - ```epid_identif_cont_matrs.R``` runs the epidemic identificatino algorithm and calculates the exemplar countries' contact matrices
