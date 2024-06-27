@@ -14,14 +14,14 @@ In ```/prelim/``` and ```/fcns/```. Main files include:
 
 ## Files for epidemic inference and viewing posterior parameters:
 
-In ``` /epidemic_inference/ ```. 
+In ``` /epidemic_inference/ ```.
 
 - ``` cluster_code_sep_CHN_1.R ``` runs inference in some epidemics in China. Can change parameters to run inference on different epidemcs and countries
 - ``` viewing_sep_bt.R ``` runs plots of inference outputs
 
 ## Files for simulating future epidemics, including demography and vaccination models, and viewing outcomes:
 
-In ``` /BS/ ```. Main files include 
+In ``` /BS/ ```. Main files include:
 
 - ``` BS_data_fcns.R ``` for the functions that run the simulations
 - ``` BS_demography.R ``` for the demographic model
