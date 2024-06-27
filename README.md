@@ -2,9 +2,14 @@
 
 flu_model, adapted from https://github.com/mbkoltai/flu_model/tree/main.
 
+Data are mainly in ``` /data/ ``` and ``` /data_for_BS/ ```.
+
 ## Files for FluNet data cleaning, epidemic identification, ITZ expansion:
 
 In ```/prelim/```. Main files include:
+
+- ``` itz_expansion.R ``` for geographical expansion of the ITZs by k-means clustering
+- 
 
 ## Files for epidemic inference and viewing posterior parameters:
 
