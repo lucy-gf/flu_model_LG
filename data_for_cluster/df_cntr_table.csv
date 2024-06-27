@@ -1,8 +1,0 @@
-"country","COUNTRY_CODE","country_sub","INF_A_NONSENT","INF_A_SENTINEL","INF_B_NONSENT","INF_B_SENTINEL","hemisphere"
-"Argentina","ARG","ARG",10,0,8,0,"SH"
-"Australia","AUS","NZL",11,0,10,0,"SH"
-"Canada","CAN","CAN",10,0,10,0,"NH"
-"China","CHN","CHN",16,0,10,0,"NH"
-"Ghana","GHA","GHA",11,0,8,0,"NH"
-"Turkey","TUR","TUR",10,0,7,0,"NH"
-"United Kingdom","UK","GBR",10,0,7,0,"NH"
