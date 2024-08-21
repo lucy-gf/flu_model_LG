@@ -1,6 +1,4 @@
 #### Economic analysis - plots
-setwd("~/Desktop/research asst/Global Code")
-
 source("BS/BS_colors.R")
 
 library(readr)
