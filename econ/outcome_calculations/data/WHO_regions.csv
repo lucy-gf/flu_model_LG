@@ -1,0 +1,204 @@
+country_code,WHOREGION,country
+BGD,SEAR,Bangladesh
+CHN,WPR,China
+IND,SEAR,India
+LKA,SEAR,Sri Lanka
+MEX,AMR,Mexico
+URY,AMR,Uruguay
+BFA,AFR,Burkina Faso
+KAZ,EUR,Kazakhstan
+PAK,EMR,Pakistan
+DOM,AMR,Dominican Republic
+JPN,WPR,Japan
+MAR,EMR,Morocco
+ISL,EUR,Iceland
+BOL,AMR,Bolivia (Plurinational State of)
+PHL,WPR,Philippines
+ROU,EUR,Romania
+SEN,AFR,Senegal
+SWE,EUR,Sweden
+UGA,AFR,Uganda
+KGZ,EUR,Kyrgyzstan
+LVA,EUR,Latvia
+SUR,AMR,Suriname
+LBN,EMR,Lebanon
+UKR,EUR,Ukraine
+CIV,AFR,Côte d'Ivoire
+DEU,EUR,Germany
+THA,SEAR,Thailand
+GUF,AMR,French Guiana
+ISR,EUR,Israel
+ARG,AMR,Argentina
+AGO,AFR,Angola
+BEL,EUR,Belgium
+AZE,EUR,Azerbaijan
+CZE,EUR,Czechia
+EST,EUR,Estonia
+ITA,EUR,Italy
+POL,EUR,Poland
+ETH,AFR,Ethiopia
+COL,AMR,Colombia
+KNA,AMR,Saint Kitts and Nevis
+RWA,AFR,Rwanda
+CAN,AMR,Canada
+FIN,EUR,Finland
+GTM,AMR,Guatemala
+HTI,AMR,Haiti
+PRT,EUR,Portugal
+SVK,EUR,Slovakia
+USA,AMR,United States of America
+CUB,AMR,Cuba
+DNK,EUR,Denmark
+KEN,AFR,Kenya
+NCL,WPR,New Caledonia
+X10,EUR,"United Kingdom, Wales"
+VNM,WPR,Viet Nam
+JAM,AMR,Jamaica
+TUN,EMR,Tunisia
+NLD,EUR,Netherlands
+TTO,AMR,Trinidad and Tobago
+DZA,AFR,Algeria
+KHM,WPR,Cambodia
+UZB,EUR,Uzbekistan
+NIC,AMR,Nicaragua
+HKG,WPR,"China, Hong Kong SAR"
+LUX,EUR,Luxembourg
+MRT,AFR,Mauritania
+QAT,EMR,Qatar
+RUS,EUR,Russian Federation
+COD,AFR,Democratic Republic of the Congo
+MYS,WPR,Malaysia
+BRA,AMR,Brazil
+HRV,EUR,Croatia
+CHL,AMR,Chile
+MDA,EUR,Republic of Moldova
+SVN,EUR,Slovenia
+TGO,AFR,Togo
+TUR,EUR,Türkiye
+ECU,AMR,Ecuador
+X12,EUR,"United Kingdom, Scotland"
+FJI,WPR,Fiji
+SGP,WPR,Singapore
+CRI,AMR,Costa Rica
+ESP,EUR,Spain
+PAN,AMR,Panama
+TZA,AFR,United Republic of Tanzania
+PRY,AMR,Paraguay
+MDG,AFR,Madagascar
+VEN,AMR,Venezuela (Bolivarian Republic of)
+GEO,EUR,Georgia
+IRL,EUR,Ireland
+TJK,EUR,Tajikistan
+TKM,EUR,Turkmenistan
+GBR,EUR,United Kingdom
+BIH,EUR,Bosnia and Herzegovina
+EGY,EMR,Egypt
+IRN,EMR,Iran (Islamic Republic of)
+BGR,EUR,Bulgaria
+BLR,EUR,Belarus
+MUS,AFR,Mauritius
+IRQ,EMR,Iraq
+ZMB,AFR,Zambia
+LAO,WPR,Lao People's Democratic Republic
+PER,AMR,Peru
+IDN,SEAR,Indonesia
+AUS,WPR,Australia
+AUT,EUR,Austria
+PRK,SEAR,Democratic People's Republic of Korea
+NZL,WPR,New Zealand
+DMA,AMR,Dominica
+ARM,EUR,Armenia
+BHS,AMR,Bahamas
+MLI,AFR,Mali
+GHA,AFR,Ghana
+HUN,EUR,Hungary
+PNG,WPR,Papua New Guinea
+BLZ,AMR,Belize
+KOR,WPR,Republic of Korea
+CHE,EUR,Switzerland
+CYP,EUR,Cyprus
+COG,AFR,Congo
+GRC,EUR,Greece
+NOR,EUR,Norway
+SAU,EMR,Saudi Arabia
+MKD,EUR,North Macedonia
+CMR,AFR,Cameroon
+NGA,AFR,Nigeria
+ZAF,AFR,South Africa
+SLV,AMR,El Salvador
+BTN,SEAR,Bhutan
+OMN,EMR,Oman
+LTU,EUR,Lithuania
+SRB,EUR,Serbia
+MMR,SEAR,Myanmar
+GLP,AMR,Guadeloupe
+ALB,EUR,Albania
+MNG,WPR,Mongolia
+BLM,AMR,Saint Barthélemy
+MDV,SEAR,Maldives
+SYC,AFR,Seychelles
+XKX,EUR,Kosovo (in accordance with UN Security Council resolution 1244 (1999))
+TLS,SEAR,Timor-Leste
+HND,AMR,Honduras
+GIN,AFR,Guinea
+MNE,EUR,Montenegro
+SSD,AFR,South Sudan
+BHR,EMR,Bahrain
+LCA,AMR,Saint Lucia
+SLE,AFR,Sierra Leone
+MOZ,AFR,Mozambique
+NER,AFR,Niger
+ABW,AMR,Aruba
+MLT,EUR,Malta
+BRB,AMR,Barbados
+FRA,EUR,France
+PSE,EMR,"occupied Palestinian territory, including east Jerusalem"
+SCG,EUR,Serbia and Montenegro (2003-2006)
+CYM,AMR,Cayman Islands
+NPL,SEAR,Nepal
+SYR,EMR,Syrian Arab Republic
+JOR,EMR,Jordan
+ARE,EMR,United Arab Emirates
+AFG,EMR,Afghanistan
+VCT,AMR,Saint Vincent and the Grenadines
+MAF,AMR,Saint Martin (French part)
+TCD,AFR,Chad
+CAF,AFR,Central African Republic
+KWT,EMR,Kuwait
+AIA,AMR,Anguilla
+YEM,EMR,Yemen
+BMU,AMR,Bermuda
+GRD,AMR,Grenada
+SDN,EMR,Sudan
+GAB,AFR,Gabon
+TCA,AMR,Turks and Caicos Islands
+ATG,AMR,Antigua and Barbuda
+ZWE,AFR,Zimbabwe
+NAM,AFR,Namibia
+GUY,AMR,Guyana
+MSR,AMR,Montserrat
+SLB,WPR,Solomon Islands
+TON,WPR,Tonga
+VUT,WPR,Vanuatu
+WSM,WPR,Samoa
+PRI,AMR,Puerto Rico
+BRN,WPR,Brunei
+MAC,WPR,Macao
+TWN,WPR,Taiwan
+LBY,EMR,Libya
+BDI,AFR,Burundi
+BEN,AFR,Benin
+BWA,AFR,Botswana
+COM,AFR,Comoros
+CPV,AFR,Cape Verde
+GMB,AFR,Gambia
+GNB,AFR,Guinea-Bissau
+GNQ,AFR,Equatorial Guinea
+LBR,AFR,Liberia
+LSO,AFR,Lesotho
+MWI,AFR,Malawi
+STP,AFR,Sao Tome and Principe
+SWZ,AFR,Eswatini
+SOM,EMR,Somalia
+DJI,EMR,Djibouti
+ERI,AFR,Eritrea
