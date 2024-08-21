@@ -1,4 +1,4 @@
-# The potential global impact and cost-effectiveness of next-generation influenza vaccines: A modelling analysis.
+# The potential global impact and cost-effectiveness of next-generation influenza vaccines: a modelling analysis.
 
 flu_model, adapted from https://github.com/mbkoltai/flu_model/tree/main.
 
