@@ -2,7 +2,7 @@
 
 flu_model, adapted from https://github.com/mbkoltai/flu_model/tree/main.
 
-Data are mainly in ``` /data/ ```, ```data_for_cluster```, and ``` /data_for_BS/ ```.
+Data are mainly in ``` /data/ ```, ```data_for_cluster```, ``` /data_for_BS/ ```, and ``` /econ/outcome_calculations/data/ ```.
 
 ## Files for FluNet data cleaning, epidemic identification, ITZ expansion:
 
@@ -31,7 +31,7 @@ In ``` /BS/ ```. Main files include:
 
 ## Files for running and viewing the economic analysis:
 
-In ```econ```. Main files:
+In ```/econ/```. Main files:
 
 - ```global_econ.R``` runs the economic analysis, including sensitivity analyses
 - ```econ_plots.R``` produces figures of economic outcomes
