@@ -1,6 +1,4 @@
-#### Economic analysis - calculating outcomes 
-# setwd("~/Desktop/research asst/Global Code")
-
+#### Economic analysis - calculating outcomes
 source("BS/BS_vaccine_programs.R")
 source("BS/BS_colors.R")
 
@@ -18,48 +16,57 @@ library(patchwork)
 library(wpp2022)
 library(WDI)
 
-## SENSITIVITY ANALYSES
-scenario_name <- 'base'
+#### SETTING SCENARIO ####
+
+scenario_name <- 'BASE50_DEPTH'
 outp_include <- F # including outpatient/non-hospitalisation visits T/F
 disease_modification <- F
 mod_val <- 0.5
 WTP_choice <- c('lancet','gdp')[1]
 WTP_GDP_ratio <- 0.5 # proportion of GDP per capita for the willingness_to_pay threshold
-discount_SA <- T
-
-if((disease_modification+discount_SA+outp_include+(WTP_choice=='gdp'))>1){
-  print('BTW there is more than one econ SA on')
-}
+discount_SA <- F
 
 econ_folder_name <- paste0(ifelse(disease_modification, '_disease_mod',''),
                            ifelse(outp_include, '_outpatient',''),
                            ifelse((WTP_choice=='gdp'), '_gdp_',''),
                            ifelse((WTP_choice=='gdp'), WTP_GDP_ratio,''),
                            ifelse(discount_SA, '_discount0', ''))
+print(paste0('Folder = ', scenario_name,econ_folder_name))
+
+if((disease_modification+discount_SA+outp_include+(WTP_choice=='gdp'))>1){
+  print('BTW there is more than one econ sensitivity analysis on')
+}
 
 ## PARAMETERS
 cost_discount_rate_val <- c(0.03, 0.03)[1 + discount_SA]
 DALY_discount_rate_val <- c(0.03, 0)[1 + discount_SA]
-flu_duration <- 4/365 
+flu_duration <- 4/365
+wastage <- 0.1
 
 print(paste0(scenario_name, ', outpatient = ', outp_include,
-             ', disease_mod = ', disease_modification, ', wtp_thresh = ', WTP_choice, 
-             ifelse((WTP_choice=='gdp'), paste0(', GDP% = ', 100*WTP_GDP_ratio), ''), 
+             ', disease_mod = ', disease_modification, ', wtp_thresh = ', WTP_choice,
+             ifelse((WTP_choice=='gdp'), paste0(', GDP% = ', 100*WTP_GDP_ratio), ''),
              ', discount rates = ', 100*cost_discount_rate_val, '% & ', 100*DALY_discount_rate_val, '%'))
+
+## making directory for saving outputs if doesn't exist
+if(!file.exists(paste0('econ/', scenario_name,econ_folder_name))){
+  dir.create(paste0('econ/', scenario_name,econ_folder_name))
+  dir.create(paste0('econ/', scenario_name,econ_folder_name,'_plots'))
+}
 
 ## LOADING DATA (BASE CASE)
 print('loading data')
 
 if(exists('econ_cases_agg')){rm(econ_cases_agg)};if(exists('econ_cases')){rm(econ_cases)}
 for(c_code in c('ARG','AUS','CAN','CHN','GBR','GHA','TUR')){
-  if(file.exists(paste0('data/vacc_output_', scenario_name,'/econ_inp_', c_code, '.Rdata'))){
+  if(file.exists(paste0('data/vacc_output_', scenario_name,'/no-sync.nosync/econ_inp_', c_code, '.Rdata'))){
     print(paste0(c_code, ' exists'))
-    load(paste0('data/vacc_output_', scenario_name,'/econ_inp_', c_code, '.Rdata'))
+    load(paste0('data/vacc_output_', scenario_name,'/no-sync.nosync/econ_inp_', c_code, '.Rdata'))
     if(exists('econ_inp_new')){
       econ_inp <- copy(econ_inp_new)
       rm(econ_inp_new)
     }
-    econ_cases_agg1 <- melt(econ_inp, 
+    econ_cases_agg1 <- melt(econ_inp,
          id.vars=c('country_code','simulation_index','year','scenario'))
     if(disease_modification==T){
       econ_cases_agg1[,vaccinated:=(substr(variable,2,2)=='V')]
@@ -70,10 +77,10 @@ for(c_code in c('ARG','AUS','CAN','CHN','GBR','GHA','TUR')){
     }
     econ_cases_agg1[,age_grp:=as.numeric(substr(variable, 3,3))][,variable:=NULL]
     if(disease_modification==T){
-      econ_cases_agg1 <- econ_cases_agg1[, lapply(.SD,sum), 
+      econ_cases_agg1 <- econ_cases_agg1[, lapply(.SD,sum),
                                          by=c('country_code','simulation_index','year','scenario','vaccinated','age_grp')]
     }else{
-      econ_cases_agg1 <- econ_cases_agg1[, lapply(.SD,sum), 
+      econ_cases_agg1 <- econ_cases_agg1[, lapply(.SD,sum),
                                          by=c('country_code','simulation_index','year','scenario','age_grp')]
     }
     setnames(econ_cases_agg1, 'value','infections')
@@ -93,9 +100,11 @@ for(c_code in c('ARG','AUS','CAN','CHN','GBR','GHA','TUR')){
 rm(econ_cases_agg1);rm(econ_inp)
 econ_aside <- copy(econ_cases_agg)
 
+#### IFRS ####
+
 print('IFRs')
 ## load ifrs
-national_ifrs <- data.table(read_csv('econ/outcome_calculations/data/national_ifrs.csv', 
+national_ifrs <- data.table(read_csv('econ/outcome_calculations/data/national_ifrs.csv',
                                      show_col_types=F))
 
 econ_cases_agg <- econ_cases_agg[national_ifrs[,c('country_code','simulation_index','age_grp','ifr')], on=c('country_code','simulation_index','age_grp')]
@@ -104,9 +113,11 @@ if(disease_modification==T){
   econ_cases_agg[vaccinated==T,deaths := mod_val*deaths]
 }
 
+#### IHRS ####
+
 print('IHRs')
 ## load ihrs
-global_ihrs <- data.table(read_csv('econ/outcome_calculations/data/global_ihrs.csv', 
+global_ihrs <- data.table(read_csv('econ/outcome_calculations/data/global_ihrs.csv',
                                      show_col_types=F))
 outpatient_ratios <- data.table(read_csv("econ/outcome_calculations/data/outpatient_ratios.csv", show_col_types=F))
 
@@ -117,16 +128,17 @@ if(disease_modification==T){
   econ_cases_agg[, vaccinated:=NULL]
   econ_cases_agg <- econ_cases_agg[, lapply(.SD,sum), by = c('country_code','simulation_index','year','scenario','age_grp','ct','vt')]
 }
-## Proxy value for now 
+
 if(outp_include == T){
   print('outpatients')
   econ_cases_agg <- econ_cases_agg[outpatient_ratios, on=c('country_code','simulation_index'),
                                    ratio:=ratio]
-  econ_cases_agg[, outpatients := ratio*hospitalisations] ## UPDATE ##
+  econ_cases_agg[, outpatients := ratio*hospitalisations]
   econ_cases_agg[, ratio:=NULL]
 }
 
-## proportion symptomatic and fever
+#### SYMPTOMATIC + FEVER ####
+
 ## from carrat (DOI: 10.1093/aje/kwm375)
 print('symptomatic, fever')
 # symp_probs <- data.table(
@@ -143,14 +155,14 @@ print('symptomatic, fever')
 # }
 # delta <- function(fit, actual) sum((fit-actual)^2)
 # objective <- function(theta, x, prob, ...) {
-#   ab <- (theta) 
+#   ab <- (theta)
 #   fit <- f.gamma(ab[1], ab[2], x=as.numeric(x),...)
 #   # fit <- f.beta(ab[1], ab[2], x=as.numeric(x),...)
 #   return (delta(fit, prob))
 # }
 # fcn_fitting <- function(rates,
 #                         probs){
-#   
+#
 #   x <- c(unlist(unname(rates)))
 #   sol <- suppressWarnings(optim(f=objective,p=c(1,1),
 #                                 # method="BFGS",
@@ -158,10 +170,10 @@ print('symptomatic, fever')
 #                                 prob=c(probs),
 #                                 control = list(reltol = 1e-15)
 #   ))
-#   parms <- (sol$par)       
+#   parms <- (sol$par)
 #   return(parms)
 # }
-# 
+#
 # for(i in 1:nrow(symp_probs)){
 #   parms <- fcn_fitting(symp_probs[i,2:4], c(0.5, 0.025, 0.975))
 #   symp_probs[i,"shape"] <- parms[1]
@@ -170,7 +182,7 @@ print('symptomatic, fever')
 #   symp_probs[i,"l95_fit"] <- qgamma(p=c(0.025), shape=parms[1], rate=parms[2])
 #   symp_probs[i,"u95_fit"] <- qgamma(p=c(0.975), shape=parms[1], rate=parms[2])
 # }
-# 
+#
 # symp_samples <- data.table(
 #   simulation_index = 1:100,
 #   symp_prob = rgamma(100, shape = unlist(symp_probs[outcome=='symptoms','shape']), rate = unlist(symp_probs[outcome=='symptoms','rate'])),
@@ -182,7 +194,9 @@ symp_samples <- data.table(read_csv('econ/outcome_calculations/data/symp_samples
 econ_cases_agg <- econ_cases_agg[symp_samples, on=c('simulation_index')]
 econ_cases_agg[, symptomatics := symp_prob*infections][, fevers := fever_prob*infections][, non_fevers := symptomatics - fevers]
 
-## YLL per death
+
+#### YLLS ####
+
 ## discounting at same rate as DALYs, using 'lxqx' method
 
 print('YLLs')
@@ -193,9 +207,9 @@ pb <- txtProgressBar(min = 0, max = 186, style = 3, width = 50, char = "=")
 
 for(i in 1:length(unique(yll_df$country_code))){
   iso3c_i <- unique(yll_df$country_code)[i]
-  yll_df[country_code == iso3c_i, 'yll'] <- yll(LT = UNLT[ISO3_code == iso3c_i & MidPeriod == 2022.5], 
+  yll_df[country_code == iso3c_i, 'yll'] <- yll(LT = UNLT[ISO3_code == iso3c_i & MidPeriod == 2022.5],
                                                 r = DALY_discount_rate_val,
-                                                smr = 1, 
+                                                smr = 1,
                                                 weight_method = "lxqx", # weight method to average LE by age group: "lx" "lxqx" "equal" "pop_ifr"
                                                 model_ages = c(5,20,65))$d_LEx
   setTxtProgressBar(pb, i)
@@ -207,7 +221,7 @@ econ_cases_agg[,YLLs := yll*deaths]
 ## removing probabilities etc.
 econ_cases_agg[, c('ifr','ihr','symp_prob','fever_prob','yll'):=NULL]
 
-## YLDs
+#### YLDS ####
 print('YLDs')
 
 ## weights from GBD
@@ -239,7 +253,10 @@ econ_cases_agg <- econ_cases_agg[DALY_weight_samples, on=c('simulation_index')]
 econ_cases_agg[, non_fever_DALYs := flu_duration*non_fever_DALY*non_fevers][, fever_DALYs := flu_duration*fever_DALY*fevers][, hosp_DALYs := flu_duration*hosp_DALY*hospitalisations]
 econ_cases_agg[, c('non_fever_DALY','fever_DALY','hosp_DALY'):=NULL]
 
-## healthcare costs from regression
+## adding YLLs and YLDs to make DALYs
+econ_cases_agg[, total_DALYs := non_fever_DALYs + fever_DALYs + hosp_DALYs + YLLs]
+
+#### HEALTHCARE COSTS ####
 print('healthcare costs')
 
 load('econ/outcome_calculations/data/predicted_costs')
@@ -261,19 +278,16 @@ if(outp_include == T){
 }
 econ_cases_agg[, c('hosp_cost','outp_cost'):=NULL]
 
-## adding YLLs and YLDs to make DALYs 
-econ_cases_agg[, total_DALYs := non_fever_DALYs + fever_DALYs + hosp_DALYs + YLLs]
-
-## discounting
+#### DISCOUNTING ####
 print('discounting')
 
 econ_cases_agg[, discount_year := year - 2025]
 econ_cases_agg[, cost_discount_rate := (1 + cost_discount_rate_val)^(-discount_year)]
 econ_cases_agg[, DALY_discount_rate := (1 + DALY_discount_rate_val)^(-discount_year)]
 if(outp_include == T){
-  econ_cases_agg[, discounted_costs := (total_hosp_cost + total_outp_cost)*cost_discount_rate] 
+  econ_cases_agg[, discounted_costs := (total_hosp_cost + total_outp_cost)*cost_discount_rate]
 }else{
-  econ_cases_agg[, discounted_costs := (total_hosp_cost)*cost_discount_rate] 
+  econ_cases_agg[, discounted_costs := (total_hosp_cost)*cost_discount_rate]
 }
 econ_cases_agg[, discounted_DALYs := total_DALYs*DALY_discount_rate]
 
@@ -292,20 +306,25 @@ if(WTP_choice == 'gdp'){
 }
 
 
-########################################################################
-
-## loading vaccine doses
+#### VACCINE DOSES ####
 print('vaccine doses')
 
-vacc_scenario_name <- 'base'
-if(scenario_name == 'low_cov'){
-  vacc_scenario_name <- 'low_cov'
-}
+if(grepl('0',scenario_name)){
+  vacc_scenario_name <- 'BASE50'
+  if(scenario_name == 'LOW20'){
+    vacc_scenario_name <- scenario_name
+  }
+}else{
+  vacc_scenario_name <- 'base'
+  if(scenario_name == 'low_cov'){
+    vacc_scenario_name <- scenario_name
+  }
+}; print(paste0('Vaccination doses scenario: ', vacc_scenario_name))
 
 vacc_doses <- data.frame()
 for(c_code in c("GHA", "TUR", "CHN", "GBR", "CAN", "AUS", "ARG")){
   vacc_doses <- rbind(vacc_doses, read_csv(paste0("data/vacc_doses_", vacc_scenario_name, "/vacc_doses_", c_code, "_",
-                                                  vacc_scenario_name, ".csv"), show_col_types=F) %>% 
+                                                  vacc_scenario_name, ".csv"), show_col_types=F) %>%
                           mutate(cluster_code = c_code))
 }
 
@@ -319,7 +338,7 @@ vacc_doses_m[, vt := (vacc_program %% 5)]
 vacc_doses_m[vt==0, vt := 5]
 setnames(vacc_doses_m, 'value','doses')
 
-if(scenario_name=='breadth'){
+if(scenario_name %like% '(?i)breadth'){
   vacc_doses_m <- rbind(vacc_doses_m[vacc_doses_m$vt==1,],
                         vacc_doses_m[vacc_doses_m$vt==1,],
                         vacc_doses_m[vacc_doses_m$vt==1,],
@@ -327,18 +346,15 @@ if(scenario_name=='breadth'){
                         vacc_doses_m[vacc_doses_m$vt==1,])
   vacc_doses_m$vt <- rep(1:5, each = nrow(vacc_doses_m)/5)
 }
-# print(head(vacc_doses_m))
 
-## implicitly discounting vaccine prices at the cost-discount-rate
+## implicitly discounting vaccine prices at the cost discount rate
 vacc_doses_m[, discount_year := year - 2025]
-# print(head(vacc_doses_m))
 vacc_doses_m[, discount_rate := (1 + cost_discount_rate_val)^(-discount_year)]
-# print(head(vacc_doses_m))
 vacc_doses_m[, discounted_doses := doses*discount_rate]
 
 ## total
-vacc_doses_sum <- vacc_doses_m[, c('year','ct','vt','discounted_doses')][, lapply(.SD, sum), by=c('year','ct','vt')]
-vacc_doses_sum <- rbind(vacc_doses_sum, data.table(year=2025:2054,ct='v',vt='',discounted_doses=0))
+vacc_doses_sum <- vacc_doses_m[, c('year','ct','vt','doses','discounted_doses')][, lapply(.SD, sum), by=c('year','ct','vt')]
+vacc_doses_sum <- rbind(vacc_doses_sum, data.table(year=2025:2054,ct='v',vt='',doses=0,discounted_doses=0))
 
 ## national
 vacc_doses_nat <- melt(vacc_doses, id.vars = c('country_code','vacc_program','year'))
@@ -347,7 +363,7 @@ vacc_doses_nat <- vacc_doses_nat[, lapply(.SD, sum), by=c('country_code','vacc_p
 vacc_doses_nat[, ct := ceiling(vacc_program/5)]
 vacc_doses_nat[, vt := (vacc_program %% 5)]
 vacc_doses_nat[vt==0, vt := 5]
-if(scenario_name=='breadth'){
+if(scenario_name %like% '(?i)breadth'){
   vacc_doses_nat <- rbind(vacc_doses_nat[vacc_doses_nat$vt==1,],
                           vacc_doses_nat[vacc_doses_nat$vt==1,],
                           vacc_doses_nat[vacc_doses_nat$vt==1,],
@@ -364,13 +380,11 @@ vacc_doses_nat[, discount_year := year - 2025]
 vacc_doses_nat[, discount_rate := (1 + cost_discount_rate_val)^(-discount_year)]
 vacc_doses_nat[, discounted_doses := doses*discount_rate]
 
-########################################################################
-
-## GLOBAL OUTCOMES, COSTS, AND DOSES IN EACH SCENARIO
+#### GLOBAL OUTCOMES, COSTS, AND DOSES ####
 print('global outcomes')
 
 total_out <- econ_cases_agg[,c('simulation_index','year','ct','vt','infections','deaths','hospitalisations',
-                               'YLLs','total_DALYs','discounted_costs','discounted_DALYs','cost_of_DALYs')][, lapply(.SD, sum), 
+                               'YLLs','total_DALYs','discounted_costs','discounted_DALYs','cost_of_DALYs')][, lapply(.SD, sum),
                                                                                          by = c('simulation_index','year','ct','vt')]
 ## adding doses
 total_out <- total_out[vacc_doses_sum, on=c('year','ct','vt')]
@@ -384,7 +398,7 @@ agg_out <- agg_out[base_scenario, on='simulation_index']
 agg_out[, incremental_costs := base_costs - discounted_costs][, incremental_DALYs := base_DALYs_cost - cost_of_DALYs]
 agg_out <- agg_out[!vt=='',]
 
-agg_out[, threshold_price := (incremental_DALYs + incremental_costs)/discounted_doses]
+# agg_out[, threshold_price := (incremental_DALYs + incremental_costs)/discounted_doses] # removing as delivery not costed
 
 agg_out[ct==1, ct_n:='0-4']
 agg_out[ct==2, ct_n:='0-10']
@@ -394,17 +408,16 @@ agg_out[ct==5, ct_n:='0-17, 65+']
 
 save(agg_out, file = paste0('econ/',scenario_name,econ_folder_name,'/agg_out'))
 
-########################################################################
-
-## WHO REGION OUTCOMES, COSTS, AND DOSES IN EACH SCENARIO
+#### WHO REGION OUTCOMES, COSTS, AND DOSES ####
 print('region-specific outcomes')
 
 total_who <- econ_cases_agg[,c('country_code','simulation_index','year','ct','vt','infections','deaths','hospitalisations',
-                               'YLLs','discounted_costs','discounted_DALYs','cost_of_DALYs')][, lapply(.SD, sum), 
+                               'YLLs','discounted_costs','discounted_DALYs','cost_of_DALYs')][, lapply(.SD, sum),
                                                                                               by = c('country_code','simulation_index','year','ct','vt')]
 
 ## adding doses
 total_who <- total_who[vacc_doses_nat, on=c('country_code','year','ct','vt')]
+
 ## adding WHO regions
 who_regions <- data.table(read_csv('econ/outcome_calculations/data/WHO_regions.csv', show_col_types = F))
 who_regions <- who_regions[country_code %in% total_who$country_code,]
@@ -421,7 +434,7 @@ total_who_sum <- total_who_sum[base_scenario, on=c('simulation_index','WHOREGION
 total_who_sum[, incremental_costs := base_costs - discounted_costs][, incremental_DALYs := base_DALYs_cost - cost_of_DALYs]
 total_who_sum <- total_who_sum[!vt=='',]
 
-total_who_sum[, threshold_price := (incremental_DALYs + incremental_costs)/discounted_doses]
+# total_who_sum[, threshold_price := (incremental_DALYs + incremental_costs)/discounted_doses] # removing as delivery not costed
 
 total_who_sum[ct==1, ct_n:='0-4']
 total_who_sum[ct==2, ct_n:='0-10']
@@ -431,24 +444,9 @@ total_who_sum[ct==5, ct_n:='0-17, 65+']
 
 save(total_who_sum, file = paste0('econ/',scenario_name,econ_folder_name,'/total_who_sum'))
 
-########################################################################
-
-## NATIONAL OUTCOMES, COSTS, AND DOSES IN EACH SCENARIO
+#### NATIONAL OUTCOMES, COSTS, AND DOSES IN EACH SCENARIO ####
 print('national outcomes')
-# 
-# total_nat <- econ_cases_agg[,c('country_code','simulation_index','year','ct','vt','infections','deaths','hospitalisations',
-#                                'YLLs','discounted_costs','discounted_DALYs','cost_of_DALYs')][, lapply(.SD, sum), 
-#                                                                                               by = c('country_code','simulation_index','year','ct','vt')]
-# 
-# ## adding doses
-# total_nat <- total_nat[vacc_doses_nat, on=c('country_code','year','ct','vt')]
-# ## adding itzs
-# itzs <- data.table(read_csv('econ/outcome_calculations/data/ITZs.csv', show_col_types = F))
-# setnames(itzs, 'codes','country_code')
-# total_nat <- total_nat[itzs[,c('country_code','cluster_name')], on=c('country_code')]
-# setnames(total_nat, 'cluster_name','itz')
-# 
-# total_nat_sum <- total_nat[,c('country_code','year','vacc_program'):=NULL]
+
 total_nat_sum <- copy(total_who)
 total_nat_sum[,c('year','vacc_program'):=NULL]
 total_nat_sum <- total_nat_sum[, lapply(.SD, sum, na.rm=T), by=c('country_code','WHOREGION','ct','vt','simulation_index')]
@@ -460,7 +458,13 @@ total_nat_sum <- total_nat_sum[base_scenario, on=c('simulation_index','country_c
 total_nat_sum[, incremental_costs := base_costs - discounted_costs][, incremental_DALYs := base_DALYs_cost - cost_of_DALYs]
 total_nat_sum <- total_nat_sum[!vt=='',]
 
-total_nat_sum[, threshold_price := (incremental_DALYs + incremental_costs)/discounted_doses]
+# costs of doses
+delivery_cost_samples <- data.table(read_csv('econ/outcome_calculations/data/delivery_cost_samples.csv', show_col_types=F))
+setnames(delivery_cost_samples, 'iso3c','country_code')
+total_nat_sum <- total_nat_sum[delivery_cost_samples, on=c('country_code','simulation_index')]
+
+# threshold price, with wastage and delivery cost taken into account
+total_nat_sum[, threshold_price := (incremental_DALYs + incremental_costs - discounted_doses*delivery_cost)/(discounted_doses/(1-wastage))]
 
 total_nat_sum[ct==1, ct_n:='0-4']
 total_nat_sum[ct==2, ct_n:='0-10']
@@ -472,10 +476,7 @@ total_nat_sum[,c('discount_year','discount_rate'):=NULL]
 
 save(total_nat_sum, file = paste0('econ/',scenario_name,econ_folder_name,'/total_nat_sum'))
 
-
-########################################################################
-
-## AGE-SPECIFIC OUTCOMES PLOT
+#### AGE-SPECIFIC OUTCOMES ####
 print('age-specific outcomes')
 
 as_out <- econ_cases_agg[,c('simulation_index','age_grp','ct','vt','infections','deaths','hospitalisations',
@@ -497,7 +498,7 @@ as_out_summ_c[age_grp == 4, age_grp_n := '65+']
 
 save(as_out_summ_c, file=paste0('econ/',scenario_name,econ_folder_name,'/as_out_summ_c'))
 
-as_nv <- as_out[ct=='v'] 
+as_nv <- as_out[ct=='v']
 as_nv[, c('ct','vt'):=NULL]
 setnames(as_nv, 'infections', 'nv_infections')
 setnames(as_nv, 'deaths', 'nv_deaths')
@@ -508,6 +509,12 @@ setnames(as_nv, 'total_DALYs', 'nv_total_DALYs')
 as_out_av <- as_out[as_nv, on=c('simulation_index','age_grp')]
 as_out_av[, infections_av := nv_infections - infections][, deaths_av := nv_deaths - deaths][, hospitalisations_av := nv_hospitalisations - hospitalisations]
 as_out_av[, fevers_av := nv_fevers - fevers][, non_fevers_av := nv_non_fevers - non_fevers][, total_DALYs_av := nv_total_DALYs - total_DALYs]
+
+out_av <- copy(as_out_av)
+out_av[, age_grp := NULL]
+out_av <- out_av[, lapply(.SD, sum), by = c('ct','vt','simulation_index')]
+save(out_av, file=paste0('econ/',scenario_name,econ_folder_name,'/as_out_averted_100'))
+
 as_out_av[, c('infections','deaths','hospitalisations','fevers','non_fevers','total_DALYs',
               'nv_infections','nv_deaths','nv_hospitalisations','nv_fevers','nv_non_fevers','nv_total_DALYs') := NULL]
 as_out_av <- as_out_av[!ct=='v']
@@ -534,7 +541,7 @@ who_regions <- who_regions[country_code %in% as_out$country_code,]
 as_out <- as_out[who_regions[,c('country_code','WHOREGION')], on='country_code']
 as_out[, country_code:=NULL]
 as_out <- as_out[, lapply(.SD, sum), by = c('WHOREGION','simulation_index','ct','vt','age_grp')]
-as_nv <- as_out[ct=='v'] 
+as_nv <- as_out[ct=='v']
 as_nv[, c('ct','vt'):=NULL]
 setnames(as_nv, 'infections', 'nv_infections')
 setnames(as_nv, 'deaths', 'nv_deaths')
