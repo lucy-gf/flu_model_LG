@@ -60,8 +60,6 @@ fcn_pop_model <- function(country, year_demog = 2025){
 ### FIXED DEMOGRAPHIC PARAMETERS
 # using WPP 2022 PROJECTIONS FOR 2025
 
-## NEED TO CHECK THAT WPP 2022 (AND 2017) HAVE THE RIGHT COUNTRIES TO MATCH PREM ET AL. 
-
 start_year <- 2025
 
 # LT_WPP_data_large <- read_xlsx("data/WPP2022_MORT_F07_1_ABRIDGED_LIFE_TABLE_BOTH_SEXES.xlsx",
