@@ -1,5 +1,7 @@
 # The potential global impact and cost-effectiveness of next-generation influenza vaccines: a modelling analysis.
 
+[![DOI](https://zenodo.org/badge/676515343.svg)](https://doi.org/10.5281/zenodo.15535351)
+
 ## For https://doi.org/10.1101/2024.09.19.24313950 (pre-print)
 
 flu_model, adapted from https://github.com/mbkoltai/flu_model/tree/main.
